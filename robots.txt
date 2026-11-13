@@ -1,4 +1,5 @@
 User-agent: *
+Disallow: /early/
 Allow: /
 
 Sitemap: https://quiz.pilotjourney.in/sitemap.xml
