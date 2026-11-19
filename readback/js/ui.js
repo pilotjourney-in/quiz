@@ -48,8 +48,24 @@
     S.opts = { role: role(), flight: $('o-flight').value, cs: $('o-cs').value, traffic: +$('o-traffic').value, runway: $('o-rwy').value };
     S.voice = $('o-voice').checked; S.hints = $('o-hints').checked;
     if (synth && S.voice) { try { synth.cancel(); synth.speak(new SpeechSynthesisUtterance(' ')); } catch (e) { /* ignore */ } }
+    unlockAudio();
     begin();
   });
+
+  /* iPhone/iPad mute web speech when the silent switch is on. Telling Safari this is a play-and-record app,
+     and keeping a silent media track playing, routes the voices like media so the volume buttons control them. */
+  var silentEl = null;
+  function unlockAudio() {
+    try { if (navigator.audioSession) navigator.audioSession.type = 'play-and-record'; } catch (e) { /* ignore */ }
+    try {
+      if (!silentEl) {
+        silentEl = document.createElement('audio');
+        silentEl.setAttribute('playsinline', ''); silentEl.loop = true; silentEl.volume = 0.01;
+        silentEl.src = 'silence.wav';
+      }
+      var pr = silentEl.play(); if (pr && pr.catch) pr.catch(function () { /* ignore */ });
+    } catch (e) { /* ignore */ }
+  }
 
   function begin() {
     var o = S.opts, w = new TL.World({ mode: o.role, runway: o.runway, traffic: o.traffic });
@@ -121,50 +137,66 @@
   }
 
   /* ================= speech in ================= */
-  var rec = null, heard = '', latch = false, downAt = 0, held = false, ready = false, stopping = false, relT = 0;
+  var rec = null, heard = '', latch = false, downAt = 0, held = false, ready = false, stopping = false, relT = 0, dogT = 0, started = false;
   function pttLabel() {
     var b = $('ptt'); b.classList.toggle('live', S.listening);
     b.textContent = !SR ? 'No mic' : stopping ? 'Sending...' : S.listening ? (!ready ? 'Wait...' : latch ? 'Tap to send' : 'Listening') : 'Hold to talk';
   }
-  function startListen() {
-    if (!SR || S.listening || stopping || !S.w || S.w.over) return;
-    heard = ''; ready = false;
-    if (rec) { try { rec.abort(); } catch (e) { /* ignore */ } }
+  function resetPtt() {
+    clearTimeout(relT); clearTimeout(dogT);
+    S.listening = false; latch = false; stopping = false; ready = false; held = false; started = false;
+    if (S.w) S.w.radio.ptt = false; pttLabel();
+  }
+  /* One recogniser for the whole session: iPhone and iPad Safari stop working after several new ones are created. */
+  function getRec() {
+    if (rec) return rec;
     var r = rec = new SR(); r.lang = 'en-IN'; r.interimResults = true; r.continuous = true; r.maxAlternatives = 1;
-    r.onaudiostart = function () { if (r !== rec) return; ready = true; pttLabel(); if (navigator.vibrate) navigator.vibrate(30); };
+    r.onstart = function () { started = true; clearTimeout(dogT); setTimeout(function () { if (S.listening && !ready) { ready = true; pttLabel(); } }, 350); };
+    r.onaudiostart = function () { ready = true; pttLabel(); if (navigator.vibrate) navigator.vibrate(30); };
     r.onresult = function (e) {
-      if (r !== rec) return;
       var fin = '', inter = '';
-      for (var i = 0; i < e.results.length; i++) { if (e.results[i].isFinal) fin += e.results[i][0].transcript + ' '; else inter += e.results[i][0].transcript; }
-      heard = (fin + inter).trim(); $('txt').value = heard;
+      for (var i = e.resultIndex; i < e.results.length; i++) { if (e.results[i].isFinal) fin += e.results[i][0].transcript + ' '; else inter += e.results[i][0].transcript; }
+      if (fin) S.fin = ((S.fin || '') + ' ' + fin).trim();
+      heard = ((S.fin || '') + ' ' + inter).trim(); $('txt').value = heard;
     };
     r.onerror = function (e) {
-      if (r !== rec) return;
-      if (e.error === 'not-allowed' || e.error === 'service-not-allowed') line('tip', '', 'The microphone is blocked. Allow it in the browser, or type your transmission.');
+      if (e.error === 'not-allowed' || e.error === 'service-not-allowed') line('tip', '', 'The microphone is blocked. Allow it in the browser settings, or type your transmission.');
       else if (e.error === 'network') line('tip', '', 'Voice input needs an internet connection. Check it, or type your transmission.');
-      else if (e.error === 'audio-capture') line('tip', '', 'No microphone found. Type your transmission instead.');
+      else if (e.error === 'audio-capture') line('tip', '', 'The microphone is busy or missing. Close other apps using it, or type your transmission.');
     };
     r.onend = function () {
-      if (r !== rec) return;
+      started = false;
       // Phones often end recognition on their own after a pause: if the button is still held, keep listening.
-      if (held && !stopping && !S.w.over) { try { r.start(); return; } catch (err) { /* fall through */ } }
-      clearTimeout(relT);
-      S.listening = false; latch = false; stopping = false; ready = false; held = false; if (S.w) S.w.radio.ptt = false; pttLabel();
-      var t = heard; heard = ''; $('txt').value = '';
-      if (t) send(t);
-      else line('tip', '', 'Nothing heard. Hold the button, wait for "Listening", then speak, and let go a moment after you finish.');
+      if (held && !stopping && S.listening && S.w && !S.w.over) { setTimeout(function () { try { r.start(); } catch (err) { finish(); } }, 120); return; }
+      finish();
     };
-    try { r.start(); } catch (err) { rec = null; return; }
-    S.listening = true; S.w.radio.ptt = true; if (synth) synth.cancel(); pttLabel();
+    return r;
+  }
+  function finish() {
+    var was = S.listening; resetPtt();
+    var t = heard; heard = ''; S.fin = ''; $('txt').value = '';
+    if (t) send(t);
+    else if (was) line('tip', '', 'Nothing heard. Hold the button, wait for "Listening", then speak, and let go a moment after you finish.');
+  }
+  function startListen() {
+    if (!SR || S.listening || stopping || !S.w || S.w.over) return;
+    heard = ''; S.fin = ''; ready = false;
+    if (synth) synth.cancel();
+    var r = getRec();
+    S.listening = true; S.w.radio.ptt = true; pttLabel();
+    try { r.start(); } catch (err) { try { r.abort(); } catch (e2) { /* ignore */ } rec = null; resetPtt(); line('tip', '', 'The mic was still busy. Tap Hold to talk again.'); return; }
+    // Watchdog: if the mic never opens, reset so the button doesn't stay stuck.
+    dogT = setTimeout(function () { if (!started && S.listening) { try { r.abort(); } catch (e) { /* ignore */ } rec = null; resetPtt(); line('tip', '', 'The mic did not open. Tap Hold to talk again.'); } }, 2500);
   }
   function stopListen() {
     if (!rec || !S.listening || stopping) return;
     stopping = true; held = false; pttLabel();
-    // Keep the mic open briefly so the last word isn't cut off, then stop; force-finish if the browser never ends.
     var r = rec;
+    // Keep the mic open briefly so the last word isn't cut off, then stop; force-finish if the browser never ends.
     setTimeout(function () { try { r.stop(); } catch (e) { /* ignore */ } }, 400);
-    relT = setTimeout(function () { if (r === rec && S.listening) { try { r.abort(); } catch (e) { /* ignore */ } if (r.onend) r.onend(); } }, 3000);
+    relT = setTimeout(function () { if (S.listening) { try { r.abort(); } catch (e) { /* ignore */ } rec = null; finish(); } }, 3000);
   }
+  document.addEventListener('visibilitychange', function () { if (document.hidden && S.listening) { try { rec && rec.abort(); } catch (e) { /* ignore */ } rec = null; resetPtt(); } });
   var ptt = $('ptt');
   ptt.addEventListener('pointerdown', function (e) {
     e.preventDefault();
