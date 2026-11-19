@@ -121,45 +121,68 @@
   }
 
   /* ================= speech in ================= */
-  var rec = null, heard = '', latch = false, downAt = 0;
-  function pttLabel() { var b = $('ptt'); b.classList.toggle('live', S.listening); b.textContent = !SR ? 'No mic' : S.listening ? (latch ? 'Tap to send' : 'Listening') : 'Hold to talk'; }
+  var rec = null, heard = '', latch = false, downAt = 0, held = false, ready = false, stopping = false, relT = 0;
+  function pttLabel() {
+    var b = $('ptt'); b.classList.toggle('live', S.listening);
+    b.textContent = !SR ? 'No mic' : stopping ? 'Sending...' : S.listening ? (!ready ? 'Wait...' : latch ? 'Tap to send' : 'Listening') : 'Hold to talk';
+  }
   function startListen() {
-    if (!SR || S.listening || !S.w || S.w.over) return;
-    heard = '';
-    rec = new SR(); rec.lang = 'en-IN'; rec.interimResults = true; rec.continuous = true;
-    rec.onresult = function (e) {
+    if (!SR || S.listening || stopping || !S.w || S.w.over) return;
+    heard = ''; ready = false;
+    if (rec) { try { rec.abort(); } catch (e) { /* ignore */ } }
+    var r = rec = new SR(); r.lang = 'en-IN'; r.interimResults = true; r.continuous = true; r.maxAlternatives = 1;
+    r.onaudiostart = function () { if (r !== rec) return; ready = true; pttLabel(); if (navigator.vibrate) navigator.vibrate(30); };
+    r.onresult = function (e) {
+      if (r !== rec) return;
       var fin = '', inter = '';
       for (var i = 0; i < e.results.length; i++) { if (e.results[i].isFinal) fin += e.results[i][0].transcript + ' '; else inter += e.results[i][0].transcript; }
       heard = (fin + inter).trim(); $('txt').value = heard;
     };
-    rec.onerror = function (e) {
+    r.onerror = function (e) {
+      if (r !== rec) return;
       if (e.error === 'not-allowed' || e.error === 'service-not-allowed') line('tip', '', 'The microphone is blocked. Allow it in the browser, or type your transmission.');
+      else if (e.error === 'network') line('tip', '', 'Voice input needs an internet connection. Check it, or type your transmission.');
+      else if (e.error === 'audio-capture') line('tip', '', 'No microphone found. Type your transmission instead.');
     };
-    rec.onend = function () {
-      S.listening = false; latch = false; if (S.w) S.w.radio.ptt = false; pttLabel();
+    r.onend = function () {
+      if (r !== rec) return;
+      // Phones often end recognition on their own after a pause: if the button is still held, keep listening.
+      if (held && !stopping && !S.w.over) { try { r.start(); return; } catch (err) { /* fall through */ } }
+      clearTimeout(relT);
+      S.listening = false; latch = false; stopping = false; ready = false; held = false; if (S.w) S.w.radio.ptt = false; pttLabel();
       var t = heard; heard = ''; $('txt').value = '';
       if (t) send(t);
+      else line('tip', '', 'Nothing heard. Hold the button, wait for "Listening", then speak, and let go a moment after you finish.');
     };
-    try { rec.start(); } catch (err) { return; }
+    try { r.start(); } catch (err) { rec = null; return; }
     S.listening = true; S.w.radio.ptt = true; if (synth) synth.cancel(); pttLabel();
   }
-  function stopListen() { if (rec && S.listening) { try { rec.stop(); } catch (e) { /* ignore */ } } }
+  function stopListen() {
+    if (!rec || !S.listening || stopping) return;
+    stopping = true; held = false; pttLabel();
+    // Keep the mic open briefly so the last word isn't cut off, then stop; force-finish if the browser never ends.
+    var r = rec;
+    setTimeout(function () { try { r.stop(); } catch (e) { /* ignore */ } }, 400);
+    relT = setTimeout(function () { if (r === rec && S.listening) { try { r.abort(); } catch (e) { /* ignore */ } if (r.onend) r.onend(); } }, 3000);
+  }
   var ptt = $('ptt');
   ptt.addEventListener('pointerdown', function (e) {
     e.preventDefault();
+    if (stopping) return;
     if (S.listening) { stopListen(); return; }
-    downAt = performance.now(); latch = false; startListen();
+    downAt = performance.now(); latch = false; held = true; startListen();
     try { ptt.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
   });
   function pttUp() {
-    if (!S.listening || latch) return;
-    if (performance.now() - downAt < 350) { latch = true; pttLabel(); } else stopListen();
+    if (!S.listening || latch || stopping) return;
+    if (performance.now() - downAt < 350) { latch = true; held = true; pttLabel(); } else stopListen();
   }
-  ptt.addEventListener('pointerup', pttUp); ptt.addEventListener('pointercancel', pttUp);
+  ptt.addEventListener('pointerup', pttUp); ptt.addEventListener('pointercancel', function () { /* ignore: phones cancel long presses; release is handled by pointerup */ });
+  ptt.addEventListener('lostpointercapture', pttUp);
   ptt.addEventListener('contextmenu', function (e) { e.preventDefault(); });
   document.addEventListener('keydown', function (e) {
     if (e.code !== 'Space' || e.repeat || $('sim').hidden || /INPUT|SELECT|TEXTAREA|BUTTON/.test(e.target.tagName)) return;
-    e.preventDefault(); downAt = 0; latch = false; startListen();
+    e.preventDefault(); if (stopping) return; downAt = 0; latch = false; held = true; startListen();
   });
   document.addEventListener('keyup', function (e) { if (e.code === 'Space' && S.listening && !latch) stopListen(); });
 
