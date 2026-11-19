@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Readback by Pilot Journey: radio practice at Nagpur</title>
+<meta name="description" content="Practise ICAO radiotelephony at a simplified Nagpur (VANP). Sit in the cockpit or in the tower.">
+<meta name="theme-color" content="#0a1c33">
+<link rel="icon" href="img/logo.png">
+<link rel="apple-touch-icon" href="img/logo.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<main id="setup" class="setup">
+  <header class="setup-head">
+    <img class="logo" src="img/logo.png" alt="Pilot Journey">
+    <h1>Readback</h1>
+    <p class="lede">Radio practice at Nagpur VANP. Fly it, or run the tower.</p>
+  </header>
+
+  <fieldset class="seats">
+    <legend>Choose your seat</legend>
+    <label class="seat">
+      <input type="radio" name="role" value="PILOT" checked>
+      <span class="seat-body">
+        <strong>Pilot</strong>
+        <span>You call and read back. The tower is simulated.</span>
+      </span>
+    </label>
+    <label class="seat">
+      <input type="radio" name="role" value="ATC">
+      <span class="seat-body">
+        <strong>Controller</strong>
+        <span>You are Nagpur Tower. The pilots are simulated.</span>
+      </span>
+    </label>
+  </fieldset>
+
+  <div class="opt opt-flight" data-for="PILOT">
+    <label for="o-flight">Flight</label>
+    <select id="o-flight">
+      <option value="CIRCUIT">Circuits, from start-up to full stop</option>
+      <option value="DEP">VFR departure</option>
+      <option value="ARR_VFR">Arrival, starting 5 miles out</option>
+    </select>
+  </div>
+
+  <button id="start" class="primary" type="button">Start session</button>
+
+  <div class="opts">
+    <div class="opt" data-for="PILOT">
+      <label for="o-cs">Your registration</label>
+      <input id="o-cs" type="text" value="VT-PJA" maxlength="6" autocomplete="off" autocapitalize="characters" spellcheck="false">
+    </div>
+    <div class="opt">
+      <label for="o-traffic">Other traffic</label>
+      <select id="o-traffic">
+        <option value="0" data-for="PILOT">None</option>
+        <option value="1" selected>Light</option>
+        <option value="2">Moderate</option>
+        <option value="3">Busy</option>
+      </select>
+    </div>
+    <div class="opt">
+      <label for="o-rwy">Runway in use</label>
+      <select id="o-rwy">
+        <option value="auto">Set by the wind</option>
+        <option value="32">32</option>
+        <option value="14">14</option>
+      </select>
+    </div>
+    <label class="check"><input id="o-voice" type="checkbox" checked> Speak the radio aloud</label>
+    <label class="check" data-for="PILOT"><input id="o-hints" type="checkbox" checked> Show what to say next</label>
+  </div>
+
+  <p class="fine" id="mic-note"></p>
+  <p class="fine">Training aid only. The taxiway and apron layout is simplified and is not the published aerodrome chart.</p>
+  <p class="foot">quiz.pilotjourney.in/readback</p>
+</main>
+
+<div id="sim" class="sim" hidden>
+  <header class="bar">
+    <img class="logo" src="img/logo.png" alt="Pilot Journey">
+    <div class="bar-info" id="info"></div>
+    <div class="bar-ctl">
+      <button type="button" id="b-speed" class="menu" aria-label="Simulation speed">1×</button>
+      <button type="button" id="b-pause" class="menu" aria-label="Pause"></button>
+      <button type="button" id="b-sound" class="menu" aria-label="Sound"></button>
+      <button type="button" id="b-end" class="menu" aria-label="End session"></button>
+      <button type="button" id="b-clean" aria-label="Clean recording mode" aria-pressed="false"></button>
+    </div>
+  </header>
+
+  <section class="mapwrap">
+    <canvas id="map" aria-label="Airport map"></canvas>
+    <button type="button" id="b-view" class="viewbtn menu">Area view</button>
+    <div id="scorechip" class="scorechip"></div>
+  </section>
+
+  <section class="panel">
+    <div id="own" class="own" hidden></div>
+    <div id="strips" class="strips" aria-label="Flight strips"></div>
+    <div id="log" class="log" aria-live="polite"></div>
+    <div id="hint" class="hint"></div>
+    <form id="say" class="say" autocomplete="off">
+      <button type="button" id="ptt" class="ptt">Hold to talk</button>
+      <input id="txt" type="text" placeholder="Type your call..." enterkeyhint="send" spellcheck="false">
+      <button type="submit" class="send">Send</button>
+    </form>
+    <p class="foot">quiz.pilotjourney.in/readback</p>
+  </section>
+</div>
+
+<div id="debrief" class="debrief" hidden>
+  <div class="debrief-card" role="dialog" aria-labelledby="d-title">
+    <img class="logo" src="img/logo.png" alt="Pilot Journey">
+    <h2 id="d-title">Readback score</h2>
+    <p class="sc-num" id="d-score"></p>
+    <dl class="sc-meta">
+      <div><dt>Airport</dt><dd>Nagpur VANP</dd></div>
+      <div><dt>Role</dt><dd id="d-role"></dd></div>
+      <div><dt>Flight</dt><dd id="d-flight"></dd></div>
+    </dl>
+    <p id="d-sum"></p>
+    <ul id="d-notes"></ul>
+    <div class="debrief-ctl">
+      <button type="button" id="d-share" class="primary">Share</button>
+      <button type="button" id="d-again">Go again</button>
+      <button type="button" id="d-setup">Change seat</button>
+    </div>
+    <p class="foot">quiz.pilotjourney.in/readback</p>
+  </div>
+</div>
+
+<script src="js/airport.js"></script>
+<script src="js/phrase.js"></script>
+<script src="js/sim.js"></script>
+<script src="js/pilot.js"></script>
+<script src="js/atc.js"></script>
+<script src="js/ui.js"></script>
+</body>
+</html>

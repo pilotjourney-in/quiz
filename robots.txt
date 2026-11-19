@@ -1,5 +1,6 @@
 User-agent: *
 Disallow: /early/
+Disallow: /readback/
 Allow: /
 
 Sitemap: https://quiz.pilotjourney.in/sitemap.xml
