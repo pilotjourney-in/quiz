@@ -172,10 +172,54 @@
     };
     return r;
   }
+  /* Phone speech recognition often swaps a word or two ("tower" for "two", "lying up" for "line up").
+     If what was heard is close to one of the calls that fit right now, and every number in that call was heard
+     correctly, send that call instead. Numbers are never guessed, so a wrong readback still counts as wrong. */
+  function lev(a, b) {
+    var m = a.length, n = b.length, d = [], i, j;
+    for (i = 0; i <= m; i++) { d[i] = [i]; }
+    for (j = 1; j <= n; j++) d[0][j] = j;
+    for (i = 1; i <= m; i++) for (j = 1; j <= n; j++) d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    return d[m][n];
+  }
+  function wordsClose(a, b) { return a === b || (a.length > 3 && b.length > 3 && lev(a, b) <= Math.floor(Math.max(a.length, b.length) / 3)); }
+  function simWords(h, c) {
+    var used = [], hit = 0;
+    c.forEach(function (cw) { for (var i = 0; i < h.length; i++) if (!used[i] && wordsClose(h[i], cw)) { used[i] = true; hit++; return; } });
+    return hit / Math.max(h.length, c.length);
+  }
+  function toks(n) {
+    var out = [];
+    n.plain.split(' ').forEach(function (x) {
+      var v = P.PHW[x] || x, last = out[out.length - 1];
+      if (/^[a-z]{1,3}$/.test(v) && last && /^[a-z]+$/.test(last.v) && last.short) last.v += v;
+      else out.push({ v: v, short: /^[a-z]{1,3}$/.test(v) });
+    });
+    return out.map(function (o) { return o.v; });
+  }
+  function snap(text) {
+    var w = S.w; if (!w) return text;
+    var cands = [];
+    try {
+      if (w.mode === 'ATC') { if (S.sel && S.sel.alive) cands = TL.Hint.atc(w, S.sel).map(function (t) { return S.sel.cs.full + ', ' + t; }); }
+      else cands = TL.Hint.pilot(w).opts || [];
+    } catch (e) { return text; }
+    var hn = P.norm(text), hw = toks(hn), best = null, bs = 0;
+    cands.forEach(function (c) {
+      if (typeof c !== 'string') return;
+      var cn = P.norm(c);
+      if (!cn.nums.every(function (x) { return hn.nums.indexOf(x) >= 0; })) return;
+      if (hn.nums.some(function (x) { return cn.nums.indexOf(x) < 0; })) return;
+      var sc = simWords(hw, toks(cn));
+      if (sc > bs) { bs = sc; best = c; }
+    });
+    if (best && bs >= 0.6 && bs < 1) { line('tip', '', 'Heard "' + text + '", taken as "' + best + '".'); return best; }
+    return text;
+  }
   function finish() {
     var was = S.listening; resetPtt();
     var t = heard; heard = ''; S.fin = ''; $('txt').value = '';
-    if (t) send(t);
+    if (t) send(snap(t));
     else if (was) line('tip', '', 'Nothing heard. Hold the button, wait for "Listening", then speak, and let go a moment after you finish.');
   }
   function startListen() {
