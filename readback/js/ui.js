@@ -366,6 +366,19 @@
     $('d-share').textContent = navigator.share ? 'Share' : 'Copy link';
     $('debrief').hidden = false;
   }
+  /* Report a bug: opens an email to Pilot Journey with the flight details and the last radio calls filled in. */
+  $('d-bug').addEventListener('click', function (e) {
+    e.preventDefault();
+    var w = S.w, o = S.opts || {}, logs = [].slice.call($('log').children, -15).map(function (d) { return d.textContent; });
+    var body = 'What went wrong (please describe):\n\n\n' +
+      '--- Details (filled in automatically) ---\n' +
+      'Role: ' + (w ? (w.mode === 'PILOT' ? 'Pilot' : 'ATC') : '') + '\n' +
+      'Flight: ' + (w ? (w.mode === 'PILOT' ? FLIGHT[o.flight] : 'Tower, ' + TRAFFIC[o.traffic]) : '') + ', runway ' + (o.runway || '') + '\n' +
+      'Score: ' + (w ? scoreText() : '') + '\n' +
+      'Voice input: ' + (SR ? 'available' : 'not available') + ', sound ' + (S.voice ? 'on' : 'off') + '\n' +
+      'Device: ' + navigator.userAgent + '\n\nLast radio calls:\n' + logs.join('\n');
+    location.href = 'mailto:pilotjourney0405@gmail.com?subject=' + encodeURIComponent('Readback bug report') + '&body=' + encodeURIComponent(body.slice(0, 1800));
+  });
   $('d-share').addEventListener('click', function () {
     var btn = this, url = location.href, text = 'I scored ' + scoreText() + ' on Readback by Pilot Journey';
     if (navigator.share) { navigator.share({ title: 'Readback by Pilot Journey', text: text, url: url }).catch(function () { /* share sheet closed */ }); return; }
