@@ -48,8 +48,18 @@
     S.opts = { role: role(), flight: $('o-flight').value, cs: $('o-cs').value, traffic: +$('o-traffic').value, runway: $('o-rwy').value };
     S.voice = $('o-voice').checked; S.hints = $('o-hints').checked;
     if (synth && S.voice) { try { synth.cancel(); synth.speak(new SpeechSynthesisUtterance(' ')); } catch (e) { /* ignore */ } }
-    unlockAudio();
     begin();
+    unlockAudio();
+    if (TL.VK && TL.VK.supported() && TL.VK.state === 'off') {
+      TL.VK.onstate = function (st) {
+        if (!S.w) return;
+        if (st === 'loading') line('info', '', 'Loading the radio voice engine (about 40 MB, first time only). You can use the button meanwhile.');
+        else if (st === 'ready') line('info', '', 'Radio voice engine ready. It only listens for radio words, so speak normal phraseology.');
+        else if (st === 'failed') line('tip', '', 'The radio voice engine could not start on this device, so the phone\'s own speech engine is used.');
+        pttLabel();
+      };
+      TL.VK.load();
+    }
   });
 
   /* iPhone/iPad mute web speech when the silent switch is on. Telling Safari this is a play-and-record app,
@@ -84,7 +94,7 @@
     $('setup').hidden = true; $('debrief').hidden = true; $('sim').hidden = false;
     $('own').hidden = o.role !== 'PILOT'; $('strips').hidden = o.role === 'PILOT';
     $('b-speed').textContent = '1×'; setPause(); setSound(); $('b-end').innerHTML = ICON.end; setClean();
-    $('ptt').disabled = !SR; if (!SR) $('ptt').textContent = 'No mic';
+    var anyMic = SR || (TL.VK && TL.VK.supported()); $('ptt').disabled = !anyMic; if (!anyMic) $('ptt').textContent = 'No mic';
     line('info', '', o.role === 'PILOT'
       ? 'You are ' + w.user.cs.full + ', a Cessna 172. Runway ' + w.rw.id + ' is in use. Hold the red button to transmit, or type.'
       : 'You are Nagpur Tower on 118.1, working ground and air. Runway ' + w.rw.id + ' is in use. Say the callsign, then the instruction.');
@@ -140,7 +150,7 @@
   var rec = null, heard = '', latch = false, downAt = 0, held = false, ready = false, stopping = false, relT = 0, dogT = 0, started = false;
   function pttLabel() {
     var b = $('ptt'); b.classList.toggle('live', S.listening);
-    b.textContent = !SR ? 'No mic' : stopping ? 'Sending...' : S.listening ? (!ready ? 'Wait...' : latch ? 'Tap to send' : 'Listening') : 'Hold to talk';
+    b.textContent = !(SR || (TL.VK && TL.VK.supported())) ? 'No mic' : stopping ? 'Sending...' : S.listening ? (!ready ? 'Wait...' : latch ? 'Tap to send' : 'Listening') : 'Hold to talk';
   }
   function resetPtt() {
     clearTimeout(relT); clearTimeout(dogT);
@@ -222,7 +232,16 @@
     if (t) send(snap(t));
     else if (was) line('tip', '', 'Nothing heard. Hold the button, wait for "Listening", then speak, and let go a moment after you finish.');
   }
+  var vkOn = false;
   function startListen() {
+    if (TL.VK && TL.VK.ready && !S.listening && !stopping && S.w && !S.w.over) {
+      if (synth) synth.cancel();
+      heard = ''; S.fin = ''; vkOn = true; ready = true;
+      S.listening = true; S.w.radio.ptt = true;
+      TL.VK.start(function (t) { heard = t; $('txt').value = t; });
+      pttLabel(); if (navigator.vibrate) navigator.vibrate(30);
+      return;
+    }
     if (!SR || S.listening || stopping || !S.w || S.w.over) return;
     heard = ''; S.fin = ''; ready = false;
     if (synth) synth.cancel();
@@ -233,6 +252,12 @@
     dogT = setTimeout(function () { if (!started && S.listening) { try { r.abort(); } catch (e) { /* ignore */ } rec = null; resetPtt(); line('tip', '', 'The mic did not open. Tap Hold to talk again.'); } }, 2500);
   }
   function stopListen() {
+    if (vkOn) {
+      if (stopping) return;
+      stopping = true; held = false; pttLabel();
+      TL.VK.stop(function (t) { vkOn = false; heard = t; finish(); });
+      return;
+    }
     if (!rec || !S.listening || stopping) return;
     stopping = true; held = false; pttLabel();
     var r = rec;
@@ -240,7 +265,7 @@
     setTimeout(function () { try { r.stop(); } catch (e) { /* ignore */ } }, 400);
     relT = setTimeout(function () { if (S.listening) { try { r.abort(); } catch (e) { /* ignore */ } rec = null; finish(); } }, 3000);
   }
-  document.addEventListener('visibilitychange', function () { if (document.hidden && S.listening) { try { rec && rec.abort(); } catch (e) { /* ignore */ } rec = null; resetPtt(); } });
+  document.addEventListener('visibilitychange', function () { if (document.hidden && S.listening && vkOn) { stopListen(); return; } if (document.hidden && S.listening) { try { rec && rec.abort(); } catch (e) { /* ignore */ } rec = null; resetPtt(); } });
   var ptt = $('ptt');
   ptt.addEventListener('pointerdown', function (e) {
     e.preventDefault();

@@ -44,7 +44,7 @@
       [/\bpush ?back\b/g, 'push back'], [/\bx ray\b/g, 'xray'], [/\bfox trot\b/g, 'foxtrot'], [/\b(q n h|queen h|que n h|q and h)\b/g, 'qnh'],
       [/\brun way\b/g, 'runway'], [/\btouch (n|and|in) go\b/g, 'touch and go'], [/\bgo round\b/g, 'go around'], [/\bgoing round\b/g, 'going around'],
       [/\bstand by\b/g, 'standby'], [/\bdown wind\b/g, 'downwind'], [/\bfinals\b/g, 'final'], [/\bi fly\b/g, 'ifly'], [/\beye fly\b/g, 'ifly'],
-      [/\bwill co\b/g, 'wilco'], [/\bclear (for|to|2|4)\b/g, 'cleared $1']];
+      [/\bwill co\b/g, 'wilco'], [/\bspice jet\b/g, 'spicejet'], [/\b(a casa|akasha|a kasa)\b/g, 'akasa'], [/\bclear (for|to|2|4)\b/g, 'cleared $1']];
     fixes.forEach(function (f) { s = s.replace(f[0], f[1]); });
     var raw = s.trim().split(/\s+/).filter(Boolean);
     var t = raw.map(function (w) {
