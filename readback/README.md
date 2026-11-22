@@ -4,6 +4,14 @@ Radio practice at a simplified Nagpur (VANP), runway 14/32. Pick the pilot seat 
 
 Plain static site: HTML, CSS and JavaScript. No build step, no server code, no API keys, no external requests.
 
+## Subscriber gate
+
+This page is a subscriber early-access preview. A weekly password, shared with
+`/early/` and posted in the Facebook subscribers group each Sunday, is required
+to open the app. The check uses a hash in `gate.json`; the password is not in
+this folder. Search engines are told not to index the page (`noindex,nofollow`,
+and `robots.txt` disallows `/readback/`).
+
 ## Hosting
 
 Upload the folder as it is to `quiz.pilotjourney.in/readback/` and open `index.html`.
@@ -14,6 +22,7 @@ Everywhere else, typing and the tap-to-send buttons do the same job.
 ## Files
 
 - `index.html`, `css/style.css` — page and styling. All colours are CSS variables at the top of `style.css`; the map reads the same variables.
+- `js/gate.js`, `gate.json` — weekly subscriber password check. App scripts are loaded only after unlock.
 - `img/logo.png` — your logo (not included)
 - `js/airport.js` — runway, frequencies, taxiway layout. **Edit this to correct the layout.**
 - `js/phrase.js` — spoken numbers/letters, speech normalising, callsigns

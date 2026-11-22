@@ -165,3 +165,75 @@ a { color: var(--sky); }
 
 .bugline { margin: 0 0 0.7rem; font-size: 0.85rem; }
 .bugline a { color: var(--ink); opacity: 0.75; text-decoration: underline; }
+
+/* ---------- subscriber gate ---------- */
+.gate {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 1.25rem 2rem;
+  position: relative;
+}
+.gate-accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--accent);
+}
+.gate-card {
+  width: 100%;
+  max-width: 28rem;
+  margin: 0 auto;
+}
+.gate-kicker {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sky);
+  margin: 0;
+}
+.gate h1 {
+  font-family: system-ui, sans-serif;
+  font-size: 1.5rem;
+  color: var(--ink);
+  margin: 0.75rem 0;
+}
+.gate-lede {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0 0 1.5rem;
+}
+.gate-form label { display: block; margin-bottom: 1rem; }
+.gate-label {
+  display: block;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+.gate-form input[type="password"] {
+  width: 100%;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.75rem 0.9rem;
+  color: var(--ink);
+}
+.gate-form .primary { width: 100%; }
+.gate-form .primary:disabled { opacity: 0.7; cursor: default; }
+.gate-error,
+.gate-noscript {
+  color: var(--bad);
+  font-size: 0.85rem;
+  margin: 0.75rem 0 0;
+}
+.gate-noscript { text-align: center; padding: 2rem 1.25rem; }
+.gate .foot { margin-top: 2.5rem; }

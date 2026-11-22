@@ -9,11 +9,32 @@
 <meta name="theme-color" content="#0a1c33">
 <link rel="icon" href="img/logo.png">
 <link rel="apple-touch-icon" href="img/logo.png">
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css?v=1">
 </head>
 <body>
 
-<main id="setup" class="setup">
+<div id="gate" class="gate">
+  <div class="gate-accent" aria-hidden="true"></div>
+  <main class="gate-card">
+    <p class="gate-kicker">Pilot Journey</p>
+    <h1>Readback</h1>
+    <p class="gate-lede">Subscriber early access. Enter this week’s password from our Facebook subscribers group.</p>
+    <form id="gate-form" class="gate-form" autocomplete="off">
+      <label for="gate-password">
+        <span class="gate-label">Password</span>
+        <input id="gate-password" name="password" type="password" autocomplete="off" spellcheck="false" required>
+      </label>
+      <button id="gate-submit" class="primary" type="submit">Unlock</button>
+      <p id="gate-error" class="gate-error" hidden></p>
+    </form>
+  </main>
+  <p class="foot">quiz.pilotjourney.in/readback</p>
+</div>
+<noscript>
+  <p class="gate-noscript">JavaScript is needed to unlock Readback.</p>
+</noscript>
+
+<main id="setup" class="setup" hidden>
   <header class="setup-head">
     <img class="logo" src="img/logo.png" alt="Pilot Journey">
     <h1>Readback</h1>
@@ -135,12 +156,6 @@
   </div>
 </div>
 
-<script src="js/airport.js"></script>
-<script src="js/phrase.js"></script>
-<script src="js/sim.js"></script>
-<script src="js/pilot.js"></script>
-<script src="js/atc.js"></script>
-<script src="js/vk.js?v=1"></script>
-<script src="js/ui.js?v=7"></script>
+<script src="js/gate.js?v=1"></script>
 </body>
 </html>
