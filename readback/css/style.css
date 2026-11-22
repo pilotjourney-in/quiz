@@ -57,12 +57,12 @@ a { color: var(--sky); }
 
 /* ---------- sim layout: one screen, nothing scrolls except inside the log ---------- */
 .sim { height: 100dvh; width: 100%; overflow: hidden; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 34%) minmax(0, 1fr); }
-.bar { display: flex; flex-wrap: nowrap; gap: 0.5rem; align-items: center; background: var(--navy-deep); color: var(--ink); padding: 0.3rem 0.5rem; padding-top: max(0.3rem, env(safe-area-inset-top)); border-bottom: 1px solid var(--line); }
+.bar { display: flex; flex-wrap: wrap; gap: 0.25rem 0.5rem; align-items: center; background: var(--navy-deep); color: var(--ink); padding: 0.3rem 0.5rem; padding-top: max(0.3rem, env(safe-area-inset-top)); border-bottom: 1px solid var(--line); }
 .bar .logo { flex: none; max-width: 26vw; }
-.bar-info { flex: 1 1 auto; min-width: 0; display: flex; gap: 0.7rem; overflow-x: auto; white-space: nowrap; font: 600 0.82rem/1.2 var(--f-narrow); color: var(--ink); scrollbar-width: none; }
-.bar-info::-webkit-scrollbar { display: none; }
+.bar-info { flex: 1 1 14rem; min-width: 0; display: flex; flex-wrap: wrap; gap: 0.3rem 0.65rem; overflow: visible; font: 600 0.82rem/1.2 var(--f-narrow); color: var(--ink); }
+.bar-info span { white-space: nowrap; }
 .bar-info span b { font-weight: 400; color: var(--muted); margin-right: 0.25rem; }
-.bar-ctl { display: flex; gap: 0.2rem; flex: none; }
+.bar-ctl { display: flex; gap: 0.2rem; flex: none; margin-left: auto; }
 .bar-ctl button { width: 1.9rem; height: 1.9rem; padding: 0; display: grid; place-items: center; background: var(--card); border: 1px solid var(--line); color: var(--ink); border-radius: 4px; font: 700 0.8rem var(--f-narrow); }
 .bar-ctl button svg { width: 1.05rem; height: 1.05rem; display: block; }
 .bar-ctl button[aria-pressed="true"] { background: var(--sky); border-color: var(--sky); color: var(--navy-deep); }

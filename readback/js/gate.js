@@ -5,12 +5,12 @@
   var STORAGE_KEY = 'pj-readback-gate';
   var SCRIPTS = [
     'js/airport.js',
-    'js/phrase.js',
+    'js/phrase.js?v=2',
     'js/sim.js',
     'js/pilot.js',
     'js/atc.js',
     'js/vk.js?v=1',
-    'js/ui.js?v=7'
+    'js/ui.js?v=8'
   ];
   var booted = false;
 

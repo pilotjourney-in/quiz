@@ -51,11 +51,15 @@
     begin();
     unlockAudio();
     if (TL.VK && TL.VK.supported() && TL.VK.state === 'off') {
+      var vkFailNoted = false;
       TL.VK.onstate = function (st) {
         if (!S.w) return;
         if (st === 'loading') line('info', '', 'Loading the radio voice engine (about 40 MB, first time only). You can use the button meanwhile.');
         else if (st === 'ready') line('info', '', 'Radio voice engine ready. It only listens for radio words, so speak normal phraseology.');
-        else if (st === 'failed') line('tip', '', 'The radio voice engine could not start on this device, so the phone\'s own speech engine is used.');
+        else if (st === 'failed' && !vkFailNoted) {
+          vkFailNoted = true;
+          line('tip', '', 'Voice engine unavailable, type your call instead.');
+        }
         pttLabel();
       };
       TL.VK.load();

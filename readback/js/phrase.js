@@ -27,6 +27,10 @@
     var s = text;
     s = s.replace(/\b([A-Z]{2})-([A-Z]{3})\b/g, function (m, a, b) { return spell(a + b); });
     s = s.replace(/\b([A-Z])-([A-Z]{2})\b/g, function (m, a, b) { return spell(a + b); });
+    /* ICAO abbreviated registration (first + last two), e.g. VT-PJA -> VJA. Leave known 3-letter groups alone. */
+    s = s.replace(/\b([A-Z]{3})\b/g, function (m) {
+      return /^(QNH|ILS|IFR|VFR|ATC|GND|TWR|APP|ATR)$/.test(m) ? m : spell(m);
+    });
     s = s.replace(/(\d+) feet\b/g, function (m, n) { return feet(+n) + ' feet'; });
     s = s.replace(/\bQNH\b/g, 'Q N H').replace(/\bILS\b/g, 'I L S').replace(/\bIFR\b/g, 'I F R').replace(/\bVFR\b/g, 'V F R');
     s = s.replace(/\bIFLY\b/g, 'I-fly');
@@ -92,7 +96,7 @@
     reg = reg.toUpperCase().replace(/[^A-Z]/g, '');
     if (reg.length !== 5) reg = 'VTPJA';
     var l = reg.toLowerCase();
-    return { full: reg.slice(0, 2) + '-' + reg.slice(2), abbr: reg[0] + '-' + reg.slice(3), keys: [l], abbrKeys: [l[0] + l.slice(3), l.slice(2)], num: null, names: [] };
+    return { full: reg.slice(0, 2) + '-' + reg.slice(2), abbr: reg[0] + reg.slice(3), keys: [l], abbrKeys: [l[0] + l.slice(3), l.slice(2)], num: null, names: [] };
   }
   function airlineCs(al, num) {
     return { full: al.tel + ' ' + num, abbr: al.tel + ' ' + num, keys: al.keys.map(function (k) { return k + num; }), abbrKeys: [], num: String(num), names: al.keys };
