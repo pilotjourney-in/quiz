@@ -108,7 +108,7 @@
     if (o.role === 'PILOT') {
       var ac = w.spawn(o.flight, { user: true, type: 'C172', cs: P.regCs(o.cs, ap().reg) });
       ac.plan = 0; ac.wantTG = false;
-      w.tuned = o.flight === 'ARR_VFR' ? 'TWR' : 'GND';
+      w.tuned = o.flight === 'ARR_VFR' ? 'TWR' : w.chan('GND');
     } else w.traffic.next = 2;
     w.on('tx', onTx);
     w.on('note', function (n) { line(n.kind, '', n.text + (n.pts ? ' (' + n.pts + ')' : '')); });
@@ -350,7 +350,7 @@
   /* ================= DOM panels ================= */
   var lastHint = '', lastStrips = '', lastOwn = '';
   function stripState(w, ac) {
-    var s = PHASE[ac.phase] || ac.phase;
+    var s = (ac.phase === 'PARKED' && ap().apronOnly ? 'On the apron' : PHASE[ac.phase]) || ac.phase;
     if (ac.phase === 'FINAL') s += ' ' + Math.max(0, -w.la(ac.u) / NM).toFixed(1) + ' NM';
     if (ac.holdPos) s += ', holding';
     if (ac.clr.land) s += ac.clr.land === 'TG' ? ', clr T&G' : ', clr land';
@@ -367,10 +367,10 @@
     $('b-view').textContent = curView() === 'GND' ? 'Area view' : 'Ground view';
     var h = '';
     if (w.mode === 'PILOT') {
-      var u = w.user, st = PHASE[u.phase] || '';
+      var u = w.user, st = (u.phase === 'PARKED' && ap().apronOnly ? 'On the apron' : PHASE[u.phase]) || '';
       if (u.alt > 0) st += ', ' + w.amsl(u) + ' ft, ' + Math.round(u.spd / 0.5144) + ' kt';
       var own = '<div class="own-id">' + esc(u.cs.full) + '</div><div class="own-state">' + esc(st) + '</div><div class="freq">' +
-        ['GND', 'TWR'].map(function (f) { return '<button type="button" data-f="' + f + '" aria-pressed="' + (w.tuned === f) + '">' + (f === 'GND' ? 'Ground' : 'Tower') + '<small>' + ap().freqs[f] + '</small></button>'; }).join('') + '</div>';
+        (ap().noGnd ? ['TWR'] : ['GND', 'TWR']).map(function (f) { return '<button type="button" data-f="' + f + '" aria-pressed="' + (w.tuned === f) + '">' + (f === 'GND' ? 'Ground' : 'Tower') + '<small>' + ap().freqs[f] + '</small></button>'; }).join('') + '</div>';
       if (own !== lastOwn) { lastOwn = own; $('own').innerHTML = own; }
       var ph = TL.Hint.pilot(w);
       h = '<p>' + esc(ph.note) + '</p>';
@@ -383,7 +383,7 @@
       });
       var sh = list.map(function (ac) {
         var k = ac.kind === 'DEP' ? 'dep' : ac.kind === 'CIRCUIT' ? 'loc' : 'arr';
-        var extra = ac.kind === 'DEP' ? 'to ' + ac.dest : ac.kind === 'CIRCUIT' ? 'circuits' : 'stand ' + w.standName(ac);
+        var extra = ac.kind === 'DEP' ? 'to ' + ac.dest : ac.kind === 'CIRCUIT' ? 'circuits' : ap().apronOnly ? 'apron' : 'stand ' + w.standName(ac);
         return '<button type="button" class="strip ' + k + (ac === S.sel ? ' sel' : '') + (ac.call && !ac.call.queued ? ' calling' : '') + '" data-id="' + ac.id + '"><b>' + esc(ac.cs.full) +
           '</b><span>' + esc(ac.perf.short + ', ' + extra) + '</span><span class="st">' + esc(stripState(w, ac)) + '</span></button>';
       }).join('');
@@ -576,7 +576,7 @@
       // stand numbers, just beyond each stand (only when zoomed in enough to keep them apart)
       var gap = Infinity;   // closest pair of stands, so numbers are only drawn where they won't overlap
       A.standIds.forEach(function (i1, k) { A.standIds.slice(k + 1).forEach(function (i2) { gap = Math.min(gap, Math.hypot(nodes[i1].u - nodes[i2].u, nodes[i1].v - nodes[i2].v)); }); });
-      if (gap * s > 24) A.standIds.forEach(function (id) {
+      if (gap * s > 24 && !A.apronOnly) A.standIds.forEach(function (id) {
         var nd = nodes[id], ld = A.adj[id][0], ln = ld ? nodes[ld.to] : { u: nd.u, v: nd.v - 1 }, du = nd.u - ln.u, dv = nd.v - ln.v, L = Math.hypot(du, dv) || 1;
         var p = sc(V, nd.u + du / L * 70, nd.v + dv / L * 70); label(g, String(nd.name), p.x, p.y, C.muted, '11px ' + FONT, 'center');
       });

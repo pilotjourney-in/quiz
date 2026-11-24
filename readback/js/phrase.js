@@ -34,12 +34,20 @@
     });
     /* Runway with a side letter: 08R -> zero eight right. */
     s = s.replace(/\b(\d{2})([LRC])\b/g, function (m, d, x) { return d + ' ' + SIDE[x]; });
+    /* Designators of two letters (ER, FR, KP) at the current airport: spelt letter by letter. */
+    var AP = (typeof TL !== 'undefined' && TL.AIRPORT) || null;
+    if (AP && AP.edges) {
+      var two = {}; AP.edges.forEach(function (e) { if (e[2] && /^[A-Z]{2}\d{0,2}$/.test(e[2])) two[e[2]] = 1; });
+      Object.keys(AP.holds || {}).forEach(function (h) { if (/^[A-Z]{2}\d{0,2}$/.test(h)) two[h] = 1; });
+      s = s.replace(/\b([A-Z]{2})(\d{0,2})\b/g, function (m, l, d) { return two[m] ? PH[l[0]] + ' ' + PH[l[1]] + (d ? ' ' + d : '') : m; });
+    }
     /* Taxiway, holding point and stand designators: A, P, A1, N3, E10 -> Alpha, Papa, Alpha one ...
        (I and O are never used as designators, so the word "I" is left alone). */
-    s = s.replace(/\b([A-HJ-NP-Z])(\d{0,2})\b/g, function (m, l, d) { return PH[l] + (d ? ' ' + d : ''); });
+    s = s.replace(/\b([A-HJ-NP-Z])(\d{0,2})\b(?!-)/g, function (m, l, d) { return PH[l] + (d ? ' ' + d : ''); });   // (?!-): not the X of an already spelt 'X-ray'
     s = s.replace(/(\d+) feet\b/g, function (m, n) { return feet(+n) + ' feet'; });
     s = s.replace(/\bQNH\b/g, 'Q N H').replace(/\bILS\b/g, 'I L S').replace(/\bIFR\b/g, 'I F R').replace(/\bVFR\b/g, 'V F R');
     s = s.replace(/\bIFLY\b/g, 'I-fly');
+    s = s.replace(/\b(1[1-3]\d\.\d)00\b/g, '$1');   // frequencies: when the final two digits are zero, only the first four are spoken (120.100 -> one two zero decimal one)
     s = s.replace(/\d+(\.\d+)?/g, function (m) { return digits(m); });
     s = s.replace(/\b(three|four|five|nine)\b/gi, function (m) { return SAYW[m.toLowerCase()]; });
     return s.replace(/-/g, ' ');
@@ -147,7 +155,9 @@
     return p.mark + '-' + r;
   }
   function airlineCs(al, num) {
-    return { full: al.tel + ' ' + num, abbr: al.tel + ' ' + num, keys: al.keys.map(function (k) { return k + num; }), abbrKeys: [], num: String(num), names: al.keys };
+    // also match the telephony as norm() hears it: 'Air India' -> 'airi', 'Delta' -> 'd' (India and Delta are spelling-alphabet words)
+    var heard = norm(al.tel).compact, keys = al.keys.slice(); if (keys.indexOf(heard) < 0) keys.push(heard);
+    return { full: al.tel + ' ' + num, abbr: al.tel + ' ' + num, keys: keys.map(function (k) { return k + num; }), abbrKeys: [], num: String(num), names: keys.filter(function (k) { return k.length > 2; }) };
   }
   /* 0 = not addressed, higher = stronger match. */
   function matchCs(n, cs) {

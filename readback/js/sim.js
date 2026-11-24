@@ -71,7 +71,7 @@
     this.stands = A.standIds.map(function () { return null; });
     this.radio = new Radio(this);
     this.score = { pts: 0, moves: 0, notes: [], rbOk: 0, rbTotal: 0, rbBad: 0, missed: 0 };   // rbOk of rbTotal = readbacks right first time
-    this.tuned = 'GND'; this.pendingRb = null; this.user = null; this.over = false;
+    this.tuned = ap().noGnd ? 'TWR' : 'GND'; this.pendingRb = null; this.user = null; this.over = false;
     this.atc = this.mode !== 'ATC' ? new TL.AutoATC(this) : null;
     this.traffic = { level: o.traffic == null ? 1 : o.traffic, next: 4 };
     this.lastCheck = 0; this.pairs = {};
@@ -84,8 +84,8 @@
   /* Landing geometry uses the landing threshold, which may be displaced (rw.dthr metres in from the runway end). */
   W.la = function (u) { return this.along(u) - (this.rw.dthr || 0); };
   W.lpt = function (a, c) { return this.pt(a + (this.rw.dthr || 0), c); };
-  W.chan = function (unit) { return this.mode === 'ATC' ? 'TWR' : (unit === 'GND' ? 'GND' : 'TWR'); };
-  W.station = function (unit) { return this.mode === 'ATC' ? ap().units.TWR : ap().units[unit === 'GND' ? 'GND' : 'TWR']; };
+  W.chan = function (unit) { return this.mode === 'ATC' ? 'TWR' : (unit === 'GND' && !ap().noGnd ? 'GND' : 'TWR'); };
+  W.station = function (unit) { return this.mode === 'ATC' ? ap().units.TWR : ap().units[unit === 'GND' && !ap().noGnd ? 'GND' : 'TWR']; };
   W.audible = function (ch) { return this.mode === 'PILOT' ? ch === this.tuned : this.mode === 'ATC'; };
   W.windText = function () { return 'wind ' + ('00' + this.wind.dir).slice(-3) + ' degrees ' + this.wind.spd + ' knots'; };
   /* Heights inside the sim are above the field (never below zero); what is said and shown is MSL, rounded to 100 ft. */
@@ -165,7 +165,13 @@
     var self = this, onFinal = this.acs.some(function (a) { return a.kind === 'ARR_IFR' && (a.phase === 'AWAY' || (a.phase === 'FINAL' && -self.la(a.u) > 4000)); });
     var r = Math.random(), kind = r < 0.42 ? 'DEP' : r < 0.75 ? 'ARR_IFR' : r < 0.9 ? 'CIRCUIT' : 'ARR_VFR';
     if ((kind === 'CIRCUIT' || kind === 'ARR_VFR') && circ >= (this.mode === 'PILOT' ? 1 : 2)) kind = 'DEP';
-    if (kind === 'ARR_IFR' && onFinal) kind = 'DEP';
+    // a slow aircraft on a long base or final would be caught on final by a new jet (spawned about 3.5 min out): wait
+    var slowLong = this.acs.some(function (a) {
+      if (a.perf.ifr || (a.phase !== 'BASE' && a.phase !== 'FINAL')) return false;
+      var d = a.phase === 'BASE' ? Math.abs(a.v) + a.perf.fl : -self.la(a.u);
+      return d / a.perf.vApp > 100;
+    });
+    if (kind === 'ARR_IFR' && (onFinal || slowLong)) kind = 'DEP';
     // departures waiting on the ground (not yet airborne): beyond 3, add no more (a backtrack runway handles few)
     var waiting = this.acs.filter(function (a) { return (a.kind === 'DEP' || a.kind === 'CIRCUIT') && /^(PARKED|STARTED|TAXI_OUT|HOLDING_POINT)$/.test(a.phase); }).length;
     if ((kind === 'DEP' || kind === 'CIRCUIT') && waiting >= (this.rw.backtrack ? 2 : 3)) return;
@@ -182,6 +188,9 @@
     return { u: nd.u, v: nd.v, th: Math.atan2(nd.v - ln.v, nd.u - ln.u), id: id, name: nd.name };
   };
   W.standName = function (ac) { return String(ap().nodes[ap().standIds[ac.stand]].name); };
+  // Airports whose AIP publishes no stand numbers (apronOnly) are spoken as "the apron".
+  W.standAt = function (ac) { return ap().apronOnly ? 'on the apron' : 'stand ' + this.standName(ac); };
+  W.standTo = function (ac) { return ap().apronOnly ? 'to the apron' : 'stand ' + this.standName(ac); };
   W.holdOf = function (ac) { return ap().holds[ac.holdName || this.rw.hold]; };
   function pts(ids) { return ids.map(function (id) { var nd = ap().nodes[id]; return { u: nd.u, v: nd.v }; }); }
   /* Node routes over the taxiway graph. */
@@ -344,6 +353,7 @@
       if (why === 'BLOCKED') this.note('bad', who + ' went around: runway occupied', -12);
     } else if (ac.isUser) {
       if (why === 'NOCLR') this.note('bad', 'No landing clearance by short final, so the aircraft went around. Report final earlier.', -5);
+      if (why === 'TRAFFIC') this.note('info', 'The runway was still occupied, so you went around. Say "going around" and rejoin the circuit.', 0);
       if (why === 'BLOCKED') this.note('info', 'Runway occupied: going around.', 0);
     }
   };
@@ -401,10 +411,9 @@
     // go-around gates
     if (ph === 'FINAL') {
       var dthr = -w.la(ac.u);
-      if (dthr > 0) {
-        if (!ac.clr.land && dthr < (pf.ifr ? 900 : 450)) w.goAround(ac, 'NOCLR');
-        else if (ac.clr.land && dthr < 350 && w.surfaceBlocker(ac)) w.goAround(ac, 'BLOCKED');
-      }
+      if (dthr > 0 && !ac.clr.land && dthr < (pf.ifr ? 900 : 450)) w.goAround(ac, ac.atcWait === 'LAND' && w.mode !== 'ATC' ? 'TRAFFIC' : 'NOCLR');   // the automatic tower was holding the clearance for traffic: not the pilot's fault
+      // runway occupied: go around, also over the threshold until touchdown (another aircraft can touch down just ahead)
+      else if (ac.clr.land && dthr < 350) { var sb = w.surfaceBlocker(ac); if (sb && (dthr > 0 || Math.abs(sb.u - ac.u) < 1200)) w.goAround(ac, 'BLOCKED'); }
     }
   }
   function touchdown(w, ac) {
@@ -485,7 +494,7 @@
     var acs = w.acs.slice();
     acs.forEach(function (ac) {
       if (ac.phase === 'AT_STAND') {
-        if (ac.isUser) { w.finish('Parked at stand ' + w.standName(ac)); return; }
+        if (ac.isUser) { w.finish('Parked ' + (ap().apronOnly ? 'on the apron' : 'at stand ' + w.standName(ac))); return; }
         if (w.time - ac.doneAt > 20) { w.score.moves++; if (w.mode === 'ATC') w.score.pts += 10; w.remove(ac); }
       } else if (ac.kind === 'DEP' && ac.phase === 'CLIMB' && Math.hypot(ac.u - 1600, ac.v) > (ac.handed ? 9000 : 15000)) {
         if (ac.handed) { w.score.moves++; if (w.mode === 'ATC') w.score.pts += 10; }

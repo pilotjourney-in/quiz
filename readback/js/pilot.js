@@ -20,7 +20,7 @@
     switch (c.t) {
       case 'STARTUP': return 'start-up approved, QNH ' + w.qnh;
       case 'TAXI': return 'taxi holding point ' + w.holdOf(ac).name + ', ' + r + via(w.taxiNames(ac, true));
-      case 'TAXI_STAND': return 'taxi stand ' + w.standName(ac) + via(ac.exit ? w.taxiNames(ac, false) : []);
+      case 'TAXI_STAND': return 'taxi ' + w.standTo(ac) + via(ac.exit ? w.taxiNames(ac, false) : []);
       case 'HOLD_POSITION': return 'hold position';
       case 'RESUME': return 'continue taxi';
       case 'HOLD_SHORT': return 'hold short of ' + r + (c.why ? ', ' + c.why : '');
@@ -179,7 +179,7 @@
     if (ac.gaSay) { ac.gaSay = false; go('GOING_AROUND', 'TWR', 'going around'); return; }
     switch (ph) {
       case 'PARKED':
-        if (t >= ac.readyAt && !waiting) go('REQ_STARTUP', 'GND', 'stand ' + w.standName(ac) + ', information ' + w.info + ', request start-up' +
+        if (t >= ac.readyAt && !waiting) go('REQ_STARTUP', 'GND', w.standAt(ac) + ', information ' + w.info + ', request start-up' +
           (ac.kind === 'CIRCUIT' ? ' for circuits' : ', ' + (ac.perf.ifr ? 'IFR' : 'VFR') + ' to ' + ac.dest));
         break;
       case 'STARTED':
