@@ -23,14 +23,20 @@
     return o.join(' ') || 'zero';
   }
   /* Turn display text ("runway 32, QNH 1012") into what should be said on the radio. */
+  var SIDE = { L: 'left', R: 'right', C: 'centre' };
   function spoken(text) {
     var s = text;
-    s = s.replace(/\b([A-Z]{2})-([A-Z]{3})\b/g, function (m, a, b) { return spell(a + b); });
-    s = s.replace(/\b([A-Z])-([A-Z]{2})\b/g, function (m, a, b) { return spell(a + b); });
-    /* ICAO abbreviated registration (first + last two), e.g. VT-PJA -> VJA. Leave known 3-letter groups alone. */
-    s = s.replace(/\b([A-Z]{3})\b/g, function (m) {
+    /* Registrations with their nationality mark: VT-PJA, G-PJAA, OE-PJA, A6-PJA, 9V-PJA, PJ-PJA. */
+    s = s.replace(/\b([A-Z0-9]{1,2})-([A-Z]{2,4})\b/g, function (m, a, b) { return spell(a + b); });
+    /* ICAO abbreviated registration (first character + last two), e.g. VJA, GAA, 9JA. Leave known 3-letter groups alone. */
+    s = s.replace(/\b([A-Z0-9][A-Z]{2})\b/g, function (m) {
       return /^(QNH|ILS|IFR|VFR|ATC|GND|TWR|APP|ATR)$/.test(m) ? m : spell(m);
     });
+    /* Runway with a side letter: 08R -> zero eight right. */
+    s = s.replace(/\b(\d{2})([LRC])\b/g, function (m, d, x) { return d + ' ' + SIDE[x]; });
+    /* Taxiway, holding point and stand designators: A, P, A1, N3, E10 -> Alpha, Papa, Alpha one ...
+       (I and O are never used as designators, so the word "I" is left alone). */
+    s = s.replace(/\b([A-HJ-NP-Z])(\d{0,2})\b/g, function (m, l, d) { return PH[l] + (d ? ' ' + d : ''); });
     s = s.replace(/(\d+) feet\b/g, function (m, n) { return feet(+n) + ' feet'; });
     s = s.replace(/\bQNH\b/g, 'Q N H').replace(/\bILS\b/g, 'I L S').replace(/\bIFR\b/g, 'I F R').replace(/\bVFR\b/g, 'V F R');
     s = s.replace(/\bIFLY\b/g, 'I-fly');
@@ -50,7 +56,14 @@
       [/\bstand by\b/g, 'standby'], [/\bdown wind\b/g, 'downwind'], [/\bfinals\b/g, 'final'], [/\bi fly\b/g, 'ifly'], [/\beye fly\b/g, 'ifly'],
       [/\bwill co\b/g, 'wilco'], [/\bspice jet\b/g, 'spicejet'], [/\b(a casa|akasha|a kasa)\b/g, 'akasa'], [/\bclear (for|to|2|4)\b/g, 'cleared $1']];
     fixes.forEach(function (f) { s = s.replace(f[0], f[1]); });
-    var raw = s.trim().split(/\s+/).filter(Boolean);
+    // typed runway side letters (08r -> 08 right) and "centre"/"center"
+    s = s.replace(/\b(\d{1,2})([lrc])\b/g, function (m, d, x) { return d + ' ' + { l: 'left', r: 'right', c: 'center' }[x]; }).replace(/\bcentre\b/g, 'center');
+    var raw = [];
+    // split designators the way they are spoken: "n11" -> "n 11" (November one one), "9v" -> "9 v", so typed and spoken forms compare alike
+    s.trim().split(/\s+/).filter(Boolean).forEach(function (w) {
+      var m = /^([a-z])(\d{1,3})$/.exec(w) || /^(\d{1,2})([a-z])$/.exec(w);
+      if (m) raw.push(m[1], m[2]); else raw.push(w);
+    });
     var t = raw.map(function (w) {
       if (/^\d+(\.\d+)?$/.test(w)) return { k: 'n', v: w };
       if (NUMW[w]) return { k: 'n', v: NUMW[w] };
@@ -79,10 +92,26 @@
     };
   }
 
-  /* Does the normalised text name a taxiway/holding-point letter after one of the lead words? */
-  function letterAfter(n, leads, letter) {
-    var L = letter.toLowerCase(), names = Object.keys(PHW).filter(function (k) { return PHW[k] === L; }).concat([L]);
-    return new RegExp('\\b(' + leads.join('|') + ') (' + names.join('|') + ')\\b').test(n.plain);
+  /* Does the text name a taxiway/holding-point/stand designator (A, A1, N3, 12) right after one of the lead words?
+     Works on the compact form, where "alpha one" and "A1" both become "a1". */
+  function desigAfter(n, leads, des) {
+    var d = String(des).toLowerCase().replace(/[^a-z0-9]/g, '');
+    return new RegExp('(' + leads.join('|') + ')' + d + '(?![0-9])').test(n.compact);
+  }
+  function letterAfter(n, leads, letter) { return desigAfter(n, leads, letter); }
+  /* Is this runway (e.g. '32', '08R') named? The digits must be heard ('08' or '8'), and the side word if it has one. */
+  function rwyNamed(n, id) {
+    var m = /^(\d{2})([LRC]?)$/.exec(id); if (!m) return false;
+    var d = m[1], ok = n.nums.some(function (x) { return x === d || x === d.replace(/^0/, '') || x.indexOf(d) === 0 && /^\d+$/.test(x) && x.length <= 2; });
+    if (!ok) return false;
+    return !m[2] || new RegExp('\\b' + { L: 'left', R: 'right', C: 'center' }[m[2]] + '\\b').test(n.plain);
+  }
+  /* Turn a designator heard in speech ('a1', 'alpha', 'b') into its written form ('A1', 'A', 'B'), or ''. */
+  function desig(word, nextNum) {
+    var w = String(word || '').toLowerCase(), l = PHW[w] || (/^[a-z]\d{0,2}$/.test(w) ? w : '');
+    if (!l) return '';
+    if (l.length === 1 && nextNum && /^\d{1,2}$/.test(nextNum)) l += nextNum;
+    return l.toUpperCase();
   }
 
   var AIRLINES = [
@@ -92,11 +121,30 @@
     { tel: 'Spicejet', keys: ['spicejet'], types: ['B738'] },
     { tel: 'Allied', keys: ['allied', 'allianceair'], types: ['AT72'] }
   ];
-  function regCs(reg) {
-    reg = reg.toUpperCase().replace(/[^A-Z]/g, '');
-    if (reg.length !== 5) reg = 'VTPJA';
-    var l = reg.toLowerCase();
-    return { full: reg.slice(0, 2) + '-' + reg.slice(2), abbr: reg[0] + reg.slice(3), keys: [l], abbrKeys: [l[0] + l.slice(3), l.slice(2)], num: null, names: [] };
+  /* Nationality marks used to split a registration typed without its hyphen. Longest match wins. */
+  var MARKS = ['VT', 'G', 'OE', 'A6', '9V', '9N', 'PJ', 'PH', 'D', 'F', 'I', 'EI', 'HB', 'OY', 'SE', 'LN', 'OH', 'EC', 'CS', 'SP', 'OK', 'C', 'VH', 'ZK',
+    'JA', 'HL', 'B', 'HS', '9M', 'PK', 'RP', 'A7', 'A9C', 'HZ', 'AP', '4R', 'S2', 'ZS', '5Y', 'ET', 'SU', 'TC', 'VP', 'N'];
+  /* Split 'VT-PJA', 'G-PJAA', '9VPJA' into mark and suffix. */
+  function splitReg(reg) {
+    var r = String(reg || '').toUpperCase().replace(/[^A-Z0-9-]/g, ''), m = /^([A-Z0-9]{1,3})-([A-Z0-9]{1,5})$/.exec(r);
+    if (m) return { mark: m[1], suf: m[2] };
+    r = r.replace(/-/g, '');
+    var best = '';
+    MARKS.forEach(function (k) { if (r.indexOf(k) === 0 && k.length > best.length && r.length - k.length >= 3) best = k; });
+    return best ? { mark: best, suf: r.slice(best.length) } : null;
+  }
+  /* Callsign from a registration. Abbreviated form per ICAO Annex 10: first character plus the last two (VT-PJA -> VJA, G-PJAA -> GAA, 9V-PJA -> 9JA). */
+  function regCs(reg, fallback) {
+    var p = splitReg(reg);
+    if (!p || !/^[A-Z]{3,4}$/.test(p.suf)) p = splitReg(fallback || 'VT-PJA');
+    var full = p.mark + '-' + p.suf, flat = (p.mark + p.suf).toLowerCase(), abbr = (p.mark[0] + p.suf.slice(-2));
+    return { full: full, abbr: abbr, keys: [flat], abbrKeys: [abbr.toLowerCase(), p.suf.toLowerCase()], num: null, names: [] };
+  }
+  /* A random local registration with the same mark and suffix length as the airport's default one. */
+  function randomReg(like) {
+    var p = splitReg(like || 'VT-PJA') || { mark: 'VT', suf: 'PJA' }, L = 'ABCDEFGHJKLMNPRSTUWXYZ', r = '';
+    for (var i = 0; i < p.suf.length; i++) r += L[Math.floor(Math.random() * L.length)];
+    return p.mark + '-' + r;
   }
   function airlineCs(al, num) {
     return { full: al.tel + ' ' + num, abbr: al.tel + ' ' + num, keys: al.keys.map(function (k) { return k + num; }), abbrKeys: [], num: String(num), names: al.keys };
@@ -111,5 +159,6 @@
     return 0;
   }
 
-  TL.Phrase = { PH: PH, PHW: PHW, spoken: spoken, norm: norm, letterAfter: letterAfter, AIRLINES: AIRLINES, regCs: regCs, airlineCs: airlineCs, matchCs: matchCs };
+  TL.Phrase = { PH: PH, PHW: PHW, spoken: spoken, norm: norm, letterAfter: letterAfter, desigAfter: desigAfter, desig: desig, rwyNamed: rwyNamed,
+    AIRLINES: AIRLINES, regCs: regCs, randomReg: randomReg, splitReg: splitReg, airlineCs: airlineCs, matchCs: matchCs };
 })(typeof window !== 'undefined' ? (window.TL = window.TL || {}) : (globalThis.TL = globalThis.TL || {}));

@@ -4,12 +4,12 @@
 <meta name="robots" content="noindex, nofollow">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Readback by Pilot Journey: radio practice at Nagpur</title>
-<meta name="description" content="Practise ICAO radiotelephony at a simplified Nagpur (VANP). Sit in the cockpit or in the tower.">
+<title>Readback by Pilot Journey: ICAO radio practice</title>
+<meta name="description" content="Practise ICAO radiotelephony at real airports. Sit in the cockpit or in the tower.">
 <meta name="theme-color" content="#0a1c33">
 <link rel="icon" href="img/logo.png">
 <link rel="apple-touch-icon" href="img/logo.png">
-<link rel="stylesheet" href="css/style.css?v=2">
+<link rel="stylesheet" href="css/style.css?v=3">
 </head>
 <body>
 
@@ -38,7 +38,7 @@
   <header class="setup-head">
     <img class="logo" src="img/logo.png" alt="Pilot Journey">
     <h1>Readback</h1>
-    <p class="lede">Radio practice at Nagpur VANP. Fly it, or run the tower.</p>
+    <p class="lede">ICAO radio practice at real airports. Fly it, or run the tower.</p>
   </header>
 
   <fieldset class="seats">
@@ -54,10 +54,16 @@
       <input type="radio" name="role" value="ATC">
       <span class="seat-body">
         <strong>Controller</strong>
-        <span>You are Nagpur Tower. The pilots are simulated.</span>
+        <span>You are the tower. The pilots are simulated.</span>
       </span>
     </label>
   </fieldset>
+
+  <div class="opt opt-airport">
+    <label for="o-airport">Airport</label>
+    <select id="o-airport"></select>
+    <p class="fine" id="o-chart"></p>
+  </div>
 
   <div class="opt opt-flight" data-for="PILOT">
     <label for="o-flight">Flight</label>
@@ -73,7 +79,7 @@
   <div class="opts">
     <div class="opt" data-for="PILOT">
       <label for="o-cs">Your registration</label>
-      <input id="o-cs" type="text" value="VT-PJA" maxlength="6" autocomplete="off" autocapitalize="characters" spellcheck="false">
+      <input id="o-cs" type="text" value="VT-PJA" maxlength="7" autocomplete="off" autocapitalize="characters" spellcheck="false">
     </div>
     <div class="opt">
       <label for="o-traffic">Other traffic</label>
@@ -88,8 +94,6 @@
       <label for="o-rwy">Runway in use</label>
       <select id="o-rwy">
         <option value="auto">Set by the wind</option>
-        <option value="32">32</option>
-        <option value="14">14</option>
       </select>
     </div>
     <label class="check"><input id="o-voice" type="checkbox" checked> Speak the radio aloud</label>
@@ -97,7 +101,7 @@
   </div>
 
   <p class="fine" id="mic-note"></p>
-  <p class="fine">Training aid only. The taxiway and apron layout is simplified and is not the published aerodrome chart.</p>
+  <p class="fine">Training simulation, not for navigation. Ground layouts are simplified.</p>
   <p class="foot">quiz.pilotjourney.in/readback</p>
 </main>
 
@@ -140,7 +144,7 @@
     <h2 id="d-title">Readback score</h2>
     <p class="sc-num" id="d-score"></p>
     <dl class="sc-meta">
-      <div><dt>Airport</dt><dd>Nagpur VANP</dd></div>
+      <div><dt>Airport</dt><dd id="d-airport"></dd></div>
       <div><dt>Role</dt><dd id="d-role"></dd></div>
       <div><dt>Flight</dt><dd id="d-flight"></dd></div>
     </dl>
@@ -156,6 +160,6 @@
   </div>
 </div>
 
-<script src="js/gate.js?v=2"></script>
+<script src="js/gate.js?v=5"></script>
 </body>
 </html>

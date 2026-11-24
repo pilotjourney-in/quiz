@@ -1,7 +1,8 @@
 /* The automatic controller (used when you fly), plus understanding what the user says in either seat, and hints. */
 (function (TL) {
   'use strict';
-  var AP = TL.AIRPORT, P = TL.Phrase, PH = P.PH, Cmd = TL.Cmd;
+  var P = TL.Phrase, Cmd = TL.Cmd;
+  function ap() { return TL.AIRPORT; }
   var DEFER = { STARTUP: 1, TAXI: 1, TAXI_STAND: 1, LINE_UP: 1, CLEARED_TAKEOFF: 1 };   // wait for the user's readback before moving
   var PRI = { GOING_AROUND: 0, REPORT: 1, INBOUND: 2, READY: 3 };
   var GROUND_OUT = { TAXI_OUT: 1, HOLDING_POINT: 1, LINEUP: 1, LINED_UP: 1 };
@@ -14,7 +15,7 @@
   A.addr = function (ac, ch) {
     var k = ac.id + ch;
     if (this.met[k]) return ac.cs.abbr;
-    this.met[k] = 1; return ac.cs.full + ', ' + AP.unitNames[ch];
+    this.met[k] = 1; return ac.cs.full + ', ' + ap().units[ch];
   };
   A.issue = function (ac, unit, decide) {
     var w = this.w, self = this, ch = w.chan(unit);
@@ -49,15 +50,19 @@
     if (this.otherLining(ac)) return false;
     // do not launch behind slower traffic that is still climbing out on the runway track
     if (w.acs.some(function (o) { return o !== ac && o.phase === 'CLIMB' && o.perf.vClimb <= ac.perf.vClimb && Math.abs(o.v) < 500 && w.along(o.u) < (ac.perf.ifr ? 9000 : 3000); })) return false;
+    if (w.needsBacktrack(ac) && ac.phase !== 'LINED_UP') return false;   // must backtrack and line up first
     var need = ac.phase === 'LINED_UP' ? 65 : ac.perf.ifr ? 95 : 110;
     return w.nextArrival(ac).t > need;
   };
   A.canLineup = function (ac) {
     var w = this.w, b = w.rwyBlocker(ac);
+    if (w.needsBacktrack(ac)) {   // backtrack: needs an empty runway and a gap long enough to backtrack and line up
+      return !b && !this.otherLining(ac) && w.nextArrival(ac).t > 150 + w.lineupTime(ac);
+    }
     if (!b || b.phase === 'LINED_UP' || b.phase === 'LINEUP') return false;
     if (this.otherLining(ac)) return false;
     if (b.perf.vClimb < ac.perf.vClimb && b.phase !== 'LANDING_ROLL' && b.phase !== 'VACATING') return false;   // would be stuck behind a slow climber
-    return w.nextArrival(ac).t > (b.phase === 'LANDING_ROLL' ? 210 : 150);
+    return w.nextArrival(ac).t > (b.phase === 'LANDING_ROLL' ? 210 : 150) + w.lineupTime(ac);
   };
   A.tkof = function (ac, first) {
     var w = this.w;
@@ -69,8 +74,8 @@
     return [{ t: 'HOLD_SHORT', why: w.rwyBlocker(ac) ? 'traffic on the runway' : 'traffic on final' }];
   };
   A.aheadOnFinal = function (ac) {
-    var w = this.w, d = -w.along(ac.u);
-    return w.acs.some(function (o) { return o !== ac && o.phase === 'FINAL' && ac.phase === 'FINAL' && -w.along(o.u) < d; });
+    var w = this.w, d = -w.la(ac.u);
+    return w.acs.some(function (o) { return o !== ac && o.phase === 'FINAL' && ac.phase === 'FINAL' && -w.la(o.u) < d; });
   };
   A.landOk = function (ac) {
     var w = this.w;
@@ -87,9 +92,9 @@
   /* Track distance still to fly to the threshold, for aircraft established in the circuit. */
   A.td = function (o) {
     var w = this.w, pf = o.perf;
-    if (o.phase === 'DOWNWIND') return Math.max(0, w.along(o.u) + pf.fl) + pf.cw + pf.fl;
+    if (o.phase === 'DOWNWIND') return Math.max(0, w.la(o.u) + pf.fl) + pf.cw + pf.fl;
     if (o.phase === 'BASE') return Math.abs(o.v) + pf.fl;
-    if (o.phase === 'FINAL') return -w.along(o.u);
+    if (o.phase === 'FINAL') return -w.la(o.u);
     return null;
   };
   /* Same-speed traffic too close ahead in the circuit. */
@@ -101,10 +106,10 @@
     });
   };
   A.conflict = function (ac) {
-    var w = this.w, eta = (Math.max(0, w.along(ac.u) + ac.perf.fl) + ac.perf.cw + ac.perf.fl) / ac.spd, hit = null;
+    var w = this.w, eta = (Math.max(0, w.la(ac.u) + ac.perf.fl) + ac.perf.cw + ac.perf.fl) / ac.spd, hit = null;
     w.acs.forEach(function (o) {
       if (o === ac || o.phase !== 'FINAL') return;
-      var t = w.eta(o, -w.along(o.u));
+      var t = w.eta(o, -w.la(o.u));
       if (o.perf.ifr !== ac.perf.ifr && t > eta - 110 && t < eta + 110) hit = o;
     });
     return hit;
@@ -134,7 +139,7 @@
           if (ac.isUser && unit === 'TWR' && w.mode === 'PILOT') return [{ t: 'CONTACT', unit: 'GND' }];
           return ph === 'VACATED' || ph === 'VACATING' || ph === 'LANDING_ROLL' ? [{ t: 'TAXI_STAND' }] : [{ t: 'ROGER' }];
         case 'INBOUND':
-          if (d.ifr || ph === 'FINAL') return -w.along(ac.u) > 9000 ? [{ t: 'CONTINUE' }, { t: 'QNH' }] : self.land(ac, true);
+          if (d.ifr || ph === 'FINAL') return -w.la(ac.u) > 9000 ? [{ t: 'CONTINUE' }, { t: 'QNH' }] : self.land(ac, true);
           if (ph === 'INBOUND') return [{ t: 'JOIN' }, { t: 'REPORT', point: 'downwind' }];
           return [{ t: 'ROGER' }];
         case 'REPORT':
@@ -153,7 +158,7 @@
 
   /* Things the controller does without being asked. */
   A.pro = function (ac) {
-    var w = this.w, self = this, ph = ac.phase, d = -w.along(ac.u);
+    var w = this.w, self = this, ph = ac.phase, d = -w.la(ac.u);
     if (ac.atcWait === 'TKOF') {
       if (!GROUND_OUT[ph]) { ac.atcWait = null; return; }
       if (this.canTakeoff(ac) || (!ac.clr.lineup && ph === 'HOLDING_POINT' && this.canLineup(ac))) this.issue(ac, 'TWR', function () { return self.tkof(ac, false); });
@@ -168,8 +173,8 @@
     if (ac.atcWait === 'BASE') {
       var c = ac.confWith;
       if (ph !== 'DOWNWIND') { ac.atcWait = null; return; }
-      var mine = (ac.perf.cw + Math.max(0, -w.along(ac.u))) / 38;
-      if (!c || !c.alive || c.phase !== 'FINAL' || w.eta(c, -w.along(c.u)) < mine - 110) { ac.atcWait = null; this.issue(ac, 'TWR', function () { return ac.phase === 'DOWNWIND' ? [{ t: 'TURN_BASE' }, { t: 'NUMBER', n: 2 }] : null; }); }
+      var mine = (ac.perf.cw + Math.max(0, -w.la(ac.u))) / 38;
+      if (!c || !c.alive || c.phase !== 'FINAL' || w.eta(c, -w.la(c.u)) < mine - 110) { ac.atcWait = null; this.issue(ac, 'TWR', function () { return ac.phase === 'DOWNWIND' ? [{ t: 'TURN_BASE' }, { t: 'NUMBER', n: 2 }] : null; }); }
       return;
     }
     if (ph === 'DOWNWIND' && !ac.extend && !ac.orbit) {
@@ -224,26 +229,27 @@
 
   /* ================= You are the pilot ================= */
   var RBREQ = { STARTUP: ['start', 'qnh'], TAXI: ['hold', 'rwy'], TAXI_STAND: ['stand'], HOLD_POSITION: ['holdw'], HOLD_SHORT: ['holdw', 'rwy'],
-    LINE_UP: ['lineup', 'rwy'], CLEARED_TAKEOFF: ['takeoff', 'rwy'], CLEARED_LAND: ['land', 'rwy'], CLEARED_TG: ['touch', 'rwy'],
+    LINE_UP: ['lineup', 'rwy', 'bt'], CLEARED_TAKEOFF: ['takeoff', 'rwy'], CLEARED_LAND: ['land', 'rwy'], CLEARED_TG: ['touch', 'rwy'],
     GO_AROUND: ['goaround'], JOIN: ['downwind', 'rwy', 'qnh'], CONTACT: ['freq'] };
   var RBNAME = { start: 'start-up', qnh: 'QNH', hold: 'holding point', rwy: 'runway', stand: 'stand number', holdw: 'the word "hold"', lineup: '"line up"',
-    takeoff: '"cleared for take-off"', land: '"cleared to land"', touch: '"touch and go"', goaround: '"going around"', downwind: 'downwind', freq: 'frequency' };
+    takeoff: '"cleared for take-off"', bt: '"backtrack"', land: '"cleared to land"', touch: '"touch and go"', goaround: '"going around"', downwind: 'downwind', freq: 'frequency' };
   function has(w, key, n, c, ac) {
     var s = n.plain, some = function (v) { return n.nums.some(function (x) { return x.indexOf(v) >= 0; }); };
     switch (key) {
       case 'start': return /start/.test(s);
       case 'qnh': return some(String(w.qnh));
-      case 'rwy': return some(w.rw.id);
-      case 'hold': return P.letterAfter(n, ['point', 'holding', 'short', 'hold'], w.rw.hold);
-      case 'stand': return some(String(ac.stand + 1));
+      case 'rwy': return P.rwyNamed(n, w.rw.id);
+      case 'hold': return P.desigAfter(n, ['point', 'holding', 'short', 'hold'], w.holdOf(ac).name);
+      case 'stand': return P.desigAfter(n, ['stand'], w.standName(ac));
       case 'holdw': return /hold/.test(s);
       case 'lineup': return /line up/.test(s);
+      case 'bt': return !w.needsBacktrack(ac) || /back ?track/.test(s);
       case 'takeoff': return /take off/.test(s);
       case 'land': return /land/.test(s);
       case 'touch': return /touch/.test(s);
       case 'goaround': return /go(ing)? around/.test(s);
       case 'downwind': return /downwind/.test(s);
-      case 'freq': var f = AP.freqs[c.unit]; return some(f) || some(f.replace('.', ''));
+      case 'freq': var f = ap().freqs[c.unit]; return some(f) || some(f.replace('.', ''));
     }
     return true;
   }
@@ -257,7 +263,7 @@
     w.pendingRb = null;
     rb.cmds.forEach(function (c) {
       if (DEFER[c.t]) TL.Pilot.apply(w, w.user, c);
-      if (c.t === 'CONTACT') { if (c.unit === 'APP') w.finish('Handed off to Nagpur Approach'); else w.expectFreq = c.unit; }
+      if (c.t === 'CONTACT') { if (c.unit === 'APP') w.finish('Handed off to ' + ap().units.APP); else w.expectFreq = c.unit; }
     });
     w.emit('pending', null);
   }
@@ -316,7 +322,7 @@
     if (it.i === 'GOING_AROUND') ac.gaSay = false;
     if (it.i === 'REPORT') ac.rep[it.point === 'downwind' ? 'dw' : it.point === 'final' ? 'fin' : 'base'] = 1;
     var want = UNIT[it.i];
-    if (want && want !== ch) { w.note('tip', 'That call belongs on ' + AP.unitNames[want] + ' ' + AP.freqs[want] + '.', -1); atc.receive(ac, 'WRONG_UNIT', { unit: want }, ch); return; }
+    if (want && want !== ch) { w.note('tip', 'That call belongs on ' + ap().units[want] + ' ' + ap().freqs[want] + '.', -1); atc.receive(ac, 'WRONG_UNIT', { unit: want }, ch); return; }
     atc.receive(ac, it.i, { point: it.point, want: it.want }, ch);
   }
 
@@ -338,7 +344,7 @@
     }
     if (/hold position|\bstop\b/.test(s)) cmds.push({ t: 'HOLD_POSITION' });
     else if (/hold short|hold at|holding point \w+ hold\b/.test(s)) cmds.push({ t: 'HOLD_SHORT' });
-    if (/line up/.test(s)) cmds.push({ t: 'LINE_UP' });
+    if (/line up|back ?track/.test(s)) cmds.push({ t: 'LINE_UP' });
     if (/cleared (for |4 )?(immediate )?take off|take off (is )?cleared/.test(s)) cmds.push({ t: 'CLEARED_TAKEOFF' });
     if (/touch and go/.test(s)) cmds.push({ t: 'CLEARED_TG' });
     else if (/cleared (to |too |2 )?land|cleared full stop|land(ing)? cleared/.test(s)) cmds.push({ t: 'CLEARED_LAND' });
@@ -349,7 +355,7 @@
     if (/join/.test(s)) cmds.push({ t: 'JOIN' });
     if ((m = /number (\d)/.exec(s))) cmds.push({ t: 'NUMBER', n: +m[1] });
     if ((m = /report (downwind|base|final|short final)/.exec(s))) cmds.push({ t: 'REPORT', point: m[1] });
-    if ((m = /vacate (?:via |at |on |left |right )*(?:taxiway )?(\w+)/.exec(s))) { var L = (P.PHW[m[1]] || (m[1].length === 1 ? m[1] : '')).toUpperCase(); if (AP.links[L] != null) cmds.push({ t: 'VACATE', exit: L }); }
+    if ((m = /vacate (?:via |at |on |left |right )*(?:taxiway )?(\w+)(?: (\d{1,2})\b)?/.exec(s))) { var L = P.desig(m[1], m[2]); if (!ap().holds[L] && m[2]) L = P.desig(m[1]); if (ap().holds[L] && w.rw.exits.indexOf(L) >= 0) cmds.push({ t: 'VACATE', exit: L }); }
     if (/contact|frequency change/.test(s)) cmds.push({ t: 'CONTACT', unit: /ground/.test(s) ? 'GND' : /tower/.test(s) ? 'TWR' : 'APP' });
     if (!cmds.length && /standby/.test(s)) cmds.push({ t: 'STANDBY' });
     if (!cmds.length && /qnh/.test(s)) cmds.push({ t: 'QNH' });
@@ -367,15 +373,15 @@
       if (!w.csTip) { w.csTip = true; w.note('tip', 'Start each instruction with the aircraft callsign. Sent to the selected strip this time.', 0); }
     }
     var cmds = parseAtc(w, n, ac);
-    if (!cmds.length) { w.radio.tx({ ch: 'TWR', from: ac, pri: true, text: AP.unitNames.TWR + ', say again for ' + ac.cs.abbr }); return; }
-    var other = w.rw.id === '32' ? '14' : '32';
-    if (n.nums.indexOf(other) >= 0 && n.nums.indexOf(w.rw.id) < 0 && /runway/.test(n.plain)) {
+    if (!cmds.length) { w.radio.tx({ ch: 'TWR', from: ac, pri: true, text: ap().units.TWR + ', say again for ' + ac.cs.abbr }); return; }
+    var wrongRwy = !P.rwyNamed(n, w.rw.id) && Object.keys(ap().runways).some(function (id) { return id !== w.rw.id && P.rwyNamed(n, id); });
+    if (wrongRwy && /runway/.test(n.plain)) {
       w.note('tip', 'Runway in use is ' + w.rw.id + '.', -2);
       w.radio.tx({ ch: 'TWR', from: ac, pri: true, text: 'Confirm runway ' + w.rw.id + '? ' + ac.cs.abbr }); return;
     }
     cmds.forEach(function (k) {
       var clr = k.t === 'CLEARED_TAKEOFF' || k.t === 'CLEARED_LAND' || k.t === 'CLEARED_TG' || k.t === 'LINE_UP';
-      if (clr && n.nums.indexOf(w.rw.id) < 0 && !w.rwTip) { w.rwTip = true; w.note('tip', 'Include the runway designator in line-up, take-off and landing clearances.', -1); }
+      if (clr && !P.rwyNamed(n, w.rw.id) && !w.rwTip) { w.rwTip = true; w.note('tip', 'Include the runway designator in line-up, take-off and landing clearances.', -1); }
       if (k.t === 'CLEARED_TAKEOFF' && GROUND_OUT[ac.phase] && w.nextArrival(ac).t < 50) w.note('bad', 'Take-off clearance issued with traffic on short final', -10);
     });
     TL.Pilot.respond(w, ac, cmds, 'TWR');
@@ -391,8 +397,8 @@
 
   /* ================= Hints ================= */
   function pilotHint(w) {
-    var ac = w.user, rb = w.pendingRb, ph = ac.phase, cs = ac.cs, r = 'runway ' + w.rw.id, G = AP.unitNames.GND, T = AP.unitNames.TWR;
-    var tune = function (u) { return { note: 'Tune ' + AP.unitNames[u] + ' ' + AP.freqs[u] + '.', opts: [] }; };
+    var ac = w.user, rb = w.pendingRb, ph = ac.phase, cs = ac.cs, r = 'runway ' + w.rw.id, G = ap().units.GND, T = ap().units.TWR;
+    var tune = function (u) { return { note: 'Tune ' + ap().units[u] + ' ' + ap().freqs[u] + '.', opts: [] }; };
     if (rb) {
       if (rb.ch !== w.tuned) return tune(rb.ch);
       var parts = rb.cmds.map(function (c) { return Cmd.rb(w, ac, c); }).filter(Boolean);
@@ -401,15 +407,15 @@
     if (w.expectFreq && w.expectFreq !== w.tuned) return tune(w.expectFreq);
     var g = w.tuned === 'GND';
     switch (ph) {
-      case 'PARKED': return g ? { note: 'Ask for start-up.', opts: [G + ', ' + cs.full + ', stand ' + (ac.stand + 1) + ', information ' + w.info + ', request start-up' + (ac.kind === 'CIRCUIT' ? ' for circuits' : ', VFR to ' + ac.dest)] } : tune('GND');
+      case 'PARKED': return g ? { note: 'Ask for start-up.', opts: [G + ', ' + cs.full + ', stand ' + w.standName(ac) + ', information ' + w.info + ', request start-up' + (ac.kind === 'CIRCUIT' ? ' for circuits' : ', VFR to ' + ac.dest)] } : tune('GND');
       case 'STARTED': return g ? { note: 'Ask for taxi.', opts: [cs.abbr + ', request taxi'] } : tune('GND');
-      case 'TAXI_OUT': return { note: 'Taxiing to holding point ' + PH[w.rw.hold] + '. Listen out.', opts: [] };
-      case 'HOLDING_POINT': return g ? { note: 'Wait to be passed to Tower.', opts: [] } : { note: ac.atcWait || ac.toldHold ? 'Holding. Wait for the tower.' : 'Report ready.', opts: ac.atcWait ? [] : [T + ', ' + cs.full + ', holding point ' + PH[w.rw.hold] + ', ready for departure'] };
-      case 'LINEUP': case 'LINED_UP': return { note: ac.clr.takeoff ? 'Cleared for take-off.' : 'Lined up. Wait for take-off clearance.', opts: [] };
+      case 'TAXI_OUT': return { note: 'Taxiing to holding point ' + w.holdOf(ac).name + '. Listen out.', opts: [] };
+      case 'HOLDING_POINT': return g ? { note: 'Wait to be passed to Tower.', opts: [] } : { note: ac.atcWait || ac.toldHold ? 'Holding. Wait for the tower.' : 'Report ready.', opts: ac.atcWait ? [] : [T + ', ' + cs.full + ', holding point ' + w.holdOf(ac).name + ', ready for departure'] };
+      case 'LINEUP': case 'LINED_UP': return { note: ac.backtracking ? 'Backtracking to the end of runway ' + w.rw.id + '. Listen out.' : ac.clr.takeoff ? 'Cleared for take-off.' : 'Lined up. Wait for take-off clearance.', opts: [] };
       case 'TKOF_ROLL': return { note: 'Rolling.', opts: [] };
       case 'CLIMB': return { note: ac.gaSay ? 'Going around. Tell the tower.' : ac.kind === 'DEP' ? 'Climbing out. Wait for the handoff.' : 'Climbing. Report when downwind.', opts: ac.gaSay ? [cs.abbr + ', going around'] : [] };
       case 'CROSSWIND': return { note: 'Crosswind. Report when downwind.', opts: [] };
-      case 'INBOUND': return ac.joinClr ? { note: 'Joining the circuit.', opts: [] } : { note: 'Call the tower for joining instructions.', opts: [T + ', ' + cs.full + ', ' + ac.perf.name + ', 5 miles southwest, 2500 feet, inbound for landing, information ' + w.info] };
+      case 'INBOUND': return ac.joinClr ? { note: 'Joining the circuit.', opts: [] } : { note: 'Call the tower for joining instructions.', opts: [T + ', ' + cs.full + ', ' + ac.perf.name + ', ' + ac.posRep + ', inbound for landing, information ' + w.info] };
       case 'DOWNWIND': return ac.rep.dw ? { note: ac.extend ? 'Extending downwind. Wait for the base call.' : 'Downwind.', opts: [] } : { note: 'Report downwind with your intentions.', opts: (function () {
         var fs = cs.abbr + ', downwind ' + r + ', full stop', tg = cs.abbr + ', downwind ' + r + ', touch and go';
         return ac.kind !== 'CIRCUIT' ? [fs] : ac.wantTG ? [tg, fs] : [fs, tg];   // full stop first unless a touch and go is wanted
@@ -417,8 +423,8 @@
       case 'BASE': return { note: 'Base leg.', opts: [] };
       case 'FINAL': return ac.clr.land ? { note: ac.clr.land === 'TG' ? 'Cleared touch and go.' : 'Cleared to land.', opts: [] } : { note: 'Report final.', opts: ac.rep.fin ? [] : [cs.abbr + ', final ' + r] };
       case 'LANDING_ROLL': case 'TG_ROLL': case 'VACATING': return { note: 'On the runway.', opts: [] };
-      case 'VACATED': return g ? { note: 'Ask Ground for taxi to the stand.', opts: [G + ', ' + cs.full + ', runway vacated via ' + PH[ac.exit] + ', request taxi'] } : { note: 'Report runway vacated.', opts: [cs.abbr + ', runway vacated via ' + PH[ac.exit]] };
-      case 'TAXI_IN': return { note: 'Taxiing to stand ' + (ac.stand + 1) + '.', opts: [] };
+      case 'VACATED': return g ? { note: 'Ask Ground for taxi to the stand.', opts: [G + ', ' + cs.full + ', runway vacated via ' + ac.exit + ', request taxi'] } : { note: 'Report runway vacated.', opts: [cs.abbr + ', runway vacated via ' + ac.exit] };
+      case 'TAXI_IN': return { note: 'Taxiing to stand ' + w.standName(ac) + '.', opts: [] };
     }
     return { note: '', opts: [] };
   }

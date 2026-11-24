@@ -1,7 +1,8 @@
 /* Browser side: setup screen, map drawing, strips, radio log, speech in and out. */
 (function () {
   'use strict';
-  var TL = window.TL, AP = TL.AIRPORT, P = TL.Phrase, RAD = Math.PI / 180, NM = 1852;
+  var TL = window.TL, P = TL.Phrase, RAD = Math.PI / 180, NM = 1852;
+  function ap() { return TL.AIRPORT; }   // read at call time: the airport can change between sessions
   var $ = function (id) { return document.getElementById(id); };
   var S = { w: null, opts: null, sel: null, speed: 1, paused: false, view: 'AUTO', voice: true, hints: true, lastT: 0, lastDom: 0, hits: [], inset: null, listening: false };
   // map colours are read from the CSS variables in css/style.css, so the stylesheet stays the single source
@@ -38,6 +39,24 @@
   }
   document.querySelectorAll('input[name=role]').forEach(function (el) { el.addEventListener('change', syncSetup); });
   syncSetup();
+
+  /* Airport picker: lists the catalog, and refills the runway list and default registration when changed. */
+  var lastDefReg = null;
+  function fillAirport() {
+    var A = TL.selectAirport($('o-airport').value), rs = $('o-rwy'), keep = rs.value;
+    rs.innerHTML = '<option value="auto">Set by the wind</option>' + Object.keys(A.runways).map(function (id) { return '<option value="' + esc(id) + '">' + esc(id) + '</option>'; }).join('');
+    rs.value = A.runways[keep] ? keep : 'auto';
+    var cs = $('o-cs'); if (!cs.value || cs.value === lastDefReg) cs.value = A.reg; lastDefReg = A.reg;
+    $('o-chart').textContent = A.chart && A.chart.aip ? 'Layout traced from the AIP aerodrome chart. ' + A.chart.source : A.chart.source;
+  }
+  (function () {
+    var sel = $('o-airport'), list = Object.keys(TL.AIRPORTS).map(function (k) { return TL.AIRPORTS[k]; });
+    list.sort(function (a, b) { return a.icao === TL.DEFAULT_AIRPORT ? -1 : b.icao === TL.DEFAULT_AIRPORT ? 1 : a.name.localeCompare(b.name); });
+    sel.innerHTML = list.map(function (a) { return '<option value="' + a.icao + '">' + esc(a.name + ' ' + a.icao) + '</option>'; }).join('');
+    sel.value = TL.DEFAULT_AIRPORT;
+    sel.addEventListener('change', fillAirport);
+    fillAirport();
+  })();
   var SR = window.SpeechRecognition || window.webkitSpeechRecognition, synth = window.speechSynthesis, voices = [];
   if (!SR) $('mic-note').textContent = 'This browser has no voice input, so you will type or tap your transmissions. Chrome, Edge and Safari support voice.';
   else if (location.protocol === 'file:') $('mic-note').textContent = 'Opened from a file: the microphone may be blocked. Voice input works when the page is served over https.';
@@ -45,7 +64,7 @@
   if (synth) { loadVoices(); if (synth.addEventListener) synth.addEventListener('voiceschanged', loadVoices); }
 
   $('start').addEventListener('click', function () {
-    S.opts = { role: role(), flight: $('o-flight').value, cs: $('o-cs').value, traffic: +$('o-traffic').value, runway: $('o-rwy').value };
+    S.opts = { role: role(), airport: $('o-airport').value, flight: $('o-flight').value, cs: $('o-cs').value, traffic: +$('o-traffic').value, runway: $('o-rwy').value };
     S.voice = $('o-voice').checked; S.hints = $('o-hints').checked;
     if (synth && S.voice) { try { synth.cancel(); synth.speak(new SpeechSynthesisUtterance(' ')); } catch (e) { /* ignore */ } }
     begin();
@@ -82,10 +101,12 @@
   }
 
   function begin() {
-    var o = S.opts, w = new TL.World({ mode: o.role, runway: o.runway, traffic: o.traffic });
+    var o = S.opts;
+    TL.selectAirport(o.airport);
+    var w = new TL.World({ mode: o.role, runway: o.runway, traffic: o.traffic });
     S.w = w; S.sel = null; S.paused = false; S.speed = 1; S.view = o.role === 'PILOT' ? 'AUTO' : 'GND';
     if (o.role === 'PILOT') {
-      var ac = w.spawn(o.flight, { user: true, type: 'C172', cs: P.regCs(o.cs) });
+      var ac = w.spawn(o.flight, { user: true, type: 'C172', cs: P.regCs(o.cs, ap().reg) });
       ac.plan = 0; ac.wantTG = false;
       w.tuned = o.flight === 'ARR_VFR' ? 'TWR' : 'GND';
     } else w.traffic.next = 2;
@@ -101,7 +122,7 @@
     var anyMic = SR || (TL.VK && TL.VK.supported()); $('ptt').disabled = !anyMic; if (!anyMic) $('ptt').textContent = 'No mic';
     line('info', '', o.role === 'PILOT'
       ? 'You are ' + w.user.cs.full + ', a Cessna 172. Runway ' + w.rw.id + ' is in use. Hold the red button to transmit, or type.'
-      : 'You are Nagpur Tower on 118.1, working ground and air. Runway ' + w.rw.id + ' is in use. Say the callsign, then the instruction.');
+      : 'You are ' + ap().units.TWR + ' on ' + ap().freqs.TWR + ', working ground and air. Runway ' + w.rw.id + ' is in use. Say the callsign, then the instruction.');
     S.lastT = performance.now();
     var my = S.token = (S.token || 0) + 1;
     requestAnimationFrame(function loop(ts) { if (S.token !== my || !S.w) return; frame(ts); requestAnimationFrame(loop); });
@@ -330,7 +351,7 @@
   var lastHint = '', lastStrips = '', lastOwn = '';
   function stripState(w, ac) {
     var s = PHASE[ac.phase] || ac.phase;
-    if (ac.phase === 'FINAL') s += ' ' + Math.max(0, -w.along(ac.u) / NM).toFixed(1) + ' NM';
+    if (ac.phase === 'FINAL') s += ' ' + Math.max(0, -w.la(ac.u) / NM).toFixed(1) + ' NM';
     if (ac.holdPos) s += ', holding';
     if (ac.clr.land) s += ac.clr.land === 'TG' ? ', clr T&G' : ', clr land';
     else if (ac.clr.takeoff) s += ', clr t/o';
@@ -349,7 +370,7 @@
       var u = w.user, st = PHASE[u.phase] || '';
       if (u.alt > 0) st += ', ' + w.amsl(u) + ' ft, ' + Math.round(u.spd / 0.5144) + ' kt';
       var own = '<div class="own-id">' + esc(u.cs.full) + '</div><div class="own-state">' + esc(st) + '</div><div class="freq">' +
-        ['GND', 'TWR'].map(function (f) { return '<button type="button" data-f="' + f + '" aria-pressed="' + (w.tuned === f) + '">' + (f === 'GND' ? 'Ground' : 'Tower') + '<small>' + AP.freqs[f] + '</small></button>'; }).join('') + '</div>';
+        ['GND', 'TWR'].map(function (f) { return '<button type="button" data-f="' + f + '" aria-pressed="' + (w.tuned === f) + '">' + (f === 'GND' ? 'Ground' : 'Tower') + '<small>' + ap().freqs[f] + '</small></button>'; }).join('') + '</div>';
       if (own !== lastOwn) { lastOwn = own; $('own').innerHTML = own; }
       var ph = TL.Hint.pilot(w);
       h = '<p>' + esc(ph.note) + '</p>';
@@ -362,7 +383,7 @@
       });
       var sh = list.map(function (ac) {
         var k = ac.kind === 'DEP' ? 'dep' : ac.kind === 'CIRCUIT' ? 'loc' : 'arr';
-        var extra = ac.kind === 'DEP' ? 'to ' + ac.dest : ac.kind === 'CIRCUIT' ? 'circuits' : 'stand ' + (ac.stand + 1);
+        var extra = ac.kind === 'DEP' ? 'to ' + ac.dest : ac.kind === 'CIRCUIT' ? 'circuits' : 'stand ' + w.standName(ac);
         return '<button type="button" class="strip ' + k + (ac === S.sel ? ' sel' : '') + (ac.call && !ac.call.queued ? ' calling' : '') + '" data-id="' + ac.id + '"><b>' + esc(ac.cs.full) +
           '</b><span>' + esc(ac.perf.short + ', ' + extra) + '</span><span class="st">' + esc(stripState(w, ac)) + '</span></button>';
       }).join('');
@@ -390,6 +411,7 @@
     $('d-score').classList.toggle('full', w.mode === 'PILOT' && sc.rbTotal > 0 && sc.rbOk === sc.rbTotal);
     $('d-role').textContent = w.mode === 'PILOT' ? 'Pilot' : 'ATC';
     $('d-flight').textContent = w.mode === 'PILOT' ? FLIGHT[o.flight] : 'Tower, ' + TRAFFIC[o.traffic];
+    $('d-airport').textContent = ap().name + ' ' + ap().icao;
     $('d-sum').textContent = sum;
     $('d-notes').innerHTML = items.length ? items.map(function (i) { return '<li>' + i + '</li>'; }).join('') : '<li class="ok">Nothing to fix. Clean radio work.</li>';
     $('d-share').textContent = navigator.share ? 'Share' : 'Copy link';
@@ -402,7 +424,8 @@
     var body = 'What went wrong (please describe):\n\n\n' +
       '--- Details (filled in automatically) ---\n' +
       'Role: ' + (w ? (w.mode === 'PILOT' ? 'Pilot' : 'ATC') : '') + '\n' +
-      'Flight: ' + (w ? (w.mode === 'PILOT' ? FLIGHT[o.flight] : 'Tower, ' + TRAFFIC[o.traffic]) : '') + ', runway ' + (o.runway || '') + '\n' +
+      'Airport: ' + ap().icao + ', runway in use ' + (w ? w.rw.id : '') + ' (picked: ' + (o.runway || '') + ')\n' +
+      'Flight: ' + (w ? (w.mode === 'PILOT' ? FLIGHT[o.flight] : 'Tower, ' + TRAFFIC[o.traffic]) : '') + '\n' +
       'Score: ' + (w ? scoreText() : '') + '\n' +
       'Voice input: ' + (SR ? 'available' : 'not available') + ', sound ' + (S.voice ? 'on' : 'off') + '\n' +
       'Device: ' + navigator.userAgent + '\n\nLast radio calls:\n' + logs.join('\n');
@@ -422,12 +445,27 @@
   });
 
   /* ================= map ================= */
-  var DX = Math.sin(AP.hdg14 * RAD), DY = Math.cos(AP.hdg14 * RAD), NX = -DY, NY = DX, HALF = AP.length / 2;
-  function world(u, v) { return { x: (u - HALF) * DX + v * NX, y: (u - HALF) * DY + v * NY }; }
+  /* Runway-frame (u, v) to east/north metres around the middle of the runway. Recomputed when the airport changes. */
+  var G = null;
+  function geo() {
+    var A = ap();
+    if (!G || G.ap !== A) {
+      var h = A.axisHdg * RAD, DX = Math.sin(h), DY = Math.cos(h);
+      G = { ap: A, DX: DX, DY: DY, NX: -DY, NY: DX, HALF: A.length / 2 };
+      var u0 = -250, u1 = A.length + 250, v0 = -250, v1 = 250;   // ground view: the airport's own extent, else every node, the runway and a margin
+      if (A.gndView) G.box = A.gndView.slice();
+      else {
+        Object.keys(A.nodes).forEach(function (id) { var n = A.nodes[id]; u0 = Math.min(u0, n.u - 120); u1 = Math.max(u1, n.u + 120); v0 = Math.min(v0, n.v - 120); v1 = Math.max(v1, n.v + 150); });
+        G.box = [u0, u1, v0, v1];
+      }
+    }
+    return G;
+  }
+  function world(u, v) { var g = geo(); return { x: (u - g.HALF) * g.DX + v * g.NX, y: (u - g.HALF) * g.DY + v * g.NY }; }
   function curView() { var w = S.w; if (S.view !== 'AUTO') return S.view; return w && w.user && w.user.alt > 0 ? 'AREA' : 'GND'; }
   function makeView(kind, r) {
     var pts, w = S.w;
-    if (kind === 'GND') pts = [world(-250, -330), world(3450, -330), world(3450, 640), world(-250, 640)];
+    if (kind === 'GND') { var b = geo().box; pts = [world(b[0], b[2]), world(b[1], b[2]), world(b[1], b[3]), world(b[0], b[3])]; }
     else {
       var c = world(w.pt(-2500, 0).u, -1200), R = 12500;
       if (w.user) { // your own flight: stay close to the circuit, widen only as far as needed
@@ -451,13 +489,13 @@
   var FONT = '"Avenir Next Condensed", "Roboto Condensed", "Arial Narrow", Arial, sans-serif';
 
   function scene(g, r, kind, mini) {
-    var w = S.w, V = makeView(kind, r), s = V.s, detail = !mini && s * 100 > 9;
+    var w = S.w, V = makeView(kind, r), s = V.s, detail = !mini && s * 100 > 5;
     g.save(); g.beginPath(); g.rect(r.x, r.y, r.w, r.h); g.clip();
     g.fillStyle = mini ? C.navy : C['navy-deep']; g.fillRect(r.x, r.y, r.w, r.h);
     var rw = w.rw, k;
     if (kind === 'AREA') {
       // range rings and the extended centreline, like an approach chart
-      var c0 = sc(V, HALF, 0);
+      var c0 = sc(V, geo().HALF, 0);
       g.strokeStyle = C.line; g.lineWidth = 1; g.setLineDash([4, 5]);
       [5].concat(mini ? [] : [2.5]).forEach(function (nm) { g.beginPath(); g.arc(c0.x, c0.y, nm * NM * s, 0, 7); g.stroke(); });
       g.beginPath(); var t0 = w.pt(0, 0), t9 = w.pt(-9 * NM, 0); seg(g, V, t0.u, 0, t9.u, 0); g.stroke();
@@ -474,37 +512,81 @@
         g.stroke(); g.setLineDash([]);
       }
     }
-    // apron and taxiways
+    var A = ap(), nodes = A.nodes;
+    // aprons and taxiways, from the airport's taxiway graph
     if (!mini) {
-      var ap = [sc(V, 1040, 395), sc(V, 2160, 395), sc(V, 2160, 530), sc(V, 1040, 530)];
-      g.fillStyle = C.panel; g.beginPath(); ap.forEach(function (p, i) { if (i) g.lineTo(p.x, p.y); else g.moveTo(p.x, p.y); }); g.closePath(); g.fill();
+      g.fillStyle = C.panel;
+      (A.aprons || []).forEach(function (poly) {
+        g.beginPath(); poly.forEach(function (q, i) { var p = sc(V, q[0], q[1]); if (i) g.lineTo(p.x, p.y); else g.moveTo(p.x, p.y); }); g.closePath(); g.fill();
+      });
+      // other runways (not in use in this session): drawn as runways, with their designators
+      (A.decor || []).forEach(function (dc) {
+        if (dc.kind !== 'runway') return;
+        var a = dc.pts[0], z = dc.pts[1], w0 = Math.max(3, (dc.width || 45) * s);
+        g.strokeStyle = C.line; g.lineWidth = w0 + 2; g.beginPath(); seg(g, V, a[0], a[1], z[0], z[1]); g.stroke();
+        g.strokeStyle = C.panel; g.lineWidth = w0; g.beginPath(); seg(g, V, a[0], a[1], z[0], z[1]); g.stroke();
+        if (dc.label) {
+          var du = z[0] - a[0], dv = z[1] - a[1], L = Math.hypot(du, dv) || 1, ex = du / L * 140, ev = dv / L * 140;
+          var pa = sc(V, a[0] - ex, a[1] - ev), pz = sc(V, z[0] + ex, z[1] + ev);
+          label(g, dc.label[1], pa.x, pa.y, C.muted, '700 11px ' + FONT, 'center'); label(g, dc.label[0], pz.x, pz.y, C.muted, '700 11px ' + FONT, 'center');
+        }
+      });
+      // pavement the chart marks as disused: drawn faintly, never used for taxi routes
+      (A.decor || []).forEach(function (dc) {
+        if (dc.kind === 'runway') return;
+        g.strokeStyle = C.line; g.globalAlpha = 0.45; g.lineWidth = Math.max(1, 18 * s); g.setLineDash([6, 6]); g.beginPath();
+        dc.pts.forEach(function (q, i) { var p = sc(V, q[0], q[1]); if (i) g.lineTo(p.x, p.y); else g.moveTo(p.x, p.y); });
+        g.stroke(); g.setLineDash([]); g.globalAlpha = 1;
+      });
       g.strokeStyle = C.line; g.lineWidth = Math.max(1.5, 23 * s); g.lineCap = 'round'; g.beginPath();
-      for (k in AP.links) seg(g, V, AP.links[k], 0, AP.links[k], AP.P_V);
-      seg(g, V, AP.links.D, AP.P_V, AP.links.A, AP.P_V);
-      for (k in AP.apronLinks) seg(g, V, AP.apronLinks[k], AP.P_V, AP.apronLinks[k], AP.APRON_V);
+      A.edges.forEach(function (ed) { var a = nodes[ed[0]], b = nodes[ed[1]]; seg(g, V, a.u, a.v, b.u, b.v); });
       g.stroke();
     }
     // runway
-    var rwW = Math.max(mini ? 2 : 4, AP.width * s);
+    var rwW = Math.max(mini ? 2 : 4, A.width * s);
     g.lineCap = 'butt';
-    if (!mini) { g.strokeStyle = C.line; g.lineWidth = rwW + 3; g.beginPath(); seg(g, V, 0, 0, AP.length, 0); g.stroke(); }
+    if (!mini) { g.strokeStyle = C.line; g.lineWidth = rwW + 3; g.beginPath(); seg(g, V, 0, 0, A.length, 0); g.stroke(); }
     g.strokeStyle = mini ? C.body : C.card; g.lineWidth = rwW;
-    g.beginPath(); seg(g, V, 0, 0, AP.length, 0); g.stroke();
-    if (kind === 'GND' && !mini) { g.strokeStyle = C.ink; g.lineWidth = Math.max(1, 1.2 * s); g.setLineDash([Math.max(4, 30 * s), Math.max(4, 30 * s)]); g.beginPath(); seg(g, V, 80, 0, AP.length - 80, 0); g.stroke(); g.setLineDash([]); }
+    g.beginPath(); seg(g, V, 0, 0, A.length, 0); g.stroke();
+    // displaced thresholds: a bar across the runway where landing traffic touches down beyond
+    if (!mini) Object.keys(A.runways).forEach(function (id) {
+      var R = A.runways[id]; if (!R.dthr) return;
+      var du = R.thrU + R.dir * R.dthr; g.strokeStyle = C.ink; g.lineWidth = Math.max(1.5, 3 * s); g.beginPath(); seg(g, V, du, -A.width / 2 - 6, du, A.width / 2 + 6); g.stroke();
+    });
+    if (kind === 'GND' && !mini) { g.strokeStyle = C.ink; g.lineWidth = Math.max(1, 1.2 * s); g.setLineDash([Math.max(4, 30 * s), Math.max(4, 30 * s)]); g.beginPath(); seg(g, V, 80, 0, A.length - 80, 0); g.stroke(); g.setLineDash([]); }
     if (detail) {
-      // holding points
+      // holding points: a bar across the taxiway, square to the runway entry
       g.strokeStyle = C.accent; g.lineWidth = 2.5; g.beginPath();
-      for (k in AP.links) seg(g, V, AP.links[k] - 28, AP.HOLD_V, AP.links[k] + 28, AP.HOLD_V);
+      Object.keys(A.holds).forEach(function (k) {
+        var h = nodes[A.holds[k].id], r0 = nodes[A.holds[k].rwy], du = r0.u - h.u, dv = r0.v - h.v, L = Math.hypot(du, dv) || 1;
+        seg(g, V, h.u - dv / L * 28, h.v + du / L * 28, h.u + dv / L * 28, h.v - du / L * 28);
+      });
       g.stroke();
-      for (k in AP.links) { var lp = sc(V, AP.links[k] + (k === 'A' ? 75 : -75), 150); label(g, k, lp.x, lp.y, C.body, '700 12px ' + FONT, 'center'); }
-      for (k in AP.apronLinks) { var ep = sc(V, AP.apronLinks[k] + (k === 'F' ? 75 : -75), 335); label(g, k, ep.x, ep.y, C.body, '700 12px ' + FONT, 'center'); }
-      var pp = sc(V, 2650, AP.P_V + 60); label(g, 'P', pp.x, pp.y, C.body, '700 12px ' + FONT, 'center');
-      AP.stands.forEach(function (u, i) { var sp = sc(V, u, AP.STAND_V + 75); label(g, String(i + 1), sp.x, sp.y, C.muted, '11px ' + FONT, 'center'); });
-      var ar = sc(V, 1600, 560); label(g, 'Apron', ar.x + 60 * s, ar.y - 22, C.muted, '11px ' + FONT, 'center');
+      // one label per taxiway designator, on its longest segment; holding points named differently get their own
+      var best = {}, edgeNames = {};
+      A.edges.forEach(function (ed) {
+        if (!ed[2]) return; edgeNames[ed[2]] = 1;
+        var a = nodes[ed[0]], b = nodes[ed[1]], d = Math.hypot(a.u - b.u, a.v - b.v);
+        if (!best[ed[2]] || d > best[ed[2]].d) best[ed[2]] = { d: d, u: (a.u + b.u) / 2, v: (a.v + b.v) / 2 };
+      });
+      Object.keys(best).forEach(function (nm) { var p = sc(V, best[nm].u, best[nm].v); label(g, nm, p.x, p.y, C.ink, '700 12px ' + FONT, 'center'); });
+      Object.keys(A.holds).forEach(function (k) {
+        if (edgeNames[k]) return; var h = nodes[A.holds[k].id], p = sc(V, h.u, h.v); label(g, k, p.x + 8, p.y, C.accent, '700 11px ' + FONT);
+      });
+      // stand numbers, just beyond each stand (only when zoomed in enough to keep them apart)
+      var gap = Infinity;   // closest pair of stands, so numbers are only drawn where they won't overlap
+      A.standIds.forEach(function (i1, k) { A.standIds.slice(k + 1).forEach(function (i2) { gap = Math.min(gap, Math.hypot(nodes[i1].u - nodes[i2].u, nodes[i1].v - nodes[i2].v)); }); });
+      if (gap * s > 24) A.standIds.forEach(function (id) {
+        var nd = nodes[id], ld = A.adj[id][0], ln = ld ? nodes[ld.to] : { u: nd.u, v: nd.v - 1 }, du = nd.u - ln.u, dv = nd.v - ln.v, L = Math.hypot(du, dv) || 1;
+        var p = sc(V, nd.u + du / L * 70, nd.v + dv / L * 70); label(g, String(nd.name), p.x, p.y, C.muted, '11px ' + FONT, 'center');
+      });
     }
     if (!mini) {
-      var n14 = sc(V, -170, 0), n32 = sc(V, AP.length + 170, 0), f = '700 ' + (detail ? 15 : 11) + 'px ' + FONT;
-      label(g, '14', n14.x, n14.y, rw.id === '14' ? C.accent : C.muted, f, 'center'); label(g, '32', n32.x, n32.y, rw.id === '32' ? C.accent : C.muted, f, 'center');
+      var f = '700 ' + (detail ? 15 : 11) + 'px ' + FONT;
+      Object.keys(A.runways).forEach(function (id) {
+        var R = A.runways[id], p = sc(V, R.thrU - R.dir * 170, 0);
+        label(g, id, p.x, p.y, rw.id === id ? C.accent : C.muted, f, 'center');
+      });
     }
     // aircraft
     var cur = w.radio.ch.TWR.cur || w.radio.ch.GND.cur, pulse = 0.5 + 0.5 * Math.sin(performance.now() / 180);
@@ -512,7 +594,7 @@
       if (ac.phase === 'AWAY') return;
       var p = sc(V, ac.u, ac.v);
       if (p.x < r.x - 20 || p.x > r.x + r.w + 20 || p.y < r.y - 20 || p.y > r.y + r.h + 20) return;
-      var fx = Math.cos(ac.th) * DX + Math.sin(ac.th) * NX, fy = Math.cos(ac.th) * DY + Math.sin(ac.th) * NY, ang = Math.atan2(-fy, fx);
+      var gg = geo(), fx = Math.cos(ac.th) * gg.DX + Math.sin(ac.th) * gg.NX, fy = Math.cos(ac.th) * gg.DY + Math.sin(ac.th) * gg.NY, ang = Math.atan2(-fy, fx);
       var L = mini ? 4 : ac.perf.ifr ? 10 : 7.5, mine = ac.isUser, air = ac.alt > 0;
       if (mini) { if (!air && !mine) return; g.fillStyle = mine ? C.sky : C.ink; g.beginPath(); g.arc(p.x, p.y, mine ? 3.5 : 2.5, 0, 7); g.fill(); return; }
       var calling = w.mode === 'ATC' && ac.call && !ac.call.queued, talking = cur && cur.from === ac && cur.aud;
@@ -547,6 +629,7 @@
     var m = Math.round(Math.min(130, Math.min(W, H) * 0.34));
     S.inset = { x: W - m - 8, y: 8, w: m, h: m };
     scene(g, S.inset, kind === 'GND' ? 'AREA' : 'GND', true);
+    label(g, 'Training simulation, not for navigation', 8, 12, C.muted, '10px ' + FONT);
     if (S.paused) { g.globalAlpha = 0.7; g.fillStyle = C['navy-deep']; g.fillRect(0, 0, W, H); g.globalAlpha = 1; g.fillStyle = C.ink; g.font = '700 22px ' + FONT; g.textAlign = 'center'; g.fillText('Paused', W / 2, H / 2); }
   }
 

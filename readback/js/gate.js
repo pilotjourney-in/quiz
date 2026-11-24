@@ -4,13 +4,13 @@
   var GATE_URL = 'gate.json';
   var STORAGE_KEY = 'pj-readback-gate';
   var SCRIPTS = [
-    'js/airport.js',
-    'js/phrase.js?v=2',
-    'js/sim.js',
-    'js/pilot.js',
-    'js/atc.js',
-    'js/vk.js?v=1',
-    'js/ui.js?v=8'
+    'js/airport.js?v=3',
+    'js/phrase.js?v=4',
+    'js/sim.js?v=4',
+    'js/pilot.js?v=4',
+    'js/atc.js?v=4',
+    'js/vk.js?v=3',
+    'js/ui.js?v=10'
   ];
   var booted = false;
 

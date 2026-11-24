@@ -1,7 +1,8 @@
 /* Instruction wording, how an aircraft complies with an instruction, and what AI pilots say on their own. */
 (function (TL) {
   'use strict';
-  var AP = TL.AIRPORT, P = TL.Phrase, PH = P.PH;
+  var P = TL.Phrase;
+  function ap() { return TL.AIRPORT; }
   var GROUND_OUT = { TAXI_OUT: 1, HOLDING_POINT: 1, LINEUP: 1, LINED_UP: 1 };
 
   function unitShort(u) { return u === 'GND' ? 'Ground' : u === 'TWR' ? 'Tower' : 'Approach'; }
@@ -9,17 +10,21 @@
   /* Orbits default to turning away from the runway. */
   function orbitDir(w, c) { return c.dir || (w.rw.circuit === 'left' ? 'right' : 'left'); }
 
+  /* "F and P", "N3, P and J": designators as written; spoken() turns them into Foxtrot, November three... */
+  function list(a) { return a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' and ' + a[a.length - 1]; }
+  function via(names) { return names.length ? ', via ' + list(names) : ''; }
+
   /* What the controller says for a command. */
   function text(w, ac, c) {
     var r = 'runway ' + w.rw.id;
     switch (c.t) {
       case 'STARTUP': return 'start-up approved, QNH ' + w.qnh;
-      case 'TAXI': return 'taxi holding point ' + PH[w.rw.hold] + ', ' + r + ', via ' + PH[w.rw.apronOut] + ' and Papa';
-      case 'TAXI_STAND': return 'taxi stand ' + (ac.stand + 1) + ' via Papa and ' + PH[w.rw.apronIn];
+      case 'TAXI': return 'taxi holding point ' + w.holdOf(ac).name + ', ' + r + via(w.taxiNames(ac, true));
+      case 'TAXI_STAND': return 'taxi stand ' + w.standName(ac) + via(ac.exit ? w.taxiNames(ac, false) : []);
       case 'HOLD_POSITION': return 'hold position';
       case 'RESUME': return 'continue taxi';
       case 'HOLD_SHORT': return 'hold short of ' + r + (c.why ? ', ' + c.why : '');
-      case 'LINE_UP': return 'line up and wait ' + r;
+      case 'LINE_UP': return w.needsBacktrack(ac) ? 'backtrack ' + r + ', line up and wait' : 'line up and wait ' + r;
       case 'CLEARED_TAKEOFF': return w.windText() + ', ' + r + ', cleared for take-off';
       case 'CLEARED_LAND': return w.windText() + ', ' + r + ', cleared to land';
       case 'CLEARED_TG': return w.windText() + ', ' + r + ', cleared touch and go';
@@ -31,8 +36,8 @@
       case 'TURN_BASE': return 'turn base';
       case 'ORBIT': return 'orbit ' + orbitDir(w, c);
       case 'JOIN': return 'join ' + w.rw.circuit + '-hand downwind ' + r + ', QNH ' + w.qnh;
-      case 'VACATE': return 'vacate via ' + PH[c.exit];
-      case 'CONTACT': return 'contact ' + AP.unitNames[c.unit] + ' ' + AP.freqs[c.unit];
+      case 'VACATE': return 'vacate via ' + c.exit;
+      case 'CONTACT': return 'contact ' + ap().units[c.unit] + ' ' + ap().freqs[c.unit];
       case 'STANDBY': return 'standby';
       case 'ROGER': return 'roger';
       case 'RADIO': return 'readability five';
@@ -56,7 +61,7 @@
       case 'EXTEND': return 'extending downwind';
       case 'TURN_BASE': return 'turning base';
       case 'ORBIT': return 'orbiting ' + orbitDir(w, c);
-      case 'CONTACT': return unitShort(c.unit) + ' ' + AP.freqs[c.unit];
+      case 'CONTACT': return unitShort(c.unit) + ' ' + ap().freqs[c.unit];
       case 'ROGER': case 'RADIO': case 'STANDBY': return '';
       default: return text(w, ac, c);
     }
@@ -128,7 +133,7 @@
         ac.joinClr = true; ac.orbit = null; return ok();
       case 'VACATE':
         ac.exitPref = c.exit;
-        if (ph === 'LANDING_ROLL') { ac.exit = null; ac.exit = w.chooseExit(ac); if (ac.exit !== c.exit) return no('vacate ' + PH[c.exit] + ', will vacate via ' + PH[ac.exit]); }
+        if (ph === 'LANDING_ROLL') { ac.exit = null; ac.exit = w.chooseExit(ac); if (ac.exit !== c.exit) return no('vacate ' + c.exit + ', will vacate via ' + ac.exit); }
         return ok();
       case 'CONTACT':
         if (c.unit === 'APP') { if ((ac.kind !== 'DEP' && !ac.missed) || !air) return no('say again'); ac.handed = true; }
@@ -174,33 +179,34 @@
     if (ac.gaSay) { ac.gaSay = false; go('GOING_AROUND', 'TWR', 'going around'); return; }
     switch (ph) {
       case 'PARKED':
-        if (t >= ac.readyAt && !waiting) go('REQ_STARTUP', 'GND', 'stand ' + (ac.stand + 1) + ', information ' + w.info + ', request start-up' +
+        if (t >= ac.readyAt && !waiting) go('REQ_STARTUP', 'GND', 'stand ' + w.standName(ac) + ', information ' + w.info + ', request start-up' +
           (ac.kind === 'CIRCUIT' ? ' for circuits' : ', ' + (ac.perf.ifr ? 'IFR' : 'VFR') + ' to ' + ac.dest));
         break;
       case 'STARTED':
         if (t - ac.startedAt > 12 && !waiting) go('REQ_TAXI', 'GND', 'request taxi');
         break;
       case 'HOLDING_POINT':
-        if (!ac.clr.lineup && !waiting && !(ac.toldHold && t - ac.toldHold < 90)) go('READY', 'TWR', 'holding point ' + PH[w.rw.hold] + ', ready for departure');
+        if (!ac.clr.lineup && !waiting && !(ac.toldHold && t - ac.toldHold < 90)) go('READY', 'TWR', 'holding point ' + w.holdOf(ac).name + ', ready for departure');
         break;
       case 'CLIMB':
         if ((ac.kind === 'DEP' ? ac.alt > 3500 : ac.missed && ac.alt > 2500) && !ac.handed && !ac.rep.fc && !waiting) { ac.rep.fc = 1; go('REQ_HANDOFF', 'TWR', 'passing ' + w.amsl(ac) + ' feet, request frequency change'); }
         break;
       case 'INBOUND':
-        if (!ac.joinClr && !waiting) go('INBOUND', 'TWR', ac.perf.name + ', 5 miles southwest, 2500 feet, inbound for landing, information ' + w.info, {});
+        if (!ac.joinClr && !waiting) go('INBOUND', 'TWR', ac.perf.name + ', ' + ac.posRep + ', inbound for landing, information ' + w.info, {});
         break;
       case 'DOWNWIND':
+        if (!ac.rep.dw && (ac.extend || ac.orbit || ac.told.EXTEND || ac.told.TURN_BASE)) ac.rep.dw = 1;   // already being sequenced: no downwind call
         if (!ac.rep.dw && w.along(ac.u) < 2000) { ac.rep.dw = 1; go('REPORT', 'TWR', 'downwind ' + rw + ', ' + (ac.wantTG ? 'touch and go' : 'full stop'), { point: 'downwind', want: ac.wantTG ? 'TG' : 'LAND' }); }
         else if (ac.extMax) { ac.extMax = false; w.turnBase(ac); go('REPORT', 'TWR', 'turning base ' + rw, { point: 'base' }); }
         break;
       case 'FINAL':
-        var d = -w.along(ac.u), jet = ac.perf.ifr, mi = Math.max(1, Math.round(d / 1852));
+        var d = -w.la(ac.u), jet = ac.perf.ifr, mi = Math.max(1, Math.round(d / 1852));
         if (ac.kind === 'ARR_IFR' && !ac.rep.init) { ac.rep.init = 1; go('INBOUND', 'TWR', 'established ILS ' + rw + ', ' + mi + ' miles', { ifr: true }); }
         else if (!ac.rep.fin && !ac.clr.land && d < (jet ? 7600 : 1e9)) { ac.rep.fin = 1; go('REPORT', 'TWR', (jet ? mi + ' miles ' : '') + 'final ' + rw, { point: 'final', want: ac.wantTG ? 'TG' : 'LAND' }); }
         else if (!ac.rep.sf && !ac.clr.land && d < (jet ? 3200 : 1300)) { ac.rep.sf = 1; go('REPORT', 'TWR', 'short final ' + rw, { point: 'final', want: ac.wantTG ? 'TG' : 'LAND' }); }
         break;
       case 'VACATED':
-        if (!waiting) go('VACATED', 'TWR', 'runway vacated via ' + PH[ac.exit]);
+        if (!waiting) go('VACATED', 'TWR', 'runway vacated via ' + ac.exit);
         break;
     }
   }
