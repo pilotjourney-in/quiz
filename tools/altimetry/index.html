@@ -243,7 +243,8 @@ function coldCorrections(alts, tAd, elev){
   <script>
 
 const $=id=>document.getElementById(id);
-function v(id){const e=$(id);if(!e)return NaN;const x=parseFloat(String(e.value).trim().replace(',','.'));return isFinite(x)?x:NaN}
+function num(s){s=String(s).trim().replace(/\s+/g,'');if(/^[-+]?\d{1,3}(,\d{2,3})+(\.\d+)?$/.test(s)&&!/^[-+]?\d+,\d{1,2}$/.test(s))s=s.replace(/,/g,'');else s=s.replace(',','.');const x=parseFloat(s);return isFinite(x)?x:NaN}
+function v(id){const e=$(id);if(!e)return NaN;return num(e.value)}
 function fx(x,d){d=d||0;return isFinite(x)?Number(x).toLocaleString('en-IN',{minimumFractionDigits:d,maximumFractionDigits:d}):'–'}
 function kv(k,val,cls){return '<div class="kv '+(cls||'')+'"><div class="k">'+k+'</div><div class="v">'+val+'</div></div>'}
 function setVals(o){for(const k in o){const e=$(k);if(e){e.value=o[k]}}}
@@ -259,7 +260,8 @@ function render(){
   if(![e,q].every(isFinite)){show('–','','Enter aerodrome elevation and QNH','','');return}
   if(q<870||q>1085){show('–','','QNH should be between 870 and 1085 hPa','','');return}
   if(e<-1500||e>15000){show('–','','Elevation should be between −1,500 and 15,000 ft','','');return}
-  const r=altimetry(e,q,isFinite(a)?a:NaN);
+  const aOk=isFinite(a)&&a>=-2000&&a<=36000; // ISA troposphere formula (to 36,089 ft)
+  const r=altimetry(e,q,aOk?a:NaN);
   let g=kv('QFE (exact ISA)',fx(r.qfe,1)+' hPa')+kv('QFE rule (27 ft/hPa)',fx(r.qfeRule,1)+' hPa','exact')+kv('Aerodrome pressure altitude',fx(r.paAerodrome,0)+' ft')+kv('Rule (27 ft/hPa)',fx(r.paAdRule,0)+' ft','exact');
   let st=`1) QFE from QNH (ISA pressure–height relation)
    QFE = QNH × (1 − 6.8756×10⁻⁶ × elevation)^5.2559
@@ -269,7 +271,8 @@ function render(){
 2) Aerodrome pressure altitude (altimeter reading with 1013 set on the ground)
    = (1 − (QFE/1013.25)^0.19026) ÷ 6.8756×10⁻⁶ = ${fx(r.paAerodrome,0)} ft
    Rule: elevation + (1013 − QNH) × 27 = ${fx(e,0)} + (${fx(1013.25-q,2)}) × 27 = ${fx(r.paAdRule,0)} ft`;
-  if(isFinite(a)){g+=kv('Height above aerodrome (QFE)',fx(r.height,0)+' ft')+kv('Flight level (QNE)','FL'+String(Math.round(r.fl)).padStart(3,'0')+' ('+fx(r.pa,0)+' ft)');
+  if(isFinite(a)&&!aOk)g+=kv('Altimeter reading','Enter −2,000 to 36,000 ft','bad');
+  if(aOk){g+=kv('Height above aerodrome (QFE)',fx(r.height,0)+' ft')+kv('Flight level (QNE)','FL'+String(Math.round(r.fl)).padStart(3,'0')+' ('+fx(r.pa,0)+' ft)');
     st+=`\n\n3) Altimeter reads ${fx(a,0)} ft on QNH
    Height on QFE = ${fx(a,0)} − ${fx(e,0)} = ${fx(r.height,0)} ft
    Static pressure there = ${fx(r.pAlt,1)} hPa → pressure altitude ${fx(r.pa,0)} ft = FL${String(Math.round(r.fl)).padStart(3,'0')} on 1013.25

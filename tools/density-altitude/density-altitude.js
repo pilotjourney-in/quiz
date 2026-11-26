@@ -41,6 +41,14 @@
     return { elevationFt: elevationFt, qnhHpa: qnhHpa, qnhInHg: qnhInHg, oatC: oatC, pa: pa, isa: isa, dev: dev, da: da };
   }
 
+  // Plausible study ranges. Outside them the inputs are almost certainly a typo (for example inHg typed as hPa).
+  function validate(elevationFt, qnhHpa, oatC) {
+    if (qnhHpa < 870 || qnhHpa > 1085) return 'QNH should be between 870 and 1085 hPa. For inHg, multiply by 33.864 first (29.92 inHg = 1013 hPa).';
+    if (elevationFt < -1500 || elevationFt > 15000) return 'Elevation should be between −1,500 and 15,000 ft.';
+    if (oatC < -60 || oatC > 60) return 'OAT should be between −60 and +60 °C.';
+    return null;
+  }
+
   function formatFt(value) {
     if (!isFiniteNumber(value)) return '';
     return String(Math.round(value));
@@ -53,7 +61,7 @@
   return {
     INHG_HPA: INHG_HPA, STD_HPA: STD_HPA, FT_PER_HPA: FT_PER_HPA,
     ISA_LAPSE_PER_1000FT: ISA_LAPSE_PER_1000FT, DA_FT_PER_DEG: DA_FT_PER_DEG,
-    VIDP_ELEV_FT: VIDP_ELEV_FT, parseInput: parseInput, calculate: calculate,
+    VIDP_ELEV_FT: VIDP_ELEV_FT, parseInput: parseInput, calculate: calculate, validate: validate,
     formatFt: formatFt, formatTemp: formatTemp,
     EXAMPLE: { label: 'VIDP 777 ft, QNH 1008 hPa, OAT 38 °C', elevation: '777', qnh: '1008', oat: '38' }
   };

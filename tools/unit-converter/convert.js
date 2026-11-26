@@ -94,6 +94,7 @@
       throw new Error('Unknown temperature unit: ' + from + ' → ' + to);
     }
     var c = from === 'C' ? value : ((value - 32) * 5) / 9;
+    if (c < -273.15 - 1e-9) return null; // below absolute zero
     return to === 'C' ? c : (c * 9) / 5 + 32;
   }
 
@@ -176,6 +177,7 @@
   function formatValue(value, kind) {
     if (!isFiniteNumber(value)) return '';
     var abs = Math.abs(value);
+    if (abs >= 1e12) return value.toPrecision(4); // keeps very large values short on a phone
     var digits;
     if (kind === 'temperature') {
       digits = abs >= 100 ? 1 : 2;

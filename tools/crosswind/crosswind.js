@@ -73,9 +73,11 @@
     var speed = parseInput(opts.speed);
     var gust = parseInput(opts.gust);
     if (heading === null || windDir === null || speed === null) return null;
+    // Wind direction is reported 0–360° (000 = calm or north in some sources, 360 = north).
+    if (windDir < 0 || windDir > 360) return null;
     var sustained = components(heading, windDir, speed);
     if (!sustained) return null;
-    var gusted = gust !== null && gust >= 0 ? components(heading, windDir, gust) : null;
+    var gusted = gust !== null && gust > speed ? components(heading, windDir, gust) : null;
     return { heading: heading, sustained: sustained, gusted: gusted };
   }
 

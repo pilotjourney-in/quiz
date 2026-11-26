@@ -189,7 +189,7 @@
           <p>The worked example uses the published elevation of Delhi’s Indira Gandhi International Airport, 777 feet, with a slightly below-standard QNH of 1008 hectopascals and a hot afternoon temperature of 38 degrees Celsius. Those inputs are typical of a pre-monsoon day at VIDP and give a density altitude well above the field elevation. Always check the aircraft flight manual for real performance figures.</p>
         </section>
         <nav class="page-links" aria-label="Study links">
-          <a href="https://quiz.pilotjourney.in/subjects/">Practise in the free DGCA question bank</a>
+          <a href="https://quiz.pilotjourney.in/subjects/performance/">Practise DGCA Performance questions</a>
           <a href="https://www.pilotjourney.in/guidance">Get free CPL career guidance</a>
         </nav>
       </div>
@@ -259,11 +259,11 @@
       var outQnh = document.getElementById('out-qnh');
       var working = document.getElementById('working-body');
 
-      function empty() {
+      function empty(msg) {
         card.classList.add('result-empty');
         number.textContent = '—';
         unit.textContent = 'ft DA';
-        sub.textContent = 'Enter elevation, QNH and OAT to estimate density altitude.';
+        sub.textContent = msg || 'Enter elevation, QNH and OAT to estimate density altitude.';
         outPa.textContent = '—';
         outIsa.textContent = '—';
         outDev.textContent = '—';
@@ -293,6 +293,8 @@
         var q = D.parseInput(qnh.value);
         var t = D.parseInput(oat.value);
         if (elev === null || q === null || t === null) { empty(); return; }
+        var bad = D.validate(elev, q, t);
+        if (bad) { empty(bad); return; }
         var r = D.calculate(elev, q, t);
         if (!r) { empty(); return; }
         card.classList.remove('result-empty');

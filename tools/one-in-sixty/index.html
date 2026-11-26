@@ -214,7 +214,8 @@ function oneInSixty(gone, off, togo, side, hdg){
   <script>
 
 const $=id=>document.getElementById(id);
-function v(id){const e=$(id);if(!e)return NaN;const x=parseFloat(String(e.value).trim().replace(',','.'));return isFinite(x)?x:NaN}
+function num(s){s=String(s).trim().replace(/\s+/g,'');if(/^[-+]?\d{1,3}(,\d{2,3})+(\.\d+)?$/.test(s)&&!/^[-+]?\d+,\d{1,2}$/.test(s))s=s.replace(/,/g,'');else s=s.replace(',','.');const x=parseFloat(s);return isFinite(x)?x:NaN}
+function v(id){const e=$(id);if(!e)return NaN;return num(e.value)}
 function fx(x,d){d=d||0;return isFinite(x)?Number(x).toLocaleString('en-IN',{minimumFractionDigits:d,maximumFractionDigits:d}):'–'}
 function kv(k,val,cls){return '<div class="kv '+(cls||'')+'"><div class="k">'+k+'</div><div class="v">'+val+'</div></div>'}
 function setVals(o){for(const k in o){const e=$(k);if(e){e.value=o[k]}}}

@@ -40,6 +40,8 @@
     var wca = toDeg(Math.asin(swc));
     var th = norm360(tc + wca);
     var gs = tas * Math.cos(toRad(wca)) - windSpeed * Math.cos(toRad(wa));
+    // A headwind equal to or stronger than the TAS gives no progress along the course.
+    if (!(gs > 0)) return { impossible: true, noProgress: true, sineWindCorrection: swc, gs: gs };
     var varMag = isFiniteNumber(variation) ? Math.abs(variation) : 0;
     var east = String(varEW || 'E').toUpperCase() !== 'W';
     var varSigned = east ? varMag : -varMag;
@@ -70,6 +72,12 @@
     if (!isFiniteNumber(value)) return '';
     return String(Number(value.toFixed(1)));
   }
+  // Headings are shown 001–360: due north is 360, never 0.
+  function formatHeading(value) {
+    if (!isFiniteNumber(value)) return '';
+    var r = Number(value.toFixed(1));
+    return String(r === 0 || r === 360 ? 360 : r);
+  }
   function formatKt(value) {
     if (!isFiniteNumber(value)) return '';
     return String(Number(value.toFixed(1)));
@@ -85,7 +93,7 @@
 
   return {
     parseInput: parseInput, norm360: norm360, solve: solve, withFuel: withFuel,
-    formatAngle: formatAngle, formatKt: formatKt, formatTime: formatTime,
+    formatAngle: formatAngle, formatHeading: formatHeading, formatKt: formatKt, formatTime: formatTime,
     EXAMPLE: {
       label: 'VIDP westbound, TAS 120 kt, wind 310°/20, var 1° E, 123 NM',
       tas: '120', tc: '240', windDir: '310', windSpeed: '20',

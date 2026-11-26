@@ -212,7 +212,7 @@
           <p>Magnetic heading follows the exam phrase east is least, west is best: subtract an easterly variation and add a westerly one. If you add a distance, time is distance divided by groundspeed. Fuel used is that time multiplied by fuel flow. The worked example is a westbound leg from the Delhi area at 120 knots, with a north-westerly wind and a one degree easterly variation typical of northern India. Treat every result as study practice, not as a flight-planning output.</p>
         </section>
         <nav class="page-links" aria-label="Study links">
-          <a href="https://quiz.pilotjourney.in/subjects/">Practise in the free DGCA question bank</a>
+          <a href="https://quiz.pilotjourney.in/subjects/air-navigation/">Practise DGCA Air Navigation questions</a>
           <a href="https://www.pilotjourney.in/guidance">Get free CPL career guidance</a>
         </nav>
       </div>
@@ -351,6 +351,12 @@
         }
         var solved = W.solve(tas, tc, wd, ws, variation === null ? 0 : variation, varEW);
         if (!solved) { empty(); return; }
+        if (solved.impossible && solved.noProgress) {
+          empty('The headwind is as strong as or stronger than the TAS, so the groundspeed would be zero or negative. No progress along this course.');
+          working.innerHTML = '<p>Groundspeed = TAS × cos(WCA) − wind × cos(wind angle) = <code>' +
+            W.formatKt(solved.gs) + ' kt</code>, which is not above zero.</p>';
+          return;
+        }
         if (solved.impossible) {
           empty('The wind is too strong to hold this course at the entered TAS. No heading exists.');
           working.innerHTML = '<p>sin(WCA) would be <code>' +
@@ -360,13 +366,13 @@
         }
         var r = W.withFuel(solved, distance, fuelFlow);
         card.classList.remove('result-empty');
-        number.textContent = W.formatAngle(r.mh);
+        number.textContent = W.formatHeading(r.mh);
         unit.textContent = '° MH';
         var wcaSide = r.wca >= 0 ? 'right' : 'left';
         sub.textContent = 'WCA ' + W.formatAngle(Math.abs(r.wca)) + '° ' + wcaSide +
-          ', true heading ' + W.formatAngle(r.th) + '°, groundspeed ' + W.formatKt(r.gs) + ' kt.';
+          ', true heading ' + W.formatHeading(r.th) + '°, groundspeed ' + W.formatKt(r.gs) + ' kt.';
         outWca.textContent = W.formatAngle(Math.abs(r.wca)) + '° ' + wcaSide;
-        outTh.textContent = W.formatAngle(r.th) + '°';
+        outTh.textContent = W.formatHeading(r.th) + '°';
         outGs.textContent = W.formatKt(r.gs) + ' kt';
         if (r.timeHours != null) {
           outTime.textContent = W.formatTime(r.timeHours) +
