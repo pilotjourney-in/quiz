@@ -756,3 +756,51 @@ main { flex: 1; }
 :where(.hx) .tbl-wrap{overflow-x:auto}
 :where(.hx) .fields+.fields{margin-top:.85rem}
 :where(.hx) .subhead{font-family:var(--font-display);font-weight:700;color:var(--ink);font-size:.95rem;margin:1.1rem 0 .5rem}
+
+/* ---- METAR/TAF decoder pages (Tool Hangar decoder.css), scoped to <body class="hx hxd"> ---- */
+/* Pilot Journey METAR/TAF decoder pages. Uses only tools.css variables. */
+:where(.hxd) .field textarea{width:100%;min-height:6.2rem;font-family:var(--font-mono);font-size:.95rem;line-height:1.5;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-control);padding:.7rem .75rem;resize:vertical;text-transform:uppercase}
+:where(.hxd) .field textarea:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+:where(.hxd) .field textarea::placeholder{color:var(--faint);text-transform:none}
+:where(.hxd) .detect{margin:.6rem 0 0;font-size:.85rem;color:var(--muted)}
+:where(.hxd) .detect b{color:var(--accent);font-weight:700}
+:where(.hxd) .rawview{font-family:var(--font-mono);font-size:.95rem;line-height:2;text-align:left;background:var(--navy-deep);border:1px solid var(--line);border-radius:var(--radius-control);padding:.55rem .7rem;margin:.9rem 0 .2rem;word-break:break-word}
+:where(.hxd) .tok{display:inline;padding:.12rem .22rem;border-radius:5px;cursor:pointer;color:var(--ink);transition:background .12s}
+:where(.hxd) .tok:hover{background:var(--tint)}
+:where(.hxd) .tok.bad{color:var(--error);text-decoration:underline wavy;text-underline-offset:3px}
+:where(.hxd) .tok.warnt{color:var(--accent);text-decoration:underline dotted;text-underline-offset:3px}
+:where(.hxd) .tok.hl{background:var(--accent);color:var(--navy);font-weight:700}
+:where(.hxd) .summary{text-align:left;font-size:.98rem;line-height:1.65;color:var(--ink);margin:.8rem 0 0}
+:where(.hxd) .istline{font-size:.9rem;color:var(--body);margin:.2rem 0 0}
+:where(.hxd) .result-big.dec{font-size:clamp(2.1rem,10vw,3.2rem)}
+:where(.hxd) .steps.dec{font-family:var(--font-sans);font-size:.9rem;white-space:normal}
+:where(.hxd) .steps.dec .rawview{position:sticky;top:66px;z-index:2;margin:0 0 .6rem;font-size:.85rem}
+:where(.hxd) table.dec{width:100%;border-collapse:collapse}
+:where(.hxd) table.dec td{border-bottom:1px solid var(--line-light);padding:.55rem .35rem;vertical-align:top;line-height:1.5;color:var(--body)}
+:where(.hxd) table.dec td.g{font-family:var(--font-mono);font-size:.82rem;font-weight:700;color:var(--ink);width:7.2rem;min-width:7.2rem;overflow-wrap:anywhere;padding-right:.6rem}
+:where(.hxd) table.dec tr.row{cursor:pointer}
+:where(.hxd) table.dec tr.row:hover td{background:var(--panel)}
+:where(.hxd) table.dec tr.sel td{background:var(--tint)}
+:where(.hxd) table.dec tr.sel td.g{color:var(--accent)}
+:where(.hxd) table.dec tr.bad td{color:var(--error)}
+:where(.hxd) table.dec tr.bad td.g{color:var(--error)}
+:where(.hxd) table.dec tr.warn td.g{color:var(--accent)}
+:where(.hxd) table.dec tr.sec td{font-family:var(--font-display);font-weight:700;color:var(--accent);font-size:.78rem;text-transform:uppercase;letter-spacing:.05em;padding-top:1rem;border-bottom:1px solid var(--line)}
+:where(.hxd) .hint{font-size:.8rem;color:var(--muted);margin:.4rem 0 .6rem}
+:where(.hxd) .practice{margin-top:1rem;padding:1.25rem 1.25rem 1.4rem}
+@media (min-width:768px){:where(.hxd) .practice{padding:1.5rem 1.6rem 1.7rem}}
+:where(.hxd) .practice h2{font-size:1.15rem;margin:.2rem 0 .35rem}
+:where(.hxd) .pscore{display:flex;justify-content:space-between;align-items:center;gap:.6rem;font-family:var(--font-mono);font-weight:700;color:var(--accent);font-size:1rem;margin-top:.6rem}
+:where(.hxd) .pscore span{color:var(--muted);font-family:var(--font-sans);font-weight:500;font-size:.82rem}
+:where(.hxd) .pq{font-family:var(--font-display);font-weight:700;color:var(--ink);font-size:1.02rem;line-height:1.45;margin:.9rem 0 .6rem}
+:where(.hxd) .popts{display:grid;gap:.5rem}
+:where(.hxd) .popt{display:block;width:100%;text-align:left;font:inherit;font-size:.95rem;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-control);padding:.75rem .85rem;cursor:pointer;line-height:1.4}
+:where(.hxd) .popt:hover{border-color:var(--accent-line)}
+:where(.hxd) .popt.right{border-color:var(--success);background:rgba(95,211,138,.14)}
+:where(.hxd) .popt.wrong{border-color:var(--error);background:var(--error-tint)}
+:where(.hxd) .popt[disabled]{cursor:default}
+:where(.hxd) .pfb{font-size:.92rem;line-height:1.55;margin:.8rem 0 0;color:var(--body)}
+:where(.hxd) .pfb:empty{display:none}
+:where(.hxd) .pfb b.ok{color:var(--success)}
+:where(.hxd) .pfb b.no{color:var(--error)}
+:where(.hxd) .tool-layout>*{min-width:0}

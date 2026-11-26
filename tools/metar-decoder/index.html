@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>METAR Decoder for Indian Airports, with Practice Quiz | Pilot Journey</title>
+  <meta name="description" content="Free METAR decoder: paste a METAR or SPECI from Delhi, Mumbai or any airport and get every group decoded in plain English, times in UTC and IST, plus exam practice questions.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://quiz.pilotjourney.in/tools/metar-decoder/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pilot Journey">
+  <meta property="og:url" content="https://quiz.pilotjourney.in/tools/metar-decoder/">
+  <meta property="og:title" content="METAR Decoder for Indian Airports, with Practice Quiz | Pilot Journey">
+  <meta property="og:description" content="Free METAR decoder: paste a METAR or SPECI from Delhi, Mumbai or any airport and get every group decoded in plain English, times in UTC and IST, plus exam practice questions.">
+  <meta property="og:image" content="https://quiz.pilotjourney.in/pj-logo-512.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="METAR Decoder for Indian Airports, with Practice Quiz | Pilot Journey">
+  <meta name="twitter:description" content="Free METAR decoder: paste a METAR or SPECI from Delhi, Mumbai or any airport and get every group decoded in plain English, times in UTC and IST, plus exam practice questions.">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "METAR decoder with exam practice", "url": "https://quiz.pilotjourney.in/tools/metar-decoder/", "applicationCategory": "EducationalApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"}, "publisher": {"@type": "Organization", "name": "Pilot Journey", "url": "https://quiz.pilotjourney.in/"}, "description": "Free METAR decoder: paste a METAR or SPECI from Delhi, Mumbai or any airport and get every group decoded in plain English, times in UTC and IST, plus exam practice questions."}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Pilot Journey Quiz", "item": "https://quiz.pilotjourney.in/"}, {"@type": "ListItem", "position": 2, "name": "Aviation tools", "item": "https://quiz.pilotjourney.in/tools/"}, {"@type": "ListItem", "position": 3, "name": "METAR decoder", "item": "https://quiz.pilotjourney.in/tools/metar-decoder/"}]}]}</script>
+</head>
+<body class="hx hxd">
+  <div class="page">
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="accent-bar" aria-hidden="true"></div>
+    <div class="top-strip">
+      <div class="wrap top-strip-inner">
+        <span><span class="dot" aria-hidden="true"></span>Free study tools · no account needed</span>
+        <span class="hide-sm">For study only · always check official documents</span>
+      </div>
+    </div>
+    <header class="site-header">
+      <div class="wrap site-header-inner">
+        <a class="brand" href="/" aria-label="Pilot Journey home">
+          <img src="../assets/pj-logo.png" alt="" width="40" height="40">
+          <span>
+            <span class="brand-name">Pilot Journey</span>
+            <span class="brand-tag">DGCA · ATPL · A320</span>
+          </span>
+        </a>
+        <nav class="nav" aria-label="Main navigation">
+          <a href="/subjects/">Question bank</a>
+          <a href="/type-rating/">Type rating</a>
+          <a href="/daily/">Daily check</a>
+          <a href="/tools/" aria-current="page">Tools</a>
+          <a href="/faq/">FAQ</a>
+        </nav>
+        <a class="btn btn-primary header-cta" href="/subjects/">Start practising</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <header class="hero">
+        <div class="wrap">
+          <nav aria-label="Breadcrumb">
+            <ol class="crumbs">
+              <li><a href="/">Quiz home</a></li>
+              <li><a href="/tools/">Aviation tools</a></li>
+              <li aria-current="page">METAR decoder</li>
+            </ol>
+          </nav>
+          <p class="kicker">Free aviation weather tool</p>
+          <h1 class="display-lg">METAR decoder with exam practice</h1>
+          <p class="lede">Paste a METAR or SPECI (a TAF works too). Every group is decoded into a table and a plain-English summary, with times in UTC and IST. Then test yourself in practice mode.</p>
+          <p class="study-note">For training/study only, not for real flight planning.</p>
+          <noscript>
+            <p class="noscript">This decoder needs JavaScript in your browser. The explanation of the METAR code and a worked example are still on this page below.</p>
+          </noscript>
+        </div>
+      </header>
+
+      <div class="wrap tool-layout">
+        <div>
+          <section class="card calc-card" id="calc">
+            <h2>Paste a report</h2>
+            <p class="panel-help">Paste one METAR, SPECI or TAF. The type is detected automatically and the decode updates as you type.</p>
+            <div class="field"><label for="raw">Report text</label><textarea id="raw" rows="4" spellcheck="false" autocomplete="off" autocapitalize="characters" placeholder="Paste a report, e.g. METAR VIDP 260230Z 28003KT 1600 BR NSC 13/09 Q1019 NOSIG"></textarea></div>
+            <p class="detect" id="detect" aria-live="polite"></p>
+
+            <div class="actions"><button type="button" class="btn btn-primary" id="exbtn">Try an example</button><button type="button" class="btn btn-ghost" id="clearbtn">Clear</button><p class="exnote" id="exnote"></p></div>
+          </section>
+
+          <section class="card result-card" id="result" aria-live="polite">
+            <span class="kicker" id="rlabel">Decoded report</span>
+            <div class="result-big" id="rbig">–</div>
+            <div class="result-sub" id="rsub"></div>
+            <div class="result-grid" id="rgrid"></div>
+            <div class="result-warn" id="rwarn"></div>
+          </section>
+
+          <details class="card working" open><summary>Group-by-group decode</summary><div class="steps dec" id="steps"></div></details>
+          <section class="card practice" id="practice" aria-labelledby="ph">
+            <p class="kicker">Exam practice mode</p>
+            <h2 id="ph">Practise reading METARs</h2>
+            <p class="panel-help">Questions are made from the report shown, like the decoding questions in the DGCA Meteorology paper. Everything runs in your browser; nothing is saved or sent.</p>
+            <div class="pscore" id="pscore"></div>
+            <div class="rawview" id="praw"></div>
+            <p class="pq" id="pq"></p>
+            <div class="popts" id="popts"></div>
+            <p class="pfb" id="pfb" aria-live="polite"></p>
+            <div class="actions"><button type="button" class="btn btn-primary" id="pnext">Next question</button><button type="button" class="btn btn-ghost" id="pnew">New report</button><button type="button" class="btn btn-ghost" id="pdecode">Decode this report</button><button type="button" class="btn btn-ghost" id="preset">Reset score</button></div>
+          </section>
+
+
+          <section class="card prose">
+            <h2>How to read a METAR</h2>
+            <p>A METAR is a routine aerodrome weather report. Busy Indian aerodromes issue one every 30 minutes, and a SPECI (special report) when conditions change significantly in between. The groups always come in the same order, set by ICAO Annex 3 and the WMO code form FM 15:</p>
+            <div class="formula">TYPE  STATION  DAY+TIME(UTC)  WIND  VISIBILITY  RVR  WEATHER  CLOUD  TEMP/DEW  QNH  TREND</div>
+            <p>Wind direction is in degrees true, speed in knots (G = gusts). Visibility is in metres, and 9999 means 10 km or more. Cloud amount is FEW, SCT, BKN or OVC, with the base in hundreds of feet above the aerodrome. M before a temperature means minus. The trend covers the next 2 hours: NOSIG (no significant change), BECMG (becoming) or TEMPO (temporarily). CAVOK replaces visibility, weather and cloud when visibility is 10 km or more, there is no cloud below 5,000 ft or the highest minimum sector altitude, no CB or TCU, and no significant weather.</p>
+            <h3>Worked example</h3>
+            <div class="formula">METAR VIDP 260230Z COR 28003KT 1600 R28/P2000 BR NSC 13/09 Q1019 BECMG 1500 BR</div>
+            <p>A corrected report for Delhi on the 26th at 0230 UTC, which is 08:00 IST (UTC + 5 h 30 min). Wind from 280° at 3 kt. Visibility 1,600 m, RVR on runway 28 more than 2,000 m, mist (BR) and no significant cloud. Temperature 13 °C, dew point 9 °C, QNH 1019 hPa. In the next 2 hours visibility is expected to become 1,500 m in mist.</p>
+            <p>In a north Indian winter, watch the gap between temperature and dew point. When it closes to 1 or 2 °C, mist (visibility 1,000 to 5,000 m) often thickens into fog (FG, below 1,000 m). In dry air, haze (HZ) and smoke (FU) are the usual reasons for poor visibility.</p>
+            <p><small>Sources: ICAO Annex 3, Meteorological Service for International Air Navigation, Appendix 3 (METAR/SPECI); WMO-No. 306 Manual on Codes, Vol. I.1, FM 15 METAR and FM 16 SPECI; AIP India GEN 3.5 (meteorological services, IMD). Sample reports from the aviationweather.gov text data service.</small></p>
+
+          </section>
+        </div>
+
+        <aside class="side">
+          <div class="card">
+            <p class="kicker">Practice</p>
+            <h2>Test yourself</h2>
+            <p>Meteorology questions in the DGCA question bank, including METAR and TAF decoding.</p>
+            <p><a class="btn btn-primary" href="https://quiz.pilotjourney.in/subjects/meteorology/">Practice DGCA Meteorology questions</a></p>
+            <p class="disclaimer">For training/study only, not for real flight planning. This is not a certified source for flight operations. Cross-check figures with official documents, the current AIP and the aircraft AFM.</p>
+          </div>
+          <div class="card">
+            <p class="kicker">More tools</p>
+            <h2>Also on Pilot Journey</h2>
+            <ul>
+              <li><a href="/tools/taf-decoder/">TAF decoder</a></li>
+              <li><a href="/tools/crosswind/">Crosswind component calculator</a></li>
+              <li><a href="/tools/wind-triangle/">Wind triangle (E6B) calculator</a></li>
+              <li><a href="/tools/density-altitude/">Pressure and density altitude calculator</a></li>
+              <li><a href="/tools/unit-converter/">Aviation unit converter</a></li>
+              <li><a href="/tools/tas-mach/">TAS, CAS and Mach calculator</a></li>
+              <li><a href="/tools/one-in-sixty/">1 in 60 rule calculator</a></li>
+              <li><a href="/tools/pet-pnr/">PET and PNR calculator</a></li>
+              <li><a href="/tools/descent-planner/">Descent planning calculator</a></li>
+              <li><a href="/tools/altimetry/">QNH, QFE and cold temperature calculator</a></li>
+              <li><a href="/tools/mass-balance/">Mass and balance (CG) calculator</a></li>
+              <li><a href="/tools/utc-ist-sunrise/">UTC/IST and sunrise/sunset calculator</a></li>
+              <li><a href="/tools/">All aviation tools</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+
+      <div class="wrap">
+        <div class="card cta-band">
+          <div>
+            <p class="kicker">Career guidance</p>
+            <h2>Planning a CPL in India?</h2>
+            <p>Get a free, plain-English path from where you are now to a computer number, medicals and flying training.</p>
+          </div>
+          <a class="btn btn-primary" href="https://www.pilotjourney.in/guidance">Get free pilot career guidance</a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-grid">
+        <div>
+          <p class="kicker">Pilot Journey</p>
+          <p>Free DGCA study tools and practice questions for aspiring pilots. Independent study project. Not affiliated with DGCA, Airbus, Boeing or any airline.</p>
+          <p class="legal-note">Study material only.<br>Always check current official documents.</p>
+        </div>
+        <div>
+          <p class="kicker">Study</p>
+          <ul>
+            <li><a href="/subjects/">Question bank</a></li>
+            <li><a href="/type-rating/">Type rating: A320 / B737</a></li>
+            <li><a href="/tools/">Aviation tools</a></li>
+            <li><a href="/daily/">Daily check</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="kicker">About</p>
+          <ul>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a href="https://www.pilotjourney.in/">Read the Pilot Journey blog</a></li>
+            <li><a href="https://altitude.pilotjourney.in/">Pilot Journey Altitude store</a></li>
+            <li><a href="https://www.pilotjourney.in/guidance">Free guidance page</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bar">
+        <div class="wrap footer-bar-inner">
+          <span>© 2026 Pilot Journey · Study material only</span>
+          <span>Free study material for pilots. Always check current DGCA and manufacturer documents.</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script id="calc-js">
+/* Pilot Journey METAR/SPECI/TAF parser (shared by /tools/metar-decoder/ and /tools/taf-decoder/).
+   Code forms: ICAO Annex 3 App. 3 & 5, WMO-No. 306 Vol. I.1 FM 15 METAR/SPECI and FM 51 TAF.
+   Pure functions, no DOM. Unknown groups are flagged, never guessed. */
+var STATIONS={VIDP:'Delhi',VABB:'Mumbai',VOBL:'Bengaluru',VECC:'Kolkata',VOMM:'Chennai',VOHS:'Hyderabad',VOCI:'Kochi',VAAH:'Ahmedabad',VOGO:'Goa (Dabolim)',VOGA:'Goa (Mopa)',VIJP:'Jaipur',VILK:'Lucknow',VEGT:'Guwahati',VAPO:'Pune',VANP:'Nagpur',VOTV:'Thiruvananthapuram',VOCB:'Coimbatore',VOTR:'Tiruchirappalli',VIAR:'Amritsar',VISR:'Srinagar',VILH:'Leh',VEPB:'Port Blair',VEBS:'Bhubaneswar',VEPT:'Patna',VIBN:'Varanasi',VOML:'Mangaluru',VICG:'Chandigarh',VIDN:'Dehradun',VABP:'Bhopal',VAID:'Indore',VARP:'Raipur',VERC:'Ranchi',VASU:'Surat',VOVZ:'Visakhapatnam',VEBD:'Bagdogra',VIBK:'Bikaner',VOMD:'Madurai',VOCL:'Kozhikode',VAJJ:'Mumbai (Juhu)',VIDX:'Hindon',
+EGLL:'London Heathrow',KJFK:'New York JFK',LFPG:'Paris CDG',EDDF:'Frankfurt',OMDB:'Dubai',UUEE:'Moscow Sheremetyevo',RJTT:'Tokyo Haneda',NZAA:'Auckland',CYYZ:'Toronto',KDEN:'Denver',WSSS:'Singapore Changi',VHHH:'Hong Kong',YSSY:'Sydney',VTBS:'Bangkok',OPKC:'Karachi',VNKT:'Kathmandu',VCBI:'Colombo',VGHS:'Dhaka'};
+var DESC={MI:'shallow',BC:'patches of',PR:'partial',DR:'low drifting',BL:'blowing',SH:'showers',TS:'thunderstorm',FZ:'freezing'};
+var PHEN={DZ:'drizzle',RA:'rain',SN:'snow',SG:'snow grains',IC:'ice crystals',PL:'ice pellets',GR:'hail',GS:'small hail or snow pellets',UP:'unidentified precipitation',BR:'mist',FG:'fog',FU:'smoke',VA:'volcanic ash',DU:'widespread dust',SA:'sand',HZ:'haze',PY:'spray',PO:'dust/sand whirls',SQ:'squall',FC:'funnel cloud',SS:'sandstorm',DS:'duststorm'};
+var PRECIP=['DZ','RA','SN','SG','IC','PL','GR','GS','UP'];
+var COVER={FEW:'Few (1–2 oktas)',SCT:'Scattered (3–4 oktas)',BKN:'Broken (5–7 oktas)',OVC:'Overcast (8 oktas)'};
+var COVERW={FEW:'few',SCT:'scattered',BKN:'broken',OVC:'overcast'};
+var DIRS={N:'north',NE:'north-east',E:'east',SE:'south-east',S:'south',SW:'south-west',W:'west',NW:'north-west'};
+var DEPOSIT={'0':'clear and dry','1':'damp','2':'wet or water patches','3':'rime or frost','4':'dry snow','5':'wet snow','6':'slush','7':'ice','8':'compacted or rolled snow','9':'frozen ruts or ridges','/':'type not reported'};
+var EXTENT={'1':'10% or less of the runway','2':'11–25% of the runway','5':'26–50% of the runway','9':'51–100% of the runway','/':'extent not reported'};
+
+function fmtN(x){x=Math.round(x);var s=String(Math.abs(x)).replace(/\B(?=(\d{3})+(?!\d))/g,',');return (x<0?'−':'')+s}
+function ord(d){d=+d;var s=(d%100>=11&&d%100<=13)?'th':({1:'st',2:'nd',3:'rd'}[d%10]||'th');return d+s}
+function pad2(n){return (n<10?'0':'')+n}
+function tC(s){return s.charAt(0)==='M'?-parseInt(s.slice(1),10):parseInt(s,10)}
+function tStr(n){return (n<0?'−':'')+Math.abs(n)+' °C'}
+/* UTC day/hour/min -> IST label. Month is unknown in a report, so a day roll-over is shown as "next day" past the 28th. */
+function toIST(d,h,m){var t=h*60+(m||0)+330,dd=+d,roll=false;if(t>=1440){t-=1440;roll=true}
+  var hh=Math.floor(t/60),mm=t%60;return {d:roll?(dd>=28?null:dd+1):dd,roll:roll,hm:pad2(hh)+':'+pad2(mm),label:pad2(hh)+':'+pad2(mm)+' IST'+(roll?(dd>=28?' (next day)':' on the '+ord(dd+1)):'')}}
+function utcLabel(d,h,m){return (d!=null?'the '+ord(d)+' at ':'')+pad2(h)+pad2(m||0)+'Z'}
+function tokenize(s){s=String(s==null?'':s).toUpperCase().replace(/=/g,' ').replace(/\s+/g,' ').trim();return s?s.split(' '):[]}
+
+/* ---------- single-group decoders (return null if the token is not that group) ---------- */
+function decWind(tok){var m=/^(\d{3}|VRB|\/\/\/)(\d{2,3}|\/\/)(?:G(\d{2,3}))?(KT|MPS|KMH)$/.exec(tok);if(!m)return null;
+  var u=m[4],f=u==='KT'?1:u==='MPS'?1.943844:0.539957;var w={dir:m[1]==='VRB'?'VRB':m[1]==='///'?null:parseInt(m[1],10),speed:m[2]==='//'?null:parseInt(m[2],10),gust:m[3]?parseInt(m[3],10):null,unit:u};
+  w.kt=w.speed==null?null:Math.round(w.speed*f);w.gustKt=w.gust==null?null:Math.round(w.gust*f);w.calm=(w.dir===0&&w.speed===0);
+  var un=u==='KT'?'kt':u==='MPS'?'m/s':'km/h',conv=function(x){return u==='KT'?'':' (about '+Math.round(x*f)+' kt)'};
+  if(w.calm)w.text='calm';
+  else if(w.speed==null)w.text='not reported';
+  else w.text=(w.dir==='VRB'?'variable in direction':w.dir==null?'direction not reported':'from '+pad3(w.dir)+'°')+' at '+w.speed+' '+un+conv(w.speed)+(w.gust!=null?', gusting '+w.gust+' '+un+conv(w.gust):'');
+  w.meaning=w.calm?'Wind calm (00000): less than 1 kt.':w.speed==null?'Surface wind not reported (/////).':'Surface wind '+w.text+'. Direction is in degrees true, speed is a 10-minute mean'+(w.gust!=null?'; G = gusts (maximum speed in the last 10 minutes)':'')+'.';
+  return w}
+function pad3(n){return n<10?'00'+n:n<100?'0'+n:''+n}
+function decVar(tok){var m=/^(\d{3})V(\d{3})$/.exec(tok);return m?{from:+m[1],to:+m[2],meaning:'Wind direction varying between '+m[1]+'° and '+m[2]+'° (variation of 60° or more with mean speed 3 kt or more).'}:null}
+function decVis(tok){var m;
+  if((m=/^(\d{4})(NDV)?$/.exec(tok))){var v=+m[1];var r=v===9999?{m:10000,op:'ge',text:'10 km or more'}:v===0?{m:50,op:'lt',text:'less than 50 m'}:{m:v,op:'eq',text:fmtN(v)+' m'};r.ndv=!!m[2];
+    r.meaning='Prevailing visibility '+r.text+(v===9999?' (9999 is the code for 10 km or more)':'')+(r.ndv?'. NDV: automatic sensor, no directional variation can be given':'')+'.';return r}
+  return null}
+function decDirVis(tok){var m=/^(\d{4})(N|NE|E|SE|S|SW|W|NW)$/.exec(tok);if(!m)return null;var v=+m[1];return {m:v,dir:m[2],meaning:'Minimum visibility '+(v===0?'less than 50 m':fmtN(v)+' m')+' towards the '+DIRS[m[2]]+' (reported when it is less than 1,500 m or less than half the prevailing visibility).'}}
+function frac(s){var p=s.split('/');return p.length===2?(+p[0])/(+p[1]):+s}
+function decSM(tok,prev){var m=/^([PM])?(\d+|\d\/\d{1,2})SM$/.exec(tok);if(!m)return null;var sm=frac(m[2])+(prev||0);var op=m[1]==='P'?'gt':m[1]==='M'?'lt':'eq';
+  var txt=(op==='gt'?'more than ':op==='lt'?'less than ':'')+(prev?prev+' '+m[2]:m[2])+' statute miles';return {m:Math.round(sm*1609.344),op:op,sm:sm,text:txt,meaning:'Visibility '+txt+' (about '+fmtN(sm*1.609344*1000)+' m). Statute miles are used in the USA and Canada, not in India.'}}
+function decRVR(tok){var m=/^R(\d{2}[LCR]?)\/([PM])?(\d{4})(?:V([PM])?(\d{4}))?(FT)?\/?([UDN])?$/.exec(tok);if(!m)return null;
+  var u=m[6]?'ft':'m',r={rwy:m[1],op:m[2]==='P'?'gt':m[2]==='M'?'lt':'eq',val:+m[3],op2:m[4]==='P'?'gt':m[4]==='M'?'lt':'eq',val2:m[5]?+m[5]:null,unit:u,trend:m[7]||null};
+  var vs=function(op,v){return (op==='gt'?'more than ':op==='lt'?'less than ':'')+fmtN(v)+' '+u};
+  r.text='runway '+r.rwy+': '+(r.val2!=null?'varying from '+vs(r.op,r.val)+' to '+vs(r.op2,r.val2):vs(r.op,r.val))+(r.trend?', '+{U:'increasing',D:'decreasing',N:'no distinct change'}[r.trend]:'');
+  r.meaning='RVR (runway visual range) '+r.text+'.'+(r.trend?' Last letter = 10-minute trend (U up, D down, N no change).':'')+(r.op==='gt'?' P = above the top of the reporting range.':r.op==='lt'?' M = below the lowest reportable value.':'');return r}
+function decRwyState(tok){var m=/^R(\d{2}[LCR]?)\/([0-9\/])([0-9\/])(\d{2}|\/\/)(\d{2}|\/\/)$/.exec(tok);var r;
+  if(m){var dep=m[4],fr=m[5];var depth=dep==='//'?'depth not measurable':dep==='00'?'less than 1 mm deep':(+dep<=90?(+dep)+' mm deep':{'92':'10 cm deep','93':'15 cm deep','94':'20 cm deep','95':'25 cm deep','96':'30 cm deep','97':'35 cm deep','98':'40 cm or more deep','99':'runway not in use'}[dep]||'depth code '+dep);
+    var fric=fr==='//'?'braking not reported':(+fr<=90?'friction coefficient 0.'+fr:{'91':'braking poor','92':'braking medium to poor','93':'braking medium','94':'braking medium to good','95':'braking good','99':'figures unreliable'}[fr]||'braking code '+fr);
+    return {rwy:m[1],meaning:'Runway state, runway '+m[1]+': '+DEPOSIT[m[2]]+', covering '+(EXTENT[m[3]]||'extent code '+m[3])+', '+depth+', '+fric+'. (WMO FM 15 runway-state group, used mainly in Europe; India reports runway surface condition by other means.)'}}
+  if((m=/^R(\d{2}[LCR]?)\/CLRD(\d{2}|\/\/)$/.exec(tok)))return {rwy:m[1],meaning:'Runway '+m[1]+': contamination cleared'+(m[2]!=='//'?', friction coefficient 0.'+m[2]:'')+'.'};
+  if(tok==='R/SNOCLO'||tok==='SNOCLO')return {rwy:'all',meaning:'Aerodrome closed because of snow on the runways.'};
+  return null}
+function altText(ds){return ds.map(function(x,k){var tx=x.text;for(var j=0;j<k;j++){var o=ds[j].text;if(o!==tx&&o.length>tx.length&&o.slice(-tx.length)===tx)return tx+' alone'}return tx}).join(' or ')}
+function decWx(tok,noInt){
+  if(tok.indexOf('/')>0){var parts=tok.split('/'),ds=[];for(var k=0;k<parts.length;k++){var d=decWx(parts[k]);if(!d)return null;ds.push(d)}
+    return {code:tok,codes:ds.map(function(x){return x.code}),phen:[].concat.apply([],ds.map(function(x){return x.phen})),text:altText(ds),alt:true,meaning:altText(ds)+'. Two codes joined by "/" is a local Indian way of writing alternatives; the ICAO code form writes groups separately.'}}
+  var m=/^(\+|-|VC)?(MI|BC|PR|DR|BL|SH|TS|FZ)?((?:DZ|RA|SN|SG|IC|PL|GR|GS|UP|BR|FG|FU|VA|DU|SA|HZ|PY|PO|SQ|FC|SS|DS)*)$/.exec(tok);
+  if(!m||(!m[2]&&!m[3]))return null;if(m[3].length>6)return null;
+  var ph=[];for(var j=0;j<m[3].length;j+=2)ph.push(m[3].substr(j,2));
+  var pre=ph.some(function(p){return PRECIP.indexOf(p)>=0}),pn=ph.map(function(p){return PHEN[p]});
+  var list=pn.length>1?pn.slice(0,-1).join(', ')+' and '+pn[pn.length-1]:(pn[0]||'');
+  var iw=m[1]==='-'?'light ':m[1]==='+'?'heavy ':(pre&&!noInt&&['BL','DR','MI','BC','PR'].indexOf(m[2])<0?'moderate ':'');
+  if(m[1]==='+'&&!pre&&ph.length)iw=(ph[0]==='FC'?'':'well-developed ');
+  var txt;
+  if(m[2]==='TS')txt=(ph.length?'thunderstorm with '+iw+list:(m[1]==='+'?'heavy ':m[1]==='-'?'light ':'')+'thunderstorm');
+  else if(m[2]==='SH')txt=iw+(list?list+' showers':'showers');
+  else if(m[2])txt=iw+DESC[m[2]]+(list?' '+list:'');
+  else txt=(m[1]==='+'&&ph[0]==='FC')?'tornado or waterspout':iw+list;
+  if(m[1]==='VC')txt=txt.replace(/^\s+/,'')+' in the vicinity (8–16 km from the aerodrome)';
+  txt=txt.replace(/\s+/g,' ').trim();
+  return {code:tok,codes:[tok],intensity:m[1]||'',desc:m[2]||'',phen:ph,text:txt,meaning:cap(txt)+'.'}}
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+function decCloud(tok){var m=/^(FEW|SCT|BKN|OVC)(\d{3}|\/\/\/)(CB|TCU|TCU\/CB|CB\/TCU|\/\/\/)?$/.exec(tok);if(m){
+    var c={cover:m[1],base:m[2]==='///'?null:parseInt(m[2],10)*100,type:m[3]&&m[3]!=='///'?m[3]:null};
+    var tn=c.type==='CB'?' cumulonimbus (CB)':c.type==='TCU'?' towering cumulus (TCU)':c.type?' towering cumulus or cumulonimbus':'';
+    c.text=COVERW[c.cover]+tn+' at '+(c.base==null?'an unmeasured height':fmtN(c.base)+' ft');
+    c.meaning=COVER[c.cover]+(tn?' of'+tn:'')+', base '+(c.base==null?'not measured (///)':fmtN(c.base)+' ft above aerodrome level')+(m[3]==='///'?'; cloud type could not be observed (automatic station)':'')+'.'+(c.type&&c.type.length>3?' Writing TCU/CB together is an Indian practice; the ICAO form gives one type.':'');return c}
+  if((m=/^VV(\d{3}|\/\/\/)$/.exec(tok)))return {vv:true,base:m[1]==='///'?null:parseInt(m[1],10)*100,meaning:'Sky obscured; vertical visibility '+(m[1]==='///'?'not available (VV///)':fmtN(parseInt(m[1],10)*100)+' ft')+'. Vertical visibility counts as the ceiling.',text:'sky obscured, vertical visibility '+(m[1]==='///'?'not available':fmtN(parseInt(m[1],10)*100)+' ft')};
+  return null}
+var NOCLOUD={NSC:'No significant cloud: no cloud below 5,000 ft (or below the highest minimum sector altitude, if greater), no CB or TCU, and CAVOK not appropriate.',NCD:'No cloud detected (automatic observing system).',SKC:'Sky clear. Some Indian stations still use SKC; the current ICAO code form uses NSC or NCD instead.',CLR:'Clear: no cloud below 12,000 ft detected by an automatic station (US practice).'};
+function decTemp(tok){var m=/^(M?\d{2}|\/\/)\/(M?\d{2}|\/\/)?$/.exec(tok);if(!m)return null;var t=m[1]==='//'?null:tC(m[1]),d=(!m[2]||m[2]==='//')?null:tC(m[2]);
+  var sp=(t!=null&&d!=null)?t-d:null;return {t:t,d:d,meaning:'Temperature '+(t==null?'not reported':tStr(t))+', dew point '+(d==null?'not reported':tStr(d))+(sp!=null?' (spread '+sp+' °C'+(sp<=2?': the air is close to saturation, so mist or fog is likely':'')+')':'')+'. M means minus.'}}
+function decQNH(tok){var m=/^([QA])(\d{4}|\/\/\/\/)$/.exec(tok);if(!m)return null;if(m[2]==='////')return {hpa:null,meaning:'QNH not reported.'};
+  if(m[1]==='Q')return {hpa:+m[2],unit:'hPa',meaning:'QNH '+(+m[2])+' hPa (altimeter setting: shows aerodrome elevation on the ground).'};
+  var inhg=(+m[2])/100,h=Math.round(inhg*33.8639);return {hpa:h,unit:'inHg',inhg:inhg,meaning:'Altimeter setting '+inhg.toFixed(2)+' inHg (about '+h+' hPa). A is used in the USA and Canada.'}}
+function decTX(tok){var m=/^(TX|TN)(M?\d{2})\/(\d{2})(\d{2})Z$/.exec(tok);if(!m)return null;return {kind:m[1],t:tC(m[2]),d:+m[3],h:+m[4],meaning:(m[1]==='TX'?'Maximum':'Minimum')+' temperature '+tStr(tC(m[2]))+' forecast for the '+ord(+m[3])+' at '+m[4]+'00 UTC ('+toIST(+m[3],+m[4],0).label+').'}}
+function decSea(tok){var m=/^W(M?\d{2}|\/\/)\/(S\d|S\/|H\d{1,3})$/.exec(tok);if(!m)return null;return {meaning:'Sea-surface temperature '+(m[1]==='//'?'not reported':tStr(tC(m[1])))+', '+(m[2].charAt(0)==='S'?'state of the sea code '+m[2].slice(1):'significant wave height '+(+m[2].slice(1))/10+' m')+'.'}}
+function decPeriod(tok){var m=/^(\d{2})(\d{2})\/(\d{2})(\d{2})$/.exec(tok);if(!m)return null;var p={fd:+m[1],fh:+m[2],td:+m[3],th:+m[4]};if(p.fh>24||p.th>24||p.fd<1||p.fd>31||p.td<1||p.td>31)return null;p.code=tok;return p}
+function periodText(p){return 'from the '+ord(p.fd)+' at '+pad2(p.fh)+'00 UTC to the '+ord(p.td)+' at '+pad2(p.th)+'00 UTC'}
+function istDH(d,h){var a=toIST(d,h,0);return {hm:a.hm,d:a.roll?(a.d==null?null:a.d):d,unk:a.roll&&a.d==null}}
+function periodIST(p){var a=istDH(p.fd,p.fh),b=istDH(p.td,p.th);if(a.d===b.d&&!a.unk&&!b.unk)return a.hm+'–'+b.hm+' IST on the '+ord(a.d);
+  var f=function(x){return x.hm+' IST '+(x.unk?'the next day':'on the '+ord(x.d))};return f(a)+' to '+f(b)}
+function periodShort(p){return p.fd===p.td?pad2(p.fh)+'00–'+pad2(p.th)+'00Z on the '+ord(p.fd):'the '+ord(p.fd)+' '+pad2(p.fh)+'00Z to the '+ord(p.td)+' '+pad2(p.th)+'00Z'}
+
+/* ---------- main parser ---------- */
+function parseReport(text){
+  var t=tokenize(text),i=0;
+  var R={type:null,typeAuto:false,station:null,name:null,time:null,cor:false,amd:false,auto:false,nil:false,cnl:false,valid:null,sections:[],groups:[],unknown:[],tokens:t,rmk:null};
+  var sec=null;
+  function newSec(kind,o){sec={kind:kind,period:null,fm:null,tl:null,at:null,from:null,wind:null,windVar:null,vis:null,visMin:null,cavok:false,nsw:false,rvr:[],wx:[],clouds:[],nocloud:null,temp:null,qnh:null,re:[],ws:[],rwy:[],tx:[]};for(var k in (o||{}))sec[k]=o[k];R.sections.push(sec);return sec}
+  function add(n,kind,meaning,flag){var g={i:i,n:n,raw:t.slice(i,i+n).join(' '),kind:kind,meaning:meaning,sec:R.sections.length-1,flag:flag||''};R.groups.push(g);if(flag==='unknown')R.unknown.push(g.raw);i+=n;return g}
+  var KW=/^(METAR|SPECI|TAF|COR|AMD|NIL|AUTO|CNL|RTD)$/,m;
+  newSec('header');
+  while(i<t.length){var k=t[i];
+    if(!R.type&&/^(METAR|SPECI|TAF)$/.test(k)){R.type=k;add(1,'type',{METAR:'METAR: routine aerodrome weather report (in India normally every 30 minutes).',SPECI:'SPECI: special aerodrome weather report, issued between routine reports when conditions change significantly.',TAF:'TAF: terminal aerodrome forecast.'}[k]);continue}
+    if(k==='COR'){R.cor=true;add(1,'cor','COR: corrected report, replaces an earlier one with an error.');continue}
+    if(k==='AMD'){R.amd=true;add(1,'amd','AMD: amended forecast, replaces the TAF issued earlier.');continue}
+    if(k==='RTD'){add(1,'rtd','RTD: delayed report (regional practice).');continue}
+    if(!R.station&&!R.time&&/^[A-Z][A-Z0-9]{3}$/.test(k)&&!KW.test(k)){R.station=k;R.name=STATIONS[k]||null;add(1,'station','Location indicator (ICAO code) '+k+(R.name?': '+R.name:'')+'.');continue}
+    if(!R.time&&(m=/^(\d{2})(\d{2})(\d{2})Z$/.exec(k))){R.time={d:+m[1],h:+m[2],m:+m[3]};var ist=toIST(R.time.d,R.time.h,R.time.m);R.time.ist=ist.label;
+      add(1,'time',(R.type==='TAF'?'Issued':R.type?'Observed':'Issued/observed')+' on the '+ord(+m[1])+' of the month at '+m[2]+m[3]+' UTC (Z), which is '+ist.label+'. IST = UTC + 5 h 30 min.');continue}
+    if(!R.valid&&(m=decPeriod(k))){R.valid=m;if(!R.type){R.type='TAF';R.typeAuto=true}add(1,'valid','Forecast valid '+periodText(m)+' ('+periodIST(m)+').');continue}
+    if(k==='NIL'){R.nil=true;add(1,'nil','NIL: the report is missing (not available).');continue}
+    if(k==='AUTO'){R.auto=true;add(1,'auto','AUTO: fully automatic observation, no human observer.');continue}
+    if(k==='CNL'){R.cnl=true;add(1,'cnl','CNL: this forecast is cancelled.');continue}
+    break}
+  if(!R.type){R.type='METAR';R.typeAuto=true}
+  var taf=R.type==='TAF';
+  newSec(taf?'base':'obs');
+  var inRmk=false;
+  while(i<t.length){var k=t[i],x;
+    if(/^(METAR|SPECI|TAF)$/.test(k)&&i>0){R.more=true;add(t.length-i,'more','A second report starts here. Only the first report is decoded; paste one report at a time.','warn');break}
+    if(k==='RMK'){add(1,'rmk','RMK: remarks follow. They are in national format and are not decoded here.');if(i<t.length){R.rmk=t.slice(i).join(' ');add(t.length-i,'rmktext','Remarks (national format, not part of the ICAO code; not decoded).')}break}
+    /* change groups */
+    if(k==='NOSIG'){newSec('NOSIG');add(1,'trend','NOSIG: no significant change expected during the next 2 hours (trend forecast).');continue}
+    if((m=/^PROB(30|40)$/.exec(k))){var n=1,tempo=false;if(t[i+1]==='TEMPO'){tempo=true;n++}var p=decPeriod(t[i+n]||'');if(p)n++;
+      /* WMO FM 51 / ICAO Annex 3: PROB is used alone or with TEMPO only, never with BECMG or FM; METAR trends never use PROB. */
+      var badNext=!p&&/^(BECMG|FM\d{6}|INTER)$/.test(t[i+n]||''),pw=!taf?' PROB is not used in a METAR trend forecast (only in a TAF).':badNext?' PROB can only be used on its own or with TEMPO, never with '+(t[i+n].indexOf('FM')===0?'FM':t[i+n])+' (ICAO Annex 3, WMO FM 51 TAF code). The group that follows is decoded on its own.':'';
+      newSec(tempo?'PROB'+m[1]+' TEMPO':'PROB'+m[1],{period:p,prob:+m[1]});
+      add(n,'change',(tempo?m[1]+'% probability of temporary fluctuations':m[1]+'% probability of these conditions')+(p?' '+periodText(p)+' ('+periodIST(p)+')':'')+'. ICAO uses only PROB30 and PROB40; below 30% is not forecast.'+(pw||(p?'':' (period missing)')),(p&&!pw)?'':'warn');continue}
+    if(k==='BECMG'||k==='TEMPO'||k==='INTER'){var p=taf?decPeriod(t[i+1]||''):null;newSec(k,{period:p});
+      var base=k==='BECMG'?'BECMG (becoming): a lasting change expected to happen at some time during the period':k==='TEMPO'?'TEMPO (temporarily): fluctuations each lasting less than 1 hour and together less than half of the period':'INTER: frequent short changes of less than 30 minutes (Australian practice, not ICAO)';
+      if(taf){add(p?2:1,'change',base+(p?', '+periodText(p)+' ('+periodIST(p)+')':'')+'.'+(k==='BECMG'?' The change normally takes no more than 2 hours (never more than 4).':'')+(p?'':' Period missing.'),p?'':'warn')}
+      else add(1,'trend',base+(k==='BECMG'?' (within the 2-hour trend period unless FM/TL/AT says when)':' (within the 2-hour trend period)')+'.');continue}
+    if(taf&&(m=/^FM(\d{2})(\d{2})(\d{2})$/.exec(k))){newSec('FM',{from:{d:+m[1],h:+m[2],m:+m[3]}});add(1,'change','FM (from) the '+ord(+m[1])+' at '+m[2]+m[3]+' UTC ('+toIST(+m[1],+m[2],+m[3]).label+'): a rapid change; everything after it replaces all earlier forecast conditions.');continue}
+    if(!taf&&(m=/^(FM|TL|AT)(\d{2})(\d{2})$/.exec(k))&&sec.kind!=='obs'){var lab={FM:'from',TL:'until',AT:'at'}[m[1]];sec[m[1].toLowerCase()]=m[2]+m[3];add(1,'trendtime',m[1]+' = '+lab+' '+m[2]+m[3]+' UTC ('+pad2((+m[2]*60+ +m[3]+330)%1440/60|0)+':'+pad2((+m[2]*60+ +m[3]+330)%60)+' IST).');continue}
+    /* observation / forecast groups */
+    if((x=decWind(k))){if(sec.wind)add(1,'unknown','Second wind group in the same section: not expected.','unknown');else{sec.wind=x;add(1,'wind',x.meaning)}continue}
+    if((x=decVar(k))&&sec.wind){sec.windVar=x;add(1,'windvar',x.meaning);continue}
+    if(k==='CAVOK'){sec.cavok=true;add(1,'cavok','CAVOK (ceiling and visibility OK): visibility 10 km or more, no cloud below 5,000 ft (or the highest minimum sector altitude, if greater), no CB or TCU, and no significant weather.');continue}
+    if(/^\d$/.test(k)&&/^\d\/\d{1,2}SM$/.test(t[i+1]||'')&&!sec.vis){x=decSM(t[i+1],+k);sec.vis=x;add(2,'vis',x.meaning);continue}
+    if(k==='////'&&!sec.vis){add(1,'vis','Visibility not reported (////), for example a sensor fault at an automatic station.');continue}
+    if((m=/^\/{6}(CB|TCU)?$/.exec(k))){add(1,'cloud','Cloud amount and height not reported (//////)'+(m[1]?', but '+(m[1]==='CB'?'cumulonimbus (CB)':'towering cumulus (TCU)')+' detected':'')+' (automatic station).');continue}
+    if((x=decSM(k))){if(!sec.vis){sec.vis=x;add(1,'vis',x.meaning)}else add(1,'unknown','Second visibility group: not expected.','unknown');continue}
+    if((x=decVis(k))){if(!sec.vis){sec.vis=x;add(1,'vis',x.meaning)}else add(1,'unknown','Second plain 4-figure group after the visibility: not recognised.','unknown');continue}
+    if((x=decDirVis(k))&&sec.vis){sec.visMin=x;add(1,'vismin',x.meaning);continue}
+    if((x=decRVR(k))){sec.rvr.push(x);add(1,'rvr',x.meaning);continue}
+    if((x=decRwyState(k))){sec.rwy.push(x);add(1,'rwystate',x.meaning);continue}
+    if((m=/^RE(.+)$/.exec(k))&&(x=decWx(m[1],true))){sec.re.push(x);add(1,'re','Recent weather: '+x.text+' since the previous report (or in the last hour), but not now.');continue}
+    if(k==='WS'){var n=1,what='';if(t[i+1]==='ALL'&&t[i+2]==='RWY'){n=3;what='all runways'}else if((m=/^(?:R|RWY)(\d{2}[LCR]?)$/.exec(t[i+1]||''))){n=2;what='runway '+m[1]}
+      sec.ws.push(what||'?');add(n,'ws',what?'Wind shear reported on '+what+' (in the take-off or approach path, below 1,600 ft).':'WS: wind shear, but the runway part is not recognised.',what?'':'unknown');continue}
+    if((m=/^WS(\d{3})\/(\d{3})(\d{2,3})KT$/.exec(k))){sec.ws.push('LLWS '+m[1]);add(1,'ws','Low-level wind shear at '+fmtN(+m[1]*100)+' ft, wind there '+m[2]+'° at '+(+m[3])+' kt (US TAF practice, not in the ICAO code form).');continue}
+    if(k==='NSW'){sec.nsw=true;add(1,'nsw','NSW: no significant weather (the weather in the earlier group ends).');continue}
+    if(k==='//'){add(1,'wx','Present weather not observable (automatic station).');continue}
+    if((x=decWx(k))){sec.wx.push(x);add(1,'wx','Present weather: '+x.meaning);continue}
+    if((x=decCloud(k))){if(x.vv)sec.vv=x;else sec.clouds.push(x);add(1,'cloud',x.meaning);continue}
+    if(NOCLOUD[k]){sec.nocloud=k;add(1,'cloud',NOCLOUD[k]);continue}
+    if((x=decTemp(k))){if(!taf&&sec.kind==='obs'&&!sec.temp){sec.temp=x;add(1,'temp',x.meaning)}else add(1,'unknown','Looks like temperature/dew point, but it is not expected here.','unknown');continue}
+    if((x=decTX(k))){sec.tx.push(x);add(1,'tx',x.meaning);continue}
+    if((x=decQNH(k))){sec.qnh=x;add(1,'qnh',x.meaning);continue}
+    if((x=decSea(k))){add(1,'sea',x.meaning);continue}
+    if(k==='VIS'){add(1,'nonstd','"VIS" written in plain language (visibility). Not part of the ICAO code form; the next group is the visibility.','warn');continue}
+    if(k==='M'&&R.groups.length&&R.groups[R.groups.length-1].kind==='vis'){add(1,'unknown','Not recognised: a lone "M" after the visibility (probably "metres" written out by the observer; not part of the code).','unknown');continue}
+    add(1,'unknown','Not recognised. This group does not match the ICAO/WMO code form, so it is not decoded. Check it against the original report.','unknown')}
+  return R}
+
+/* ---------- helpers for summaries, quiz and tests ---------- */
+function obs(R){for(var k=0;k<R.sections.length;k++)if(R.sections[k].kind==='obs'||R.sections[k].kind==='base')return R.sections[k];return null}
+function lowestCloud(s){if(!s)return null;var b=null;s.clouds.forEach(function(c){if(c.base!=null&&(b==null||c.base<b.base))b=c});return b}
+function ceiling(s){if(!s)return null;var b=null;s.clouds.forEach(function(c){if((c.cover==='BKN'||c.cover==='OVC')&&c.base!=null&&(b==null||c.base<b))b=c.base});if(s.vv&&s.vv.base!=null&&(b==null||s.vv.base<b))b=s.vv.base;return b}
+function windText(w){return !w?'':w.calm?'calm':w.speed==null?'not reported':(w.dir==='VRB'?'variable':w.dir==null?'///':pad3(w.dir)+'°')+' at '+w.speed+(w.unit==='KT'?' kt':w.unit==='MPS'?' m/s':' km/h')+(w.gust!=null?' gusting '+w.gust:'')}
+function visText(s){return s.cavok?'10 km or more (CAVOK)':s.vis?s.vis.text:''}
+function cloudText(s){if(s.cavok)return 'no cloud below 5,000 ft (CAVOK)';var a=s.clouds.map(function(c){return c.text});if(s.vv)a.push(s.vv.text);if(a.length)return a.join(', ');if(s.nocloud)return {NSC:'no significant cloud',NCD:'no cloud detected',SKC:'sky clear',CLR:'no cloud below 12,000 ft'}[s.nocloud];return ''}
+function secPhrase(s){var a=[];if(s.wind)a.push('wind '+s.wind.text);if(s.cavok)a.push('CAVOK (visibility 10 km or more, no cloud below 5,000 ft, no significant weather)');else{if(s.vis)a.push('visibility '+s.vis.text+(s.visMin?' (minimum '+fmtN(s.visMin.m)+' m to the '+DIRS[s.visMin.dir]+')':''));
+  if(s.wx.length)a.push(s.wx.map(function(w){return w.text}).join(', '));if(s.nsw)a.push('no significant weather');var c=cloudText(s);if(c)a.push(c)}
+  if(s.rvr.length)a.push('RVR '+s.rvr.map(function(r){return r.text}).join('; '));
+  return a.join(', ')}
+function summarise(R){
+  if(!R.tokens.length)return '';
+  var who=(R.name?R.name+' ('+R.station+')':(R.station||'Unknown station'));
+  var when=R.time?'the '+ord(R.time.d)+' at '+pad2(R.time.h)+pad2(R.time.m)+'Z ('+R.time.ist.replace(' (next day)',' the next day')+')':'time not given';
+  if(R.groups.every(function(g){return g.flag}))return 'This does not look like a METAR, SPECI or TAF: none of the groups match the ICAO/WMO code form. Paste one complete report, starting with METAR, SPECI, TAF or the 4-letter station code.';
+  if(R.nil)return who+': the report for '+when+' is missing (NIL).';
+  if(R.cnl)return who+': the forecast issued '+when+' has been cancelled (CNL).';
+  var out=[],s=obs(R);
+  if(R.type==='TAF'){
+    out.push(who+' '+(R.amd?'amended ':'')+(R.cor?'corrected ':'')+'TAF issued '+when+(R.valid?', valid '+periodShort(R.valid)+' ('+periodIST(R.valid)+')':'')+'.');
+    if(s)out.push('Main forecast: '+secPhrase(s)+'.'+(s.tx.length?' '+s.tx.map(function(x){return (x.kind==='TX'?'Max ':'Min ')+tStr(x.t)+' at '+pad2(x.h)+'00Z on the '+ord(x.d)}).join(', ')+'.':''));
+    R.sections.forEach(function(c){var ph=secPhrase(c);if(c.kind==='FM'){var f=c.from;out.push('From '+pad2(f.h)+pad2(f.m)+'Z on the '+ord(f.d)+' ('+toIST(f.d,f.h,f.m).label+'): '+(ph||'conditions change')+'.')}
+      else if(/^(BECMG|TEMPO|INTER|PROB)/.test(c.kind)){var lead={BECMG:'becoming',TEMPO:'temporarily',INTER:'intermittently'}[c.kind]||(c.prob+'% chance of'+(/TEMPO/.test(c.kind)?' temporarily':''));
+        out.push((c.period?cap(periodShort(c.period))+' ('+periodIST(c.period)+'): ':'')+lead+' '+(ph||'(no conditions given)')+'.')}});
+  } else {
+    out.push(who+', '+(R.type==='SPECI'?'special report (SPECI)':'METAR')+(R.cor?' (corrected)':'')+(R.auto?' (automatic)':'')+' for '+when+':');
+    if(s){var p=secPhrase(s);var x=[];if(p)x.push(p);if(s.temp)x.push('temperature '+(s.temp.t==null?'not reported':tStr(s.temp.t))+', dew point '+(s.temp.d==null?'not reported':tStr(s.temp.d)));if(s.qnh&&s.qnh.hpa)x.push('QNH '+s.qnh.hpa+' hPa'+(s.qnh.unit==='inHg'?' ('+s.qnh.inhg.toFixed(2)+' inHg)':''));
+      if(s.re.length)x.push('recent '+s.re.map(function(r){return r.text}).join(', '));if(s.ws.length)x.push('wind shear on '+s.ws.join(', '));out[0]+=' '+x.join(', ')+'.'}
+    R.sections.forEach(function(c){if(c.kind==='NOSIG')out.push('Trend: no significant change expected in the next 2 hours.');
+      else if(c.kind==='BECMG'||c.kind==='TEMPO'){var tt=[];if(c.fm)tt.push('from '+c.fm+'Z');if(c.tl)tt.push('until '+c.tl+'Z');if(c.at)tt.push('at '+c.at+'Z');
+        out.push('Trend (next 2 hours): '+(c.kind==='BECMG'?'becoming ':'temporarily ')+(secPhrase(c)||'(no conditions given)')+(tt.length?' '+tt.join(' '):'')+'.')}});
+  }
+  if(R.unknown.length)out.push('Not decoded: '+R.unknown.join(', ')+' (see the flagged rows).');
+  return out.join(' ')}
+/* Canonical key fields: used by the test suite and compared against an independent Python decoder. */
+function secKeys(s){if(!s)return null;var w=s.wind,k={};
+  k.wind=!w?null:w.calm?'CALM':(w.dir==null?'///':w.dir==='VRB'?'VRB':pad3(w.dir))+'/'+(w.speed==null?'//':w.speed)+(w.gust!=null?'G'+w.gust:'')+w.unit+(s.windVar?' '+pad3(s.windVar.from)+'V'+pad3(s.windVar.to):'');
+  k.vis=s.cavok?'CAVOK':!s.vis?null:({ge:'>=',lt:'<',gt:'>',eq:''}[s.vis.op])+s.vis.m;
+  k.clouds=s.cavok?'':s.clouds.map(function(c){return c.cover+(c.base==null?'?':c.base)+(c.type||'')}).concat(s.vv?['VV'+(s.vv.base==null?'?':s.vv.base)]:[]).concat(s.nocloud?[s.nocloud]:[]).join(' ');
+  k.wx=s.wx.map(function(x){return x.code}).join(' ');
+  k.ceiling=ceiling(s);
+  k.rvr=s.rvr.map(function(r){return r.rwy+':'+({gt:'>',lt:'<',eq:''}[r.op])+r.val+(r.trend||'')}).join(' ');
+  return k}
+function keyFields(text){var R=parseReport(text),s=obs(R),k=secKeys(s)||{};
+  var o={type:R.type,station:R.station,time:R.time?pad2(R.time.d)+pad2(R.time.h)+pad2(R.time.m):null,ist:R.time?R.time.ist:null,wind:k.wind||null,vis:k.vis||null,clouds:k.clouds||'',wx:k.wx||'',ceiling:k.ceiling==null?null:k.ceiling,rvr:k.rvr||'',
+    temp:s&&s.temp?(s.temp.t==null?'//':s.temp.t)+'/'+(s.temp.d==null?'//':s.temp.d):null,qnh:s&&s.qnh?s.qnh.hpa:null,
+    valid:R.valid?R.valid.code:null,
+    periods:R.sections.filter(function(c){return c.kind!=='header'&&c.kind!=='obs'&&c.kind!=='base'}).map(function(c){return c.kind+(c.period?' '+c.period.code:'')+(c.from?' '+pad2(c.from.d)+pad2(c.from.h)+pad2(c.from.m):'')+(c.fm?' FM'+c.fm:'')+(c.tl?' TL'+c.tl:'')+(c.at?' AT'+c.at:'')}).join(' | '),
+    tx:s?s.tx.map(function(x){return x.kind+x.t+'/'+pad2(x.d)+pad2(x.h)}).join(' '):'',
+    flags:R.unknown.join(' '),nil:R.nil,cor:R.cor,amd:R.amd,auto:R.auto};
+  return o}
+
+/* ---------- exam practice: multiple-choice questions generated from the parse ---------- */
+function rng(seed){var s=(seed>>>0)||1;return function(){s=(s*1664525+1013904223)>>>0;return s/4294967296}}
+function shuffle(a,r){a=a.slice();for(var k=a.length-1;k>0;k--){var j=Math.floor(r()*(k+1));var tmp=a[k];a[k]=a[j];a[j]=tmp}return a}
+function mcq(q,right,wrongs,expl,r,fill){right=cap(right);wrongs=wrongs.map(function(w){return w&&cap(w)});fill=(fill||[]).map(cap);var opts=[right];(wrongs.concat(fill||[])).forEach(function(w){if(w&&opts.indexOf(w)<0&&opts.length<4)opts.push(w)});if(opts.length<3)return null;var sh=shuffle(opts,r);return {q:q,options:sh,answer:sh.indexOf(right),explain:expl}}
+var TREND_DEF={NOSIG:'No significant change expected in the next 2 hours',BECMG:'A lasting change expected to happen at some time in the period',TEMPO:'Temporary fluctuations, each under 1 hour and together less than half the period',FM:'A rapid change at the stated time; all earlier conditions are replaced'};
+var WX_POOL=['BR','HZ','FU','FG','DZ','RA','TS','SH','DU','SA','BCFG','MIFG','VCSH','-RA','+TSRA','TSRA','SQ','FZFG'];
+function makeQuiz(text,seed){var R=parseReport(text),s=obs(R),r=rng(seed||7),Q=[],add=function(x){if(x)Q.push(x)};if(!s||R.nil||R.cnl)return Q;var taf=R.type==='TAF';
+  if(R.time){var t=R.time,ist=toIST(t.d,t.h,t.m).hm,utc=pad2(t.h)+':'+pad2(t.m);var m2=(t.h*60+t.m+1440-330)%1440,m3=(t.h*60+t.m+300)%1440;
+    add(mcq((taf?'This TAF was issued':'This report was observed')+' at '+pad2(t.h)+pad2(t.m)+'Z. What is that in IST?',ist+' IST',[utc+' IST',pad2(m2/60|0)+':'+pad2(m2%60)+' IST',pad2(m3/60|0)+':'+pad2(m3%60)+' IST'],'IST is UTC + 5 h 30 min, so '+pad2(t.h)+pad2(t.m)+'Z is '+ist+' IST'+(toIST(t.d,t.h,t.m).roll?' on the next day':'')+'.',r))}
+  if(taf&&R.valid){var v=R.valid;add(mcq('What is the validity period of this TAF?',periodShort(v),[periodShort({fd:v.fd,fh:(v.fh+5)%24,td:v.td,th:(v.th+5)%24}),'Issue time plus 2 hours only','9 hours from the issue time, whatever the code says'],'The group '+v.code+' means valid '+periodText(v)+'. The first two figures of each half are the day, the last two the hour (UTC).',r))}
+  if(s.wind&&s.wind.speed!=null){var w=s.wind,un=w.unit==='KT'?' kt':w.unit==='MPS'?' m/s':' km/h',right=windText(w).replace(' at',' at');
+    var wr=[];if(w.calm){wr=['000° (north) at 10 kt','Variable at 5 kt','Wind not reported']}else{var rec=typeof w.dir==='number'?pad3((w.dir+180)%360)+'°':'000°';
+      wr=[(typeof w.dir==='number'?rec:'000°')+' at '+w.speed+un+(w.gust!=null?' gusting '+w.gust:''),(w.dir==='VRB'?'variable':pad3(w.dir)+'°')+' at '+(w.speed*10)+un,w.gust!=null?(w.dir==='VRB'?'variable':pad3(w.dir)+'°')+' at '+w.gust+un+' gusting '+w.speed:(w.dir==='VRB'?'variable':pad3(w.dir)+'°')+' at '+w.speed+(w.unit==='KT'?' m/s':' kt')]}
+    add(mcq('What is the '+(taf?'forecast ':'')+'surface wind'+(taf?' at the start of the TAF':'')+'?',right,wr,w.calm?'00000KT means calm (less than 1 kt).':'The wind group gives direction (°true, 3 figures), then speed'+(w.gust!=null?', then G and the gust':'')+', then the unit ('+w.unit+'). Direction is where the wind blows FROM.',r))}
+  if(s.vis||s.cavok){var right=s.cavok?'10 km or more':s.vis.text,wr;
+    if(s.cavok||s.vis.op==='ge')wr=['9,999 ft','999 m','Not reported'];else if(s.vis.sm!=null)wr=[fmtN(s.vis.sm*1000)+' m',s.vis.sm+' NM','Not reported'];
+    else if(s.vis.op==='lt')wr=['0 m (zero visibility)','50 km or more','Not reported'];else wr=[fmtN(s.vis.m)+' ft',fmtN(s.vis.m*10)+' m',s.vis.m>=1000?fmtN(s.vis.m/10)+' m':(s.vis.m/100)+' km'];
+    add(mcq('What is the '+(taf?'forecast ':'')+'prevailing visibility'+(taf?' at the start of the TAF':'')+'?',right,wr,s.cavok?'CAVOK includes visibility of 10 km or more.':s.vis.sm!=null?'SM = statute miles.':'Visibility in a METAR/TAF is in metres (4 figures). 9999 = 10 km or more; 0000 = less than 50 m.',r))}
+  if(!taf||true){var lc=lowestCloud(s),right,wr,ex;
+    if(s.cavok){right='No cloud below 5,000 ft (CAVOK)';wr=['Overcast at 500 ft','Few at 5,000 ft','Cloud base not reported'];ex='CAVOK means no cloud below 5,000 ft (or the highest MSA if greater) and no CB/TCU.'}
+    else if(lc){right=COVERW[lc.cover]+' at '+fmtN(lc.base)+' ft';wr=[COVERW[lc.cover]+' at '+fmtN(lc.base*10)+' ft',COVERW[lc.cover]+' at '+fmtN(lc.base/10)+' ft',COVERW[lc.cover]+' at '+fmtN(lc.base)+' m'];ex='Cloud heights are in hundreds of feet above aerodrome level: '+pad3(lc.base/100)+' = '+fmtN(lc.base)+' ft.'}
+    else if(s.vv){right='Sky obscured, vertical visibility '+(s.vv.base==null?'not available':fmtN(s.vv.base)+' ft');wr=['Overcast at 1,000 ft','No significant cloud','Few at 100 ft'];ex='VV is vertical visibility: the sky is hidden (usually by fog).'}
+    else if(s.nocloud){var nc={NSC:'No significant cloud (NSC)',NCD:'No cloud detected by the automatic system (NCD)',SKC:'Sky clear (SKC)',CLR:'No cloud below 12,000 ft (CLR)'};right=nc[s.nocloud];wr=['Overcast at 0 ft','CAVOK','Few at 5,000 ft'];ex=NOCLOUD[s.nocloud]}
+    if(right)add(mcq('What is the lowest cloud'+(taf?' forecast at the start of the TAF':'')+'?',right,wr,ex,r,['Not reported']))}
+  var cg=ceiling(s);if(cg!=null){add(mcq('What is the ceiling (lowest broken or overcast layer, or vertical visibility)?',fmtN(cg)+' ft',[fmtN(cg*10)+' ft',fmtN(cg/10)+' ft','No ceiling'],'Ceiling = the lowest BKN or OVC layer (or VV). Here it is '+fmtN(cg)+' ft. This is general guidance; the term is defined in ICAO Annex 2.',r))}
+  add(mcq('Does this '+(taf?'TAF start with':'report show')+' CAVOK conditions?',s.cavok?'Yes':'No',['Yes','No'],s.cavok?'CAVOK is in the report.':'CAVOK is not in the report'+(s.vis&&s.vis.m<10000?': visibility is below 10 km':(s.wx.length?': there is significant weather':(lowestCloud(s)&&lowestCloud(s).base<5000?': there is cloud below 5,000 ft':'')))+'.',r,['Only at night','Cannot tell']));
+  if(s.temp&&s.temp.t!=null&&s.temp.d!=null){var a=s.temp.t,b=s.temp.d;add(mcq('What are the temperature and dew point?',tStr(a)+' / '+tStr(b),[tStr(b)+' / '+tStr(a),tStr(-a)+' / '+tStr(-b),tStr(a)+' / '+tStr(a-b)],'The first figure is the air temperature, the second the dew point. M means minus.',r,[tStr(a+10)+' / '+tStr(b+10)]))}
+  if(s.qnh&&s.qnh.hpa){var h=s.qnh.hpa;add(mcq('What is the QNH?',h+' hPa',[(h-10)+' hPa',(h+10)+' hPa',h+' inHg'],s.qnh.unit==='inHg'?'A'+s.qnh.inhg.toFixed(2).replace('.','')+' is '+s.qnh.inhg.toFixed(2)+' inHg, about '+h+' hPa.':'Q is QNH in hectopascals. India uses hPa.',r))}
+  if(s.wx.length){var w0=s.wx[0];if(!w0.alt){var pool=shuffle(WX_POOL.filter(function(c){return c!==w0.code}),r).map(function(c){return cap(decWx(c).text)});
+    add(mcq('What does "'+w0.code+'" mean?',cap(w0.text),pool.slice(0,3),w0.code+' = '+w0.text+'. '+'- light, no sign moderate, + heavy; VC = in the vicinity.',r,pool.slice(3)))}}
+  if(s.rvr.length){var rv=s.rvr[0];var right=rv.text.replace(/^runway \S+: /,'');add(mcq('What is the RVR on runway '+rv.rwy+'?',right,[rv.op==='gt'?'less than '+fmtN(rv.val)+' '+rv.unit:'more than '+fmtN(rv.val)+' '+rv.unit,fmtN(rv.val)+' ft',fmtN(rv.val/10)+' m'],rv.meaning,r))}
+  var ch=R.sections.filter(function(c){return /^(NOSIG|BECMG|TEMPO|FM|PROB)/.test(c.kind)});
+  if(ch.length){var c=ch[Math.floor(r()*ch.length)],key=c.kind.indexOf('PROB')===0?null:c.kind;
+    if(key)add(mcq('What does '+key+' mean'+(taf?' in this TAF':' in this report')+'?',TREND_DEF[key],Object.keys(TREND_DEF).filter(function(z){return z!==key}).map(function(z){return TREND_DEF[z]}),key+': '+TREND_DEF[key]+'.'+(taf?'':' In a METAR the trend covers the 2 hours after the observation time.'),r));
+    else add(mcq('What does '+c.kind+' mean in this TAF?',c.prob+'% probability'+(/TEMPO/.test(c.kind)?' of temporary fluctuations':' of these conditions')+' in the period',[(100-c.prob)+'% probability of these conditions in the period','These conditions will last at least '+c.prob+' minutes','The forecast is '+c.prob+'% accurate'],'PROB30 or PROB40 gives the probability (only 30% or 40% are used). PROB TEMPO = probability of temporary fluctuations.',r))}
+  if(taf&&s.tx.length){var x=s.tx[0];add(mcq('What does '+x.kind+(x.t<0?'M'+pad2(-x.t):pad2(x.t))+'/'+pad2(x.d)+pad2(x.h)+'Z mean?',(x.kind==='TX'?'Maximum':'Minimum')+' temperature '+tStr(x.t)+' on the '+ord(x.d)+' at '+pad2(x.h)+'00 UTC',[(x.kind==='TX'?'Minimum':'Maximum')+' temperature '+tStr(x.t)+' on the '+ord(x.d)+' at '+pad2(x.h)+'00 UTC','Temperature '+tStr(x.t)+' at '+pad2(x.d)+':'+pad2(x.h)+' IST','Dew point '+tStr(x.t)],'TX = maximum, TN = minimum temperature, with the day and hour (UTC) when it is expected.',r))}
+  return Q}
+
+  </script>
+  <script>
+
+const $=id=>document.getElementById(id);
+function v(id){const e=$(id);if(!e)return NaN;const x=parseFloat(String(e.value).trim().replace(',','.'));return isFinite(x)?x:NaN}
+function fx(x,d){d=d||0;return isFinite(x)?Number(x).toLocaleString('en-IN',{minimumFractionDigits:d,maximumFractionDigits:d}):'–'}
+function kv(k,val,cls){return '<div class="kv '+(cls||'')+'"><div class="k">'+k+'</div><div class="v">'+val+'</div></div>'}
+function setVals(o){for(const k in o){const e=$(k);if(e){e.value=o[k]}}}
+function bindAll(fn){document.querySelectorAll('#calc input,#calc select').forEach(e=>{e.addEventListener('input',fn);e.addEventListener('change',fn)});}
+function segInit(id,fn){const g=$(id);g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-selected','false'));b.setAttribute('aria-selected','true');fn()}));}
+function segVal(id){const b=$(id).querySelector('button[aria-selected=true]');return b?b.dataset.v:null}
+function segSet(id,val){$(id).querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.v===val?'true':'false'))}
+function show(big,unit,sub,grid,warn,steps){$('rbig').innerHTML=big+(unit?' <small>'+unit+'</small>':'');$('rsub').innerHTML=sub||'';$('rgrid').innerHTML=grid||'';$('rwarn').innerHTML=warn||'';$('steps').textContent=steps||''}
+
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function rawSpans(R){var gi=[];R.groups.forEach(function(g,k){for(var j=g.i;j<g.i+g.n;j++)gi[j]=k});
+  return R.tokens.map(function(t,j){var g=R.groups[gi[j]],c=g&&g.flag==='unknown'?' bad':g&&g.flag==='warn'?' warnt':'';return '<span class="tok'+c+'" data-g="'+gi[j]+'">'+esc(t)+'</span>'}).join(' ')}
+function secLabel(R,s){if(s.kind==='obs')return R.type==='SPECI'?'Special observation':'Observation';if(s.kind==='base')return 'Main forecast (base conditions)';
+  if(s.kind==='NOSIG')return 'Trend forecast (next 2 hours)';if(R.type!=='TAF'&&(s.kind==='BECMG'||s.kind==='TEMPO'))return 'Trend forecast (next 2 hours): '+s.kind;
+  if(s.kind==='FM')return 'Change group: FM (from)';return 'Change group: '+s.kind}
+function decodeTable(R){var h='<div class="rawview" aria-label="Raw report">'+rawSpans(R)+'</div><p class="hint">Tap a row to highlight its group in the report (or tap a group).</p><table class="dec"><tbody>',last=-1;
+  R.groups.forEach(function(g,k){if(g.sec!==last&&R.sections[g.sec]&&R.sections[g.sec].kind!=='header'){h+='<tr class="sec"><td colspan="2">'+esc(secLabel(R,R.sections[g.sec]))+'</td></tr>'}last=g.sec;
+    h+='<tr class="row'+(g.flag==='unknown'?' bad':g.flag==='warn'?' warn':'')+'" data-g="'+k+'" tabindex="0"><td class="g">'+esc(g.raw)+'</td><td>'+(g.flag==='unknown'?'<b>⚠ </b>':'')+esc(g.meaning)+'</td></tr>'});
+  return h+'</tbody></table>'}
+function hl(g){document.querySelectorAll('.tok.hl,tr.sel').forEach(function(e){e.classList.remove('hl');e.classList.remove('sel')});if(g==null)return;
+  document.querySelectorAll('#result .tok[data-g="'+g+'"],#steps .tok[data-g="'+g+'"],#steps tr[data-g="'+g+'"]').forEach(function(e){e.classList.add(e.tagName==='TR'?'sel':'hl')})}
+document.addEventListener('click',function(e){var t=e.target.closest&&e.target.closest('#result .tok,#steps .tok,#steps tr.row');if(!t)return;var g=t.getAttribute('data-g');
+  var on=t.classList.contains('hl')||t.classList.contains('sel');hl(on?null:g);if(!on&&t.tagName==='SPAN'){var row=document.querySelector('#steps tr[data-g="'+g+'"]');if(row&&row.scrollIntoView)row.scrollIntoView({block:'nearest'})}});
+document.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('#steps tr.row')){e.preventDefault();e.target.click()}});
+function decodeRender(page){var txt=$('raw').value;
+  if(!txt.trim()){$('rlabel').textContent=page==='taf'?'Decoded TAF':'Decoded report';$('rbig').textContent='–';$('rsub').innerHTML='<p class="istline">Paste a report above, or tap “Try an example”.</p>';$('rgrid').innerHTML='';$('rwarn').innerHTML='';$('steps').innerHTML='';$('detect').innerHTML='';return null}
+  var R=parseReport(txt),s=obs(R);
+  $('detect').innerHTML='Detected: <b>'+R.type+'</b>'+(R.typeAuto?' (no METAR/SPECI/TAF word, worked out from the groups)':'')+(R.station?' · '+esc(R.station)+(R.name?' '+esc(R.name):''):'');
+  $('rlabel').textContent='Decoded '+R.type+(R.cor?' (COR)':'')+(R.amd?' (AMD)':'');
+  $('rbig').className='result-big dec';$('rbig').textContent=(R.station||'????')+(R.time?' '+pad2(R.time.h)+pad2(R.time.m)+'Z':'');
+  $('rsub').innerHTML='<p class="istline">'+(R.time?'The '+ord(R.time.d)+' at '+pad2(R.time.h)+pad2(R.time.m)+' UTC = '+esc(R.time.ist):'No issue time found')+'</p><div class="rawview">'+rawSpans(R)+'</div><p class="summary">'+esc(summarise(R))+'</p>';
+  var g='';if(s&&!R.nil&&!R.cnl){var wx=s.wx.map(function(w){return w.text}).join(', ')||(s.cavok||s.nsw?'none significant':'none reported');
+    g+=kv('Wind',esc(windText(s.wind)||'–'));g+=kv('Visibility',esc(visText(s)||'–'));g+=kv('Weather',esc(cap(wx)));g+=kv('Cloud',esc(cap(cloudText(s)||'–')));
+    var cg=ceiling(s);g+=kv('Ceiling (general guidance)',cg==null?(s.cavok?'none below 5,000 ft':s.vv?'sky obscured (VV///)':'no BKN/OVC layer'):fmtN(cg)+' ft');
+    if(R.type==='TAF'){g+=kv('Valid (UTC)',R.valid?esc(periodShort(R.valid)):'–');g+=kv('Change groups',String(R.sections.filter(function(c){return /^(BECMG|TEMPO|FM|PROB|INTER)/.test(c.kind)}).length))}
+    else{g+=kv('Temp / dew point',s.temp?(s.temp.t==null?'–':tStr(s.temp.t))+' / '+(s.temp.d==null?'–':tStr(s.temp.d)):'–');g+=kv('QNH',s.qnh&&s.qnh.hpa?s.qnh.hpa+' hPa':'–');
+      var tr=R.sections.filter(function(c){return c.kind==='NOSIG'||c.kind==='BECMG'||c.kind==='TEMPO'}).map(function(c){return c.kind}).join(', ');g+=kv('Trend',tr||'none')}}
+  $('rgrid').innerHTML=g;
+  var w=[];if(R.unknown.length)w.push(R.unknown.length+' group'+(R.unknown.length>1?'s':'')+' not recognised and not decoded: '+esc(R.unknown.join(', '))+'. Check the original report.');
+  if(R.more)w.push('More than one report was pasted. Only the first is decoded.');
+  if(page==='metar'&&R.type==='TAF')w.push('This is a TAF (forecast). It is decoded here, and the <a href="/tools/taf-decoder/">TAF decoder</a> page explains TAF change groups in more detail.');
+  if(page==='taf'&&R.type!=='TAF')w.push('This is a '+R.type+' (observation), not a TAF. It is decoded here; the <a href="/tools/metar-decoder/">METAR decoder</a> page has METAR practice questions.');
+  $('rwarn').innerHTML=w.join('<br>');$('steps').innerHTML=decodeTable(R);return R}
+/* exam practice */
+var PR={bank:[],order:[],ri:-1,qs:[],qi:0,score:0,total:0,done:false,seed:1};
+function prInit(bank){PR.bank=bank;PR.seed=(Date.now()%100000)+1;var r=rng(PR.seed);PR.order=shuffle(bank.map(function(_,k){return k}),r);
+  $('pnext').addEventListener('click',prNext);$('pnew').addEventListener('click',prNewReport);$('preset').addEventListener('click',function(){PR.score=0;PR.total=0;prScore()});
+  $('pdecode').addEventListener('click',function(){$('raw').value=PR.bank[PR.order[PR.ri]];$('exnote').textContent='Report from the practice card.';render();$('result').scrollIntoView({behavior:'smooth',block:'start'})});prNewReport()}
+function prNewReport(){PR.ri=(PR.ri+1)%PR.order.length;var txt=PR.bank[PR.order[PR.ri]];PR.qs=makeQuiz(txt,PR.seed+PR.ri*17);PR.qi=0;$('praw').textContent=tokenize(txt).join(' ');prShow()}
+function prNext(){PR.qi++;if(PR.qi>=PR.qs.length){prNewReport();return}prShow()}
+function prScore(){$('pscore').innerHTML='Score '+PR.score+' / '+PR.total+' <span>'+(PR.total?Math.round(100*PR.score/PR.total)+'% correct':'Nothing is saved or sent')+'</span>'}
+function prShow(){var q=PR.qs[PR.qi];PR.done=false;$('pfb').innerHTML='';$('pnext').textContent=PR.qi+1>=PR.qs.length?'Next report':'Next question';
+  $('pq').textContent='Q'+(PR.qi+1)+' of '+PR.qs.length+'. '+q.q;
+  $('popts').innerHTML=q.options.map(function(o,k){return '<button type="button" class="popt" data-k="'+k+'">'+String.fromCharCode(65+k)+'. '+esc(o)+'</button>'}).join('');
+  $('popts').querySelectorAll('.popt').forEach(function(b){b.addEventListener('click',function(){prAnswer(+b.dataset.k)})});prScore()}
+function prAnswer(k){if(PR.done)return;PR.done=true;var q=PR.qs[PR.qi],ok=k===q.answer;PR.total++;if(ok)PR.score++;
+  $('popts').querySelectorAll('.popt').forEach(function(b,j){b.disabled=true;if(j===q.answer)b.classList.add('right');else if(j===k)b.classList.add('wrong')});
+  $('pfb').innerHTML=(ok?'<b class="ok">Correct.</b> ':'<b class="no">Not quite.</b> The answer is '+String.fromCharCode(65+q.answer)+'. ')+esc(q.explain);prScore()}
+
+var EX=[["METAR VIDP 270030Z 00000KT 0050 R28/0150N R29R/0175D R29L/0125N R27/0100N FG VV/// 07/07 Q1019 NOSIG", "Delhi winter fog: visibility below 50 m, RVR on all four runways, sky obscured. Illustrative report in the format Indian stations use."], ["METAR VABB 150530Z 24016G28KT 2000 +TSRA FEW008 SCT012 FEW025CB OVC080 26/25 Q1001 TEMPO 1500 TSRA", "Mumbai monsoon: heavy thunderstorm rain with CB, TEMPO trend. Illustrative report in the format Indian stations use."], ["METAR VOBL 260700Z 11008KT 8000 SCT012 SCT018 25/18 Q1020 NOSIG", "Bengaluru, a quiet afternoon with low scattered cloud. Real report, aviationweather.gov, 26 Nov 2026."], ["METAR VECC 260700Z 35008KT 2500 HZ FEW100 26/16 Q1014 NOSIG", "Kolkata winter haze. Real report, aviationweather.gov, 26 Nov 2026."], ["METAR VOMM 260530Z 08006KT 6000 SCT020 FEW025TCU 31/26 Q1015 NOSIG", "Chennai with towering cumulus. Real report, aviationweather.gov, 26 Nov 2026."], ["SPECI VECC 151040Z 31035G55KT 260V340 1200 +TSRA SQ SCT010 FEW025CB OVC080 24/21 Q1004 WS R19L TEMPO 0800 +TSRA", "Kolkata pre-monsoon squall (nor'wester) as a SPECI, with wind shear on runway 19L. Illustrative report in the format Indian stations use."], ["METAR VIDP 260230Z COR 28003KT 1600 R28/P2000 R27/P2000 R29R/P2000 R29L/P2000 BR NSC 13/09 Q1019 BECMG 1500 BR", "Delhi morning mist, corrected report (COR), RVR above 2,000 m. Real report, aviationweather.gov, 26 Nov 2026."], ["TAF VIDP 261100Z 2612/2718 29006KT 3000 HZ NSC TX24/2709Z TN08/2701Z BECMG 2614/2616 VRB03KT 1500 BR BECMG 2619/2621 0800 FG TEMPO 2621/2703 0200 FG VV/// PROB30 TEMPO 2700/2703 0050 FG VV/// BECMG 2705/2707 2000 BR", "A Delhi fog TAF with BECMG, TEMPO, PROB30 TEMPO and TX/TN. Illustrative report in the format Indian stations use."]];
+var BANK=["METAR VIDP 270030Z 00000KT 0050 R28/0150N R29R/0175D R29L/0125N R27/0100N FG VV/// 07/07 Q1019 NOSIG", "METAR VABB 150530Z 24016G28KT 2000 +TSRA FEW008 SCT012 FEW025CB OVC080 26/25 Q1001 TEMPO 1500 TSRA", "METAR VOBL 260700Z 11008KT 8000 SCT012 SCT018 25/18 Q1020 NOSIG", "METAR VECC 260700Z 35008KT 2500 HZ FEW100 26/16 Q1014 NOSIG", "METAR VOMM 260530Z 08006KT 6000 SCT020 FEW025TCU 31/26 Q1015 NOSIG", "SPECI VECC 151040Z 31035G55KT 260V340 1200 +TSRA SQ SCT010 FEW025CB OVC080 24/21 Q1004 WS R19L TEMPO 0800 +TSRA", "METAR VIDP 260230Z COR 28003KT 1600 R28/P2000 R27/P2000 R29R/P2000 R29L/P2000 BR NSC 13/09 Q1019 BECMG 1500 BR", "METAR VEGT 260100Z 00000KT 0300 R02/0400 FG VV/// 18/18 Q1017 TEMPO 0150 FG", "METAR VIAR 260400Z VRB01KT 0600 R34/1300 R16/0900 MIFG NSC 15/12 Q1019 BECMG 0800 MIFG", "METAR VILH 260630Z VRB01KT 6000 SKC 06/M13 Q1035 NOSIG", "METAR VOCI 251500Z VRB02KT 3000 -TSRA FEW008 SCT012 FEW025CB OVC080 25/24 Q1014 NOSIG", "METAR VABB 260600Z 13004KT 2500 FU NSC 33/18 Q1014 BECMG 3000 FU", "METAR VISR 260530Z VRB02KT 1200 R31/P2000 BR SKC 06/02 Q1029 NOSIG", "METAR VILK 260400Z 32003KT 1200 R27/P2000 BR NSC 20/16 Q1019 BECMG 1500 BR", "METAR EGLL 260650Z COR AUTO 06008KT 020V090 9999 BKN020 05/01 Q1018 NOSIG", "METAR UUEE 260700Z 28007MPS 2700 -SN SCT012 OVC020 M02/M04 Q1006 R24L/590535 R24C/590535 TEMPO 0500 +SHSN BKN010CB", "METAR KJFK 260651Z 06016G24KT 10SM SCT032 OVC200 07/03 A3058 RMK SLP356 T00720028", "METAR VOHS 260700Z 13007KT 6000 FEW020 SCT025 28/20 Q1018 NOSIG", "METAR VAAH 260700Z 07004KT 5000 FU NSC 29/09 Q1016 NOSIG"];
+var exi=-1;
+function render(){decodeRender('metar')}
+$('raw').addEventListener('input',function(){hl(null);render()});
+$('exbtn').addEventListener('click',function(){exi=(exi+1)%EX.length;$('raw').value=EX[exi][0];$('exnote').textContent='Example '+(exi+1)+' of '+EX.length+': '+EX[exi][1]+' Tap again for the next one.';hl(null);render()});
+$('clearbtn').addEventListener('click',function(){$('raw').value='';$('exnote').textContent='';render();$('raw').focus()});
+$('raw').value="METAR VIDP 260230Z COR 28003KT 1600 R28/P2000 R27/P2000 R29R/P2000 R29L/P2000 BR NSC 13/09 Q1019 BECMG 1500 BR";
+render();
+prInit(BANK);
+
+  </script>
+</body>
+</html>
