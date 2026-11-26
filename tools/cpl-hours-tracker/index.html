@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DGCA CPL &amp; ATPL Hours Tracker: Flying Hours Left for Your Licence | Pilot Journey</title>
+  <meta name="description" content="Free DGCA hours tracker for CPL and ATPL (aeroplanes). Log flights or enter totals and see hours left against every flying-experience requirement, with co-pilot and PICUS credit and a rough finish date. Data stays on your device.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://quiz.pilotjourney.in/tools/cpl-hours-tracker/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pilot Journey">
+  <meta property="og:url" content="https://quiz.pilotjourney.in/tools/cpl-hours-tracker/">
+  <meta property="og:title" content="DGCA CPL &amp; ATPL Hours Tracker: Flying Hours Left for Your Licence | Pilot Journey">
+  <meta property="og:description" content="Free DGCA hours tracker for CPL and ATPL (aeroplanes). Log flights or enter totals and see hours left against every flying-experience requirement, with co-pilot and PICUS credit and a rough finish date. Data stays on your device.">
+  <meta property="og:image" content="https://quiz.pilotjourney.in/pj-logo-512.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="DGCA CPL &amp; ATPL Hours Tracker: Flying Hours Left for Your Licence | Pilot Journey">
+  <meta name="twitter:description" content="Free DGCA hours tracker for CPL and ATPL (aeroplanes). Log flights or enter totals and see hours left against every flying-experience requirement, with co-pilot and PICUS credit and a rough finish date. Data stays on your device.">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <link rel="stylesheet" href="../assets/hours-tracker.css">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "DGCA CPL and ATPL hours tracker: how many flying hours are left?", "url": "https://quiz.pilotjourney.in/tools/cpl-hours-tracker/", "applicationCategory": "EducationalApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"}, "publisher": {"@type": "Organization", "name": "Pilot Journey", "url": "https://quiz.pilotjourney.in/"}, "description": "Free DGCA hours tracker for CPL and ATPL (aeroplanes). Log flights or enter totals and see hours left against every flying-experience requirement, with co-pilot and PICUS credit and a rough finish date. Data stays on your device."}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Pilot Journey Quiz", "item": "https://quiz.pilotjourney.in/"}, {"@type": "ListItem", "position": 2, "name": "Aviation tools", "item": "https://quiz.pilotjourney.in/tools/"}, {"@type": "ListItem", "position": 3, "name": "CPL & ATPL hours tracker", "item": "https://quiz.pilotjourney.in/tools/cpl-hours-tracker/"}]}]}</script>
+</head>
+<body class="hx">
+  <div class="page">
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="accent-bar" aria-hidden="true"></div>
+    <div class="top-strip">
+      <div class="wrap top-strip-inner">
+        <span><span class="dot" aria-hidden="true"></span>Free study tools · no account needed</span>
+        <span class="hide-sm">For study only · always check official documents</span>
+      </div>
+    </div>
+    <header class="site-header">
+      <div class="wrap site-header-inner">
+        <a class="brand" href="/" aria-label="Pilot Journey home">
+          <img src="../assets/pj-logo.png" alt="" width="40" height="40">
+          <span>
+            <span class="brand-name">Pilot Journey</span>
+            <span class="brand-tag">DGCA · ATPL · A320</span>
+          </span>
+        </a>
+        <nav class="nav" aria-label="Main navigation">
+          <a href="/subjects/">Question bank</a>
+          <a href="/type-rating/">Type rating</a>
+          <a href="/daily/">Daily check</a>
+          <a href="/tools/" aria-current="page">Tools</a>
+          <a href="/faq/">FAQ</a>
+        </nav>
+        <a class="btn btn-primary header-cta" href="/subjects/">Start practising</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <header class="hero">
+        <div class="wrap">
+          <nav aria-label="Breadcrumb">
+            <ol class="crumbs">
+              <li><a href="/">Quiz home</a></li>
+              <li><a href="/tools/">Aviation tools</a></li>
+              <li aria-current="page">CPL & ATPL hours tracker</li>
+            </ol>
+          </nav>
+          <p class="kicker">Free pilot career tool</p>
+          <h1 class="display-lg">DGCA CPL and ATPL hours tracker: how many flying hours are left?</h1>
+          <p class="lede">Pick CPL or ATPL, then log each flight or type in the totals from your logbook. You get the hours still needed for the licence, a progress bar for every DGCA flying-experience requirement, the one you are furthest behind on and a rough finish date from your recent flying.</p>
+          <p class="study-note">For training/study only, not for real flight planning.</p>
+          <noscript>
+            <p class="noscript">This tracker needs JavaScript in your browser. The DGCA requirement table and the explainer are still on this page below.</p>
+          </noscript>
+        </div>
+      </header>
+
+      <div class="wrap tool-layout">
+        <div>
+          <section class="card calc-card" id="calc">
+            <h2>Your flying log</h2>
+            <p class="panel-help">Times in hh:mm (1:30) or decimal hours (1.5). Everything you enter is saved only in this browser on this device. Nothing is sent anywhere.</p>
+            <p class="subhead ht-lichead">Which licence are you tracking?</p>
+            <div class="seg ht-seg ht-licseg" id="lic" role="tablist" aria-label="Licence"><button type="button" data-v="cpl" aria-selected="true">CPL (200 h)</button><button type="button" data-v="atpl" aria-selected="false">ATPL (1,500 h)</button></div>
+            <div class="fields">
+              <div class="field"><label for="refdate">Count hours up to (your planned application date)</label><input id="refdate" type="date"></div>
+            </div>
+            <div class="ht-cpl ht-win5wrap">
+              <label class="ht-win5"><input type="checkbox" id="win5" checked> Only count hours from the last 5 years</label>
+              <p class="ht-source ht-win5note">The Ministry's published compilation of Schedule II still uses a 5-year window. A 2019 amendment (draft G.S.R. 123(E); listed as notified on 2 July 2019 as G.S.R. 468(E)) appears to have replaced that with hours held on the date of application, but the official gazette body could not be opened when checking, so this box stays on by default. Untick it to count older hours. Confirm the current rule with DGCA or your flying school.</p>
+            </div>
+            <div class="seg ht-seg" id="mode" role="tablist" aria-label="Entry type"><button type="button" data-v="flight" aria-selected="true">Add a flight</button><button type="button" data-v="totals" aria-selected="false">Enter logbook totals</button></div>
+            <div id="fflight" class="ht-form">
+              <div class="fields">
+                <div class="field"><label for="fdate">Date</label><input id="fdate" type="date"></div>
+                <div class="field"><label for="ftype">Flight type</label><select id="ftype"><option value="dual">Dual (with instructor)</option><option value="solo">Solo</option><option value="pic">PIC</option><option value="picus">PIC under supervision (PICUS / P1 U/S)</option><option value="copilot">Co-pilot (multi-crew)</option><option value="sim">Simulator (instrument)</option></select></div>
+                <div class="field"><label for="fdur">Duration</label><input id="fdur" inputmode="decimal" placeholder="1:30 or 1.5"></div>
+                <div class="field ht-notsim"><label for="finst">Instrument time in actual flight (not simulator)</label><input id="finst" inputmode="decimal" placeholder="0:00"></div>
+                <div class="field ht-notsim ht-cpl"><label for="fldg">Night take-offs and landings (count)</label><input id="fldg" inputmode="numeric" placeholder="0"></div>
+              </div>
+              <div class="ht-checks ht-notsim">
+                <label><input type="checkbox" id="fxc"> Cross-country</label>
+                <label><input type="checkbox" id="fnight"> Night</label>
+                <label class="ht-atpl"><input type="checkbox" id="fme"> Multi-engine aeroplane</label>
+                <label class="ht-cpl"><input type="checkbox" id="fq300"> This was my 300 NM cross-country with full-stop landings at two other aerodromes</label>
+              </div>
+            </div>
+            <div id="ftotals" class="ht-form" hidden>
+              <p class="panel-help">Copy the running totals from your logbook as of a date. Totals can't show the last-six-months rules, so add recent flights one by one.</p>
+              <div class="fields">
+                <div class="field"><label for="tdate">Totals as of</label><input id="tdate" type="date"></div>
+                <div class="field"><label for="ttotal">Total flight time</label><input id="ttotal" inputmode="decimal" placeholder="hh:mm"></div>
+                <div class="field ht-atpl"><label for="tcop">Co-pilot (of the total)</label><input id="tcop" inputmode="decimal" placeholder="hh:mm"></div>
+                <div class="field ht-atpl"><label for="tpicus">PICUS / P1 U/S (of the total)</label><input id="tpicus" inputmode="decimal" placeholder="hh:mm"></div>
+                <div class="field"><label for="tpic">PIC (incl. solo, not PICUS)</label><input id="tpic" inputmode="decimal" placeholder="hh:mm"></div>
+                <div class="field ht-atpl"><label for="txcall">All cross-country (any seat)</label><input id="txcall" inputmode="decimal" placeholder="hh:mm"></div>
+                <div class="field"><label for="txc">Cross-country as PIC<span class="ht-atpl-i"> or PICUS (credited)</span></label><input id="txc" inputmode="decimal" placeholder="hh:mm"></div>
+                <div class="field ht-atpl"><label for="txcn">PIC/PICUS cross-country by night (credited)</label><input id="txcn" inputmode="decimal" placeholder="hh:mm"></div>
+                <div class="field"><label for="tnight">Night</label><input id="tnight" inputmode="decimal" placeholder="hh:mm"></div>
+                <div class="field ht-atpl"><label for="tnco">Night as co-pilot (of the night)</label><input id="tnco" inputmode="decimal" placeholder="hh:mm"></div>
+                <div class="field"><label for="tinst">Instrument time in flight</label><input id="tinst" inputmode="decimal" placeholder="hh:mm"></div>
+                <div class="field"><label for="tsim">Instrument on simulator</label><input id="tsim" inputmode="decimal" placeholder="hh:mm"></div>
+                <div class="field"><label for="tdual">Dual</label><input id="tdual" inputmode="decimal" placeholder="hh:mm"></div>
+              </div>
+              <div class="ht-checks ht-cpl"><label><input type="checkbox" id="tq300"> 300 NM qualifying cross-country already done</label></div>
+            </div>
+            <div class="actions ht-save"><button type="button" class="btn btn-primary" id="addbtn">Add to log</button><button type="button" class="btn btn-ghost" id="cancelbtn" hidden>Cancel edit</button><p class="exnote ht-err" id="ferr" role="alert"></p></div>
+            <div class="ht-log">
+              <p class="subhead">Your log <span id="logcount"></span></p>
+              <div class="tbl-wrap"><table class="tbl" id="logtbl"><thead><tr><th>Date</th><th>Entry</th><th>Time</th><th></th></tr></thead><tbody id="logbody"></tbody></table></div>
+              <p class="ht-empty" id="logempty">No entries yet. Add a flight, enter your totals, or tap "Try an example".</p>
+              <div class="actions"><button type="button" class="btn btn-ghost" id="expbtn">Export CSV backup</button><label class="btn btn-ghost" for="impfile">Import CSV</label><input type="file" id="impfile" accept=".csv,text/csv" class="ht-file"></div>
+              <p class="exnote ht-local" id="impnote"></p>
+              <p class="ht-privacy">Your log is stored only in this browser on this device (localStorage). Clearing browser data or switching phones loses it, so export a CSV backup now and then. This is a study aid, not an official logbook: your signed logbook and DGCA's records are what count.</p>
+            </div>
+
+            <div class="actions"><button type="button" class="btn btn-primary" id="exbtn">Try an example</button><button type="button" class="btn btn-ghost" id="clearbtn">Clear</button><p class="exnote" id="exnote"></p></div>
+          </section>
+
+          <section class="card result-card" id="result" aria-live="polite">
+            <span class="kicker" id="rlabel">Total hours left</span>
+            <div class="result-big" id="rbig">–</div>
+            <div class="result-sub" id="rsub"></div>
+            <div class="result-grid" id="rgrid"></div>
+            <div class="result-warn" id="rwarn"></div>
+          </section>
+
+          <details class="card working" open><summary>Breakdown by requirement</summary><div class="steps" id="steps"></div></details>
+          <section class="card prose" id="reqs">
+            <h2>DGCA flying experience requirements: CPL and ATPL (aeroplanes)</h2>
+            <h3>CPL (aeroplanes): Schedule II, Section J</h3>
+            <div class="tbl-wrap"><table class="tbl ht-reqtbl">
+              <thead><tr><th>Requirement</th><th>Minimum</th><th>Clause</th></tr></thead>
+              <tbody>
+                <tr><td>Flight time as pilot of an aeroplane (the tracker counts the last 5 years by default; you can turn that window off)</td><td>200 h</td><td>1(e)</td></tr>
+                <tr><td>Pilot-in-command (PIC)</td><td>100 h</td><td>1(e)(i)</td></tr>
+                <tr><td>PIC in the 6 months before you apply (part of the 100 h)</td><td>15 h</td><td>1(e)(i)</td></tr>
+                <tr><td>Cross-country as PIC</td><td>20 h</td><td>1(e)(ii)</td></tr>
+                <tr><td>One cross-country of at least 300 NM with full-stop landings at two different aerodromes (inside the 20 h)</td><td>1 flight</td><td>1(e)(ii)</td></tr>
+                <tr><td>Instrument time, of which no more than 5 h on an approved simulator</td><td>10 h</td><td>1(e)(iii)</td></tr>
+                <tr><td>Night flight time</td><td>5 h</td><td>1(e)(iv)</td></tr>
+                <tr><td>Night take-offs and landings as PIC (sole manipulator of the controls), within the 6 months before you apply</td><td>10 + 10</td><td>1(e)(iv)</td></tr>
+                <tr><td>Dual instruction hours</td><td class="ht-wrap">No separate figure in this clause; set by the approved training syllabus</td><td>1(f)</td></tr>
+              </tbody>
+            </table></div>
+            <p class="ht-source"><strong>Source:</strong> Aircraft Rules, 1937, Schedule II, Section J (Commercial Pilot's Licence, Aeroplanes), paragraph 1(e) Experience, checked against the Ministry of Civil Aviation's published copy of the Aircraft Rules (civilaviation.gov.in). Last checked 26 Nov 2026. <strong>Verify before relying on it:</strong> DGCA's own online copy could not be opened when checking, and rules change, so confirm the current version on the <a href="https://www.dgca.gov.in/digigov-portal/">DGCA website</a> or with your flying school.</p>
+            <p class="ht-source">A 2019 amendment (draft G.S.R. 123(E) of 14 February 2019; listed as notified on 2 July 2019, issue No. 391, as G.S.R. 468(E) dated 25 June 2019) appears to have replaced “within a period of five years immediately preceding the date of application” with hours held “on” the date of application. The official gazette body could not be opened when checking, and the Ministry compilation still shows the five-year wording, so the 5-year box stays on unless you untick it.</p>
+            <p class="ht-source">For the CPL, the tracker treats solo time as PIC time and counts 10 night landings as 10 take-offs and 10 landings. Simulator time is not flight time, so it only counts towards instrument time. The minimums overlap: PIC, cross-country, night and instrument hours all sit inside the 200 hours, not on top of them.</p>
+
+            <h3>ATPL (aeroplanes): DGCA eGCA application, flying experience</h3>
+            <div class="tbl-wrap"><table class="tbl ht-reqtbl">
+              <thead><tr><th>eGCA item</th><th>Minimum</th><th>Item</th></tr></thead>
+              <tbody>
+                <tr><td>Total flying time</td><td>1500:00</td><td>1</td></tr>
+                <tr><td>Flight time within a period of 6 months</td><td>20:00</td><td>2</td></tr>
+                <tr><td>Flight time as PIC</td><td>250:00</td><td>3</td></tr>
+                <tr><td>Flight time at night</td><td>100:00</td><td>4</td></tr>
+                <tr><td>Total cross-country</td><td>500:00</td><td>5</td></tr>
+                <tr><td>Cross-country as PIC</td><td>100:00</td><td>5.1</td></tr>
+                <tr><td>Cross-country as PIC at night</td><td>50:00</td><td>5.2</td></tr>
+                <tr><td>Instrument time</td><td>75:00</td><td>6</td></tr>
+                <tr><td>Instrument time in actual flight</td><td>50:00</td><td>6.1</td></tr>
+                <tr><td>PIC on multi-engine aircraft in the 6 months before you apply</td><td>10:00</td><td>7</td></tr>
+                <tr><td>Co-pilot on multi-engine aircraft in the 6 months before you apply</td><td>20:00</td><td>8</td></tr>
+              </tbody>
+            </table></div>
+            <p class="ht-source"><strong>Source:</strong> DGCA eGCA ATPL application, flying experience. Last checked 26 Nov 2026. Items 7 and 8 are both required; meeting only one is not enough.</p>
+            <p class="ht-source"><strong>How the tracker counts it (cross-reference, not part of the eGCA table):</strong> The Note to Aircraft Rules 1937, Schedule II, Section M, paragraph 1(e) says that on an aeroplane that must fly with a co-pilot, only 50% of ordinary co-pilot time counts towards total flight time. PIC under supervision (PICUS) counts in full towards the total but only 50% towards PIC time. The 50% co-pilot credit on night time and on the last-six-months total is DGCA application-form practice; that Note does not state it. It counts at most 25 h of simulator time towards instrument time, because the form says so and the 50 h in actual flight leaves only 25 h of the 75 h for a simulator.</p>
+            <p class="ht-source">The government copy of Section M we could open (civilaviation.gov.in) still shows the figures from before 2020: 500 h PIC, 1,000 h cross-country, 100 h instrument and 150 h in the last 12 months. The eGCA figures match the 2020 amendment (G.S.R. 22(E)), so the tracker uses eGCA.</p>
+          </section>
+
+
+          <section class="card prose">
+<h2>How the hours for a CPL and an ATPL add up</h2>
+<p>To get a Commercial Pilot Licence (aeroplanes) in India you need at least <strong>200 hours</strong> of flight time. The official compilation still counts those hours inside the five years before you apply; a 2019 amendment may have removed that limit, but the final gazette could not be opened when checking, so the tracker keeps the five-year window on unless you turn it off. The other minimums are not extra hours on top. They are slices of the same 200: at least 100 hours as pilot-in-command, 20 of those across country, 10 hours of instrument time and 5 hours at night.</p>
+<p>That overlap is why students often have plenty of total time but are still short on one slice. A solo night cross-country counts towards four bars at once; a dual circuit session only adds to the total.</p>
+<p>Some rules depend on dates rather than totals. You need 15 hours as PIC and 10 night take-offs and landings as PIC in the six months before you apply. Set the date at the top to your planned application day. Only 5 of the 10 instrument hours may come from an approved simulator, so extra simulator time does not help.</p>
+<p>The ATPL works the same way on a bigger scale: 1,500 hours, including 250 as PIC or PICUS, 500 across country, 100 at night, 75 on instruments (50 in actual flight) and, in the six months before you apply, both 10 hours of multi-engine PIC and 20 hours of multi-engine co-pilot time (items 7 and 8 are both required). Not every airline hour counts in full. Ordinary co-pilot time counts at half towards the total, and PICUS counts in full towards the total but at half towards PIC, as in the Note to Section M. The 50% co-pilot credit on night and last-six-month time is DGCA application-form practice, not stated in that Note. Switch to ATPL and the same log is re-counted with these credits.</p>
+<p>The finish date is a rough guide. It takes how much of each kind of flying you did in the last 60 days and projects it forward.</p>
+<p><small>This page is a study aid, not an official logbook. Your signed logbook and DGCA's assessment decide whether you qualify.</small></p>
+
+          </section>
+        </div>
+
+        <aside class="side">
+          <div class="card">
+            <p class="kicker">Practice</p>
+            <h2>Test yourself</h2>
+            <p>Licensing rules, flight-time definitions and the CPL experience requirements come up in the DGCA Air Regulations paper.</p>
+            <p><a class="btn btn-primary" href="https://quiz.pilotjourney.in/subjects/air-regulations/">Practice DGCA Air Regulations questions</a></p>
+            <p class="disclaimer">For training/study only, not for real flight planning. This is not a certified source for flight operations. Cross-check figures with official documents, the current AIP and the aircraft AFM.</p>
+          </div>
+          <div class="card">
+            <p class="kicker">More tools</p>
+            <h2>Also on Pilot Journey</h2>
+            <ul>
+              <li><a href="/tools/crosswind/">Crosswind component calculator</a></li>
+              <li><a href="/tools/wind-triangle/">Wind triangle (E6B) calculator</a></li>
+              <li><a href="/tools/density-altitude/">Pressure and density altitude calculator</a></li>
+              <li><a href="/tools/unit-converter/">Aviation unit converter</a></li>
+              <li><a href="/tools/tas-mach/">TAS, CAS and Mach calculator</a></li>
+              <li><a href="/tools/one-in-sixty/">1 in 60 rule calculator</a></li>
+              <li><a href="/tools/pet-pnr/">PET and PNR calculator</a></li>
+              <li><a href="/tools/descent-planner/">Descent planning calculator</a></li>
+              <li><a href="/tools/altimetry/">QNH, QFE and cold temperature calculator</a></li>
+              <li><a href="/tools/mass-balance/">Mass and balance (CG) calculator</a></li>
+              <li><a href="/tools/utc-ist-sunrise/">UTC/IST and sunrise/sunset calculator</a></li>
+              <li><a href="/tools/metar-decoder/">METAR decoder</a></li>
+              <li><a href="/tools/taf-decoder/">TAF decoder</a></li>
+              <li><a href="/tools/formulas/">DGCA CPL formula library</a></li>
+              <li><a href="/tools/">All aviation tools</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+
+      <div class="wrap">
+        <div class="card cta-band">
+          <div>
+            <p class="kicker">Career guidance</p>
+            <h2>Planning a CPL in India?</h2>
+            <p>Get a free, plain-English path from where you are now to a computer number, medicals and flying training.</p>
+          </div>
+          <a class="btn btn-primary" href="https://www.pilotjourney.in/guidance">Get free pilot career guidance</a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-grid">
+        <div>
+          <p class="kicker">Pilot Journey</p>
+          <p>Free DGCA study tools and practice questions for aspiring pilots. Independent study project. Not affiliated with DGCA, Airbus, Boeing or any airline.</p>
+          <p class="legal-note">Study material only.<br>Always check current official documents.</p>
+        </div>
+        <div>
+          <p class="kicker">Study</p>
+          <ul>
+            <li><a href="/subjects/">Question bank</a></li>
+            <li><a href="/type-rating/">Type rating: A320 / B737</a></li>
+            <li><a href="/tools/">Aviation tools</a></li>
+            <li><a href="/daily/">Daily check</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="kicker">About</p>
+          <ul>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a href="https://www.pilotjourney.in/">Read the Pilot Journey blog</a></li>
+            <li><a href="https://altitude.pilotjourney.in/">Pilot Journey Altitude store</a></li>
+            <li><a href="https://www.pilotjourney.in/guidance">Free guidance page</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bar">
+        <div class="wrap footer-bar-inner">
+          <span>© 2026 Pilot Journey · Study material only</span>
+          <span>Free study material for pilots. Always check current DGCA and manufacturer documents.</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script id="calc-js">
+// CPL hours tracker - pure functions (no DOM). All durations are whole minutes.
+const SIM_MAX_MIN=300; // max 5 h of the 10 h instrument time may be on an approved simulator
+const REQS=[
+ {key:'total',label:'Total flight time (last 5 years)',need:200*60,unit:'min',ref:'1(e)'},
+ {key:'pic',label:'Pilot-in-command (PIC)',need:100*60,unit:'min',ref:'1(e)(i)'},
+ {key:'picRecent',label:'PIC in the last 6 months',need:15*60,unit:'min',ref:'1(e)(i)'},
+ {key:'xcpic',label:'Cross-country as PIC',need:20*60,unit:'min',ref:'1(e)(ii)'},
+ {key:'q300',label:'300 NM cross-country, full-stop landings at 2 other aerodromes',need:1,unit:'flag',ref:'1(e)(ii)'},
+ {key:'inst',label:'Instrument time (max 5 h simulator)',need:10*60,unit:'min',ref:'1(e)(iii)'},
+ {key:'night',label:'Night flight time',need:5*60,unit:'min',ref:'1(e)(iv)'},
+ {key:'nightLdg',label:'Night take-offs and landings as PIC (last 6 months)',need:10,unit:'count',ref:'1(e)(iv)'}
+];
+// Hours part may use thousands separators like the other tools' num(): '1,500' or Indian '1,50,000' = whole hours;
+// '1,5' / '1,25' = decimal comma. A first group of 0 ('0,500') is a decimal comma. Spaces anywhere are ignored.
+function cleanHours(h){
+  if(/^[1-9]\d{0,2}(,\d{2,3})*,\d{3}(\.\d+)?$/.test(h))return h.replace(/,/g,'');
+  if(/^\d+,\d+$/.test(h))return h.replace(',','.');
+  return h;
+}
+function parseDur(s){ // "1:30", "1,500:30", "1.5", "1,5", "1,500" -> minutes; null if invalid or negative
+  if(s===undefined||s===null)return null; s=String(s).replace(/[\s\u00a0\u202f]+/g,''); if(s==='')return null;
+  let m=s.match(/^([\d,]+):(\d{1,2})$/);
+  if(m){const h=cleanHours(m[1]),mm=+m[2]; if(!/^\d{1,6}$/.test(h)||mm>59)return null; return (+h)*60+mm}
+  s=cleanHours(s);
+  if(!/^\d*\.?\d+$/.test(s)&&!/^\d+\.$/.test(s))return null;
+  const h=parseFloat(s); if(!isFinite(h)||h<0)return null; return Math.round(h*60);
+}
+function parseCount(s){s=String(s==null?'':s).replace(/\s+/g,'');if(s==='')return 0;if(!/^\d{1,3}$/.test(s))return null;return +s} // whole number 0-999, no '1e1' or '0x5'
+function fmtHM(min){min=Math.round(min||0);const neg=min<0;min=Math.abs(min);return (neg?'-':'')+Math.floor(min/60)+':'+String(min%60).padStart(2,'0')}
+function hoursUp(min){return Math.ceil(Math.max(0,min)/6)/10} // hours, rounded UP to 0.1 so a few minutes never shows as 0.0
+// Headline hours-left is the largest remaining *time* requirement, not just total time.
+function openLeft(rows){
+  let hours=0;
+  for(const r of rows){ if(!r.done&&r.unit==='min') hours=Math.max(hours,r.left); }
+  return {hoursLeftMin:hours,hoursLeft:hoursUp(hours)};
+}
+function validDate(s){if(!/^\d{4}-\d{2}-\d{2}$/.test(s||''))return false;const d=new Date(s+'T00:00:00Z');return !isNaN(d)&&d.toISOString().slice(0,10)===s}
+function addMonths(s,n){const y=+s.slice(0,4),m=+s.slice(5,7)-1,d=+s.slice(8,10);const t=new Date(Date.UTC(y,m+n,1));const last=new Date(Date.UTC(t.getUTCFullYear(),t.getUTCMonth()+1,0)).getUTCDate();t.setUTCDate(Math.min(d,last));return t.toISOString().slice(0,10)}
+function addDays(s,n){const t=new Date(s+'T00:00:00Z');t.setUTCDate(t.getUTCDate()+n);return t.toISOString().slice(0,10)}
+function daysBetween(a,b){return Math.round((Date.parse(b+'T00:00:00Z')-Date.parse(a+'T00:00:00Z'))/864e5)}
+const isPicType=t=>t==='solo'||t==='pic';
+const FLIGHT_TYPES=['dual','solo','pic','picus','copilot','sim'];
+// ATPL (aeroplanes): Aircraft Rules 1937, Sch II Sec M para 1(e) as amended by G.S.R. 22(E) of 10 Jan 2020 (see page for verification status)
+const ATPL_SIM_MAX_MIN=25*60; // DGCA ATPL application form: not more than 25 h of instrument time from a simulator
+const ATPL_REQS=[ // order and figures as in DGCA eGCA ATPL application, 'Flying experience' (items 1-8)
+ {key:'total',label:'Total flying time (co-pilot time at 50%)',need:1500*60,unit:'min',ref:'1'},
+ {key:'recent',label:'Flight time in the last 6 months',need:20*60,unit:'min',ref:'2'},
+ {key:'pic',label:'Flight time as PIC (PICUS at 50%)',need:250*60,unit:'min',ref:'3'},
+ {key:'night',label:'Night flight time (co-pilot at 50%)',need:100*60,unit:'min',ref:'4'},
+ {key:'xc',label:'Total cross-country',need:500*60,unit:'min',ref:'5'},
+ {key:'xcpic',label:'Cross-country as PIC',need:100*60,unit:'min',ref:'5.1'},
+ {key:'xcpicNight',label:'Cross-country as PIC at night',need:50*60,unit:'min',ref:'5.2'},
+ {key:'inst',label:'Instrument time (max 25 h simulator)',need:75*60,unit:'min',ref:'6'},
+ {key:'instAct',label:'Instrument time in actual flight',need:50*60,unit:'min',ref:'6.1'},
+ {key:'mePic',label:'PIC on multi-engine, last 6 months',need:10*60,unit:'min',ref:'7'},
+ {key:'meCo',label:'Co-pilot on multi-engine, last 6 months',need:20*60,unit:'min',ref:'8'}
+];
+// Items 7 and 8 are both required (confirmed against eGCA, 26 Nov 2026).
+// credit factors for ATPL: co-pilot 50% to total/night/recent; PICUS 100% to total, 50% to PIC
+function atplCredit(type){return {total:type==='copilot'?0.5:1,pic:(type==='solo'||type==='pic')?1:type==='picus'?0.5:0}}
+function computeATPL(entries,refDate,rateDays){
+  rateDays=rateDays||60;const from6=addMonths(refDate,-6),fromRate=addDays(refDate,-rateDays);
+  const K=['total','pic','xcpic','xcpicNight','xc','night','instAct','recent','mePic','meCo'];
+  const s={sim:0},rate={sim:0};K.forEach(k=>{s[k]=0;rate[k]=0});
+  let used=0,future=0,flights=0;
+  for(const e of entries||[]){
+    if(!e||!validDate(e.date))continue;
+    if(e.date>refDate){future++;continue}
+    used++;
+    if(e.kind==='totals'){
+      const co=e.copilot||0,pu=e.picus||0,nco=Math.min(e.nightCo||0,e.night||0);
+      s.total+=(e.total||0)-co*0.5; s.pic+=(e.pic||0)+pu*0.5; s.xcpic+=e.xcpic||0; s.xcpicNight+=e.xcpicNight||0;
+      s.xc+=Math.max(e.xc||0,e.xcpic||0); s.night+=(e.night||0)-nco*0.5; s.instAct+=e.inst||0; s.sim+=e.sim||0; continue;
+    }
+    const d=e.dur||0,recentR=e.date>fromRate;
+    if(e.type==='sim'){s.sim+=d;if(recentR)rate.sim+=d;continue}
+    flights++;
+    const c=atplCredit(e.type),inst=Math.min(e.inst||0,d);
+    const add={total:d*c.total,pic:d*c.pic,xcpic:e.xc?d*c.pic:0,xcpicNight:(e.xc&&e.night)?d*c.pic:0,xc:e.xc?d:0,night:e.night?d*c.total:0,instAct:inst,recent:e.date>=from6?d*c.total:0,mePic:(e.me&&e.date>=from6&&(e.type==='pic'||e.type==='solo'))?d:0,meCo:(e.me&&e.date>=from6&&(e.type==='copilot'||e.type==='picus'))?d:0};
+    for(const k of K){s[k]+=add[k];if(recentR)rate[k]+=(k==='recent'?d*c.total:k==='mePic'?((e.me&&(e.type==='pic'||e.type==='solo'))?d:0):k==='meCo'?((e.me&&(e.type==='copilot'||e.type==='picus'))?d:0):add[k])}
+  }
+  const simCounted=Math.min(s.sim,ATPL_SIM_MAX_MIN);
+  const have={total:s.total,pic:s.pic,xcpic:s.xcpic,xcpicNight:s.xcpicNight,xc:s.xc,night:s.night,inst:s.instAct+simCounted,instAct:s.instAct,recent:s.recent,mePic:s.mePic,meCo:s.meCo};
+  const rows=ATPL_REQS.map(r=>{const h=have[r.key],left=Math.max(0,r.need-h);return {key:r.key,label:r.label,need:r.need,unit:r.unit,ref:r.ref,have:h,left:left,pct:Math.min(100,Math.floor(h/r.need*1000)/10),done:left===0}});
+  const instRow=rows.find(r=>r.key==='inst');instRow.simLogged=s.sim;instRow.simCounted=simCounted;instRow.actual=s.instAct;
+  let furthest=null;for(const r of rows){if(r.done)continue;if(!furthest||r.pct<furthest.pct)furthest=r}
+  let finishDays=0;const noRate=[];
+  for(const r of rows){if(r.done)continue;
+    const rr=r.key==='inst'?rate.instAct+(s.sim<ATPL_SIM_MAX_MIN?rate.sim:0):rate[r.key];
+    if(!(rr>0)){noRate.push(r.key);continue}
+    finishDays=Math.max(finishDays,Math.ceil(r.left/(rr/rateDays)));
+  }
+  const allDone=rows.every(r=>r.done);
+  const ol=openLeft(rows);
+  return {lic:'atpl',rows,sums:s,simCounted,simMax:ATPL_SIM_MAX_MIN,hoursLeftMin:ol.hoursLeftMin,hoursLeft:ol.hoursLeft,furthest:furthest?furthest.key:null,allDone,
+    finishDays:noRate.length||allDone?null:finishDays,finishDate:noRate.length||allDone?null:addDays(refDate,finishDays),noRate,used,future,old:0,flights,rateDays};
+}
+// entries: {kind:'flight',date,type:'dual'|'solo'|'pic'|'sim',dur,inst,xc,night,ldg,q300} or
+//          {kind:'totals',date,total,pic,xcpic,night,inst,sim,dual,q300}
+function compute(entries,refDate,rateDays,lic,opts){return lic==='atpl'?computeATPL(entries,refDate,rateDays):computeCPL(entries,refDate,rateDays,opts)}
+function computeCPL(entries,refDate,rateDays,opts){
+  rateDays=rateDays||60;
+  // Default is a 5-year window (kept while the 2019 amendment's final gazette text could not be opened). Pass {windowYears:0} to count all dates.
+  const windowYears=(opts&&Object.prototype.hasOwnProperty.call(opts,'windowYears'))?opts.windowYears:5;
+  const from5=windowYears?addMonths(refDate,-Math.round(windowYears*12)):null, from6=addMonths(refDate,-6), fromRate=addDays(refDate,-rateDays);
+  const s={total:0,pic:0,picRecent:0,xcpic:0,night:0,instAct:0,sim:0,dual:0,nightLdg:0,q300:0};
+  const rate={total:0,pic:0,picRecent:0,xcpic:0,night:0,instAct:0,sim:0,nightLdg:0};
+  let used=0,future=0,old=0,flights=0,firstDate=null;
+  for(const e of entries||[]){
+    if(!e||!validDate(e.date))continue;
+    if(e.date>refDate){future++;continue}
+    if(from5&&e.date<from5){old++;continue}
+    used++;
+    if(e.kind==='totals'){
+      s.total+=e.total||0;s.pic+=e.pic||0;s.xcpic+=e.xcpic||0;s.night+=e.night||0;s.instAct+=e.inst||0;s.sim+=e.sim||0;s.dual+=e.dual||0;
+      if(e.q300)s.q300=1; continue;
+    }
+    const d=e.dur||0, recentR=e.date>fromRate, recent6=e.date>=from6;
+    if(!firstDate||e.date<firstDate)firstDate=e.date;
+    if(e.type==='sim'){s.sim+=d; if(recentR)rate.sim+=d; continue}
+    flights++;
+    const pic=isPicType(e.type), inst=Math.min(e.inst||0,d);
+    s.total+=d; if(e.type==='dual')s.dual+=d;
+    if(pic){s.pic+=d; if(recent6)s.picRecent+=d}
+    if(pic&&e.xc){s.xcpic+=d; if(e.q300)s.q300=1}
+    if(e.night)s.night+=d;
+    s.instAct+=inst;
+    if(pic&&e.night&&recent6)s.nightLdg+=Math.max(0,Math.floor(e.ldg||0));
+    if(recentR){rate.total+=d; if(pic){rate.pic+=d;rate.picRecent+=d} if(pic&&e.xc)rate.xcpic+=d; if(e.night)rate.night+=d; rate.instAct+=inst; if(pic&&e.night)rate.nightLdg+=Math.max(0,Math.floor(e.ldg||0))}
+  }
+  const simCounted=Math.min(s.sim,SIM_MAX_MIN);
+  const have={total:s.total,pic:s.pic,picRecent:s.picRecent,xcpic:s.xcpic,q300:s.q300,inst:s.instAct+simCounted,night:s.night,nightLdg:s.nightLdg};
+  const reqs=REQS.map(r=>r.key==='total'?Object.assign({},r,{label:windowYears?'Total flight time (last 5 years)':'Total flight time'}):r);
+  const rows=reqs.map(r=>{const h=have[r.key],left=Math.max(0,r.need-h);return {key:r.key,label:r.label,need:r.need,unit:r.unit,ref:r.ref,have:h,left:left,pct:Math.min(100,Math.floor(h/r.need*1000)/10),done:left===0}});
+  // instrument: sim beyond 5 h cannot help; remaining instrument must come from actual flight
+  const instRow=rows.find(r=>r.key==='inst');instRow.simLogged=s.sim;instRow.simCounted=simCounted;instRow.actual=s.instAct;
+  let furthest=null;for(const r of rows){if(r.done||r.unit==='flag')continue;if(!furthest||r.pct<furthest.pct)furthest=r}
+  // finish estimate from the last `rateDays` days of flying, per requirement
+  let finishDays=0;const noRate=[];
+  for(const r of rows){if(r.done||r.unit==='flag')continue;const rt=rate[r.key];
+    // instrument: once 5 h of simulator is logged, only actual instrument flying still helps
+    const rr=r.key==='inst'?rate.instAct+(s.sim<SIM_MAX_MIN?rate.sim:0):rt;
+    if(!(rr>0)){noRate.push(r.key);continue}
+    finishDays=Math.max(finishDays,Math.ceil(r.left/(rr/rateDays)));
+  }
+  const allDone=rows.every(r=>r.done);
+  const ol=openLeft(rows);
+  return {lic:'cpl',simMax:SIM_MAX_MIN,rows,sums:s,simCounted,hoursLeftMin:ol.hoursLeftMin,hoursLeft:ol.hoursLeft,windowYears:windowYears,furthest:furthest?furthest.key:null,allDone,
+    finishDays:noRate.length||allDone?null:finishDays,finishDate:noRate.length||allDone?null:addDays(refDate,finishDays),noRate,
+    used,future,old,flights,rateDays,firstDate};
+}
+// ---------- CSV (backup / restore) ----------
+const CSV_COLS=['kind','date','type','duration','instrument','cross_country','night','night_landings','xc_300nm','total','pic','xc_pic','night_total','instrument_total','sim_total','dual_total','note','xc_total','copilot_total','picus_total','xc_pic_night_total','night_copilot_total','multi_engine'];
+function csvCell(v){v=v===undefined||v===null?'':String(v);if(/^[=+\-@]/.test(v))v="'"+v;return /[",\n\r]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}
+function toCSV(entries){
+  const out=[CSV_COLS.join(',')];
+  for(const e of entries){const r={kind:e.kind,date:e.date,note:e.note||''};
+    if(e.kind==='totals'){Object.assign(r,{total:fmtHM(e.total),pic:fmtHM(e.pic),xc_pic:fmtHM(e.xcpic),night_total:fmtHM(e.night),instrument_total:fmtHM(e.inst),sim_total:fmtHM(e.sim),dual_total:fmtHM(e.dual),xc_300nm:e.q300?'yes':'no',xc_total:fmtHM(e.xc||0),copilot_total:fmtHM(e.copilot||0),picus_total:fmtHM(e.picus||0),xc_pic_night_total:fmtHM(e.xcpicNight||0),night_copilot_total:fmtHM(e.nightCo||0)})}
+    else Object.assign(r,{type:e.type,duration:fmtHM(e.dur),instrument:fmtHM(e.inst||0),cross_country:e.xc?'yes':'no',night:e.night?'yes':'no',night_landings:e.ldg||0,xc_300nm:e.q300?'yes':'no',multi_engine:e.me?'yes':'no'});
+    out.push(CSV_COLS.map(c=>csvCell(r[c])).join(','))}
+  return out.join('\n')+'\n';
+}
+function parseCSVText(t){const rows=[];let row=[],f='',q=false;t=String(t).replace(/^\uFEFF/,'');
+  for(let i=0;i<t.length;i++){const c=t[i];
+    if(q){if(c==='"'){if(t[i+1]==='"'){f+='"';i++}else q=false}else f+=c}
+    else if(c==='"')q=true;else if(c===','){row.push(f);f=''}else if(c==='\n'||c==='\r'){if(c==='\r'&&t[i+1]==='\n')i++;row.push(f);rows.push(row);row=[];f=''}else f+=c}
+  if(f!==''||row.length){row.push(f);rows.push(row)}return rows.filter(r=>r.some(x=>x.trim()!==''))}
+function yn(v){v=String(v||'').trim().toLowerCase();if(['yes','y','true','1'].includes(v))return true;if(['','no','n','false','0'].includes(v))return false;return null}
+function fromCSV(text){
+  const rows=parseCSVText(text),entries=[],errors=[];
+  if(!rows.length)return {entries,errors:[{line:0,msg:'File is empty'}]};
+  const hdr=rows[0].map(h=>h.trim().toLowerCase());const ix={};CSV_COLS.forEach(c=>ix[c]=hdr.indexOf(c));
+  if(ix.kind<0||ix.date<0)return {entries,errors:[{line:1,msg:'Missing header row (needs at least kind and date columns)'}]};
+  const g=(r,c)=>ix[c]<0?'':(r[ix[c]]||'').trim();
+  for(let i=1;i<rows.length;i++){const r=rows[i],ln=i+1;const kind=g(r,'kind').toLowerCase(),date=g(r,'date');let note=g(r,'note');if(note.startsWith("'"))note=note.slice(1);
+    if(!validDate(date)){errors.push({line:ln,msg:'Bad date "'+date+'" (use YYYY-MM-DD)'});continue}
+    if(kind==='flight'){const type=g(r,'type').toLowerCase();if(!FLIGHT_TYPES.includes(type)){errors.push({line:ln,msg:'Unknown type "'+type+'"'});continue}
+      const dur=parseDur(g(r,'duration'));if(dur===null||dur<=0||dur>24*60){errors.push({line:ln,msg:'Bad duration "'+g(r,'duration')+'"'});continue}
+      const instS=g(r,'instrument');const inst=instS===''?0:parseDur(instS);if(inst===null||inst>dur){errors.push({line:ln,msg:'Bad instrument time "'+instS+'"'});continue}
+      const xc=yn(g(r,'cross_country')),night=yn(g(r,'night')),q=yn(g(r,'xc_300nm')),me=yn(g(r,'multi_engine'));if(xc===null||night===null||q===null||me===null){errors.push({line:ln,msg:'Use yes/no for the flag columns'});continue}
+      const lS=g(r,'night_landings');const ldg=parseCount(lS);if(ldg===null||ldg>99){errors.push({line:ln,msg:'Bad night landings "'+lS+'"'});continue}
+      entries.push(type==='sim'?{kind:'flight',date,type,dur,inst:0,xc:false,night:false,ldg:0,q300:false,note}:Object.assign({kind:'flight',date,type,dur,inst,xc,night,ldg,q300:q&&xc&&isPicType(type),note},me?{me:true}:{}))}
+    else if(kind==='totals'){const keys=[['total','total'],['pic','pic'],['xcpic','xc_pic'],['night','night_total'],['inst','instrument_total'],['sim','sim_total'],['dual','dual_total'],['xc','xc_total'],['copilot','copilot_total'],['picus','picus_total'],['xcpicNight','xc_pic_night_total'],['nightCo','night_copilot_total']];const e={kind:'totals',date,note};let bad=null;
+      for(const [k,c] of keys){const s=g(r,c);const m=s===''?0:parseDur(s);if(m===null){bad=c+' "'+s+'"';break}e[k]=m}
+      if(bad){errors.push({line:ln,msg:'Bad time in '+bad});continue}
+      if(e.pic>e.total||e.dual>e.total||e.xcpic>e.pic+e.picus||e.night>e.total||e.inst>e.total||e.copilot+e.picus+e.pic+e.dual>e.total||e.xcpicNight>e.xcpic||e.nightCo>e.night||e.xc>e.total){errors.push({line:ln,msg:'Totals do not add up (a part is larger than the total)'});continue}
+      const q=yn(g(r,'xc_300nm'));e.q300=!!q;entries.push(e)}
+    else errors.push({line:ln,msg:'Unknown kind "'+kind+'" (use flight or totals)'});
+  }
+  return {entries,errors};
+}
+// sample student log (clearly sample data), dated backwards from refDate
+function sampleLog(refDate){
+  const L=[],add=(daysAgo,type,h,o)=>L.push(Object.assign({kind:'flight',date:addDays(refDate,-daysAgo),type,dur:Math.round(h*60),inst:0,xc:false,night:false,ldg:0,q300:false,note:'Sample'},o||{}));
+  let d=285;
+  for(let i=0;i<30;i++){add(d,'dual',i%3?1.2:1.0,i>18?{inst:24}:{});d-=3} // circuits, upper air, then IF dual
+  for(let i=0;i<6;i++){add(d,'sim',1.0,{});d-=2}
+  for(let i=0;i<12;i++){add(d,'solo',1.0);d-=3}
+  for(let i=0;i<8;i++){add(d,'dual',1.5,{xc:true});d-=4}
+  for(let i=0;i<22;i++){add(d,'pic',i%4===0?2.5:1.5,{xc:i%4===0});d-=3}
+  add(d,'dual',1.5,{night:true});d-=2;add(d,'dual',1.3,{night:true});d-=2;
+  add(d,'pic',1.2,{night:true,ldg:4});d-=3;add(d,'pic',3.5,{xc:true,q300:true,note:'Sample: 300 NM triangle'});d-=3;
+  for(let i=0;i<8;i++){add(d,'pic',i%2?1.4:2.0,i%3===2?{night:true,ldg:2}:{xc:i%2===0});d-=4}
+  add(d,'dual',1.2,{inst:42});
+  return L.filter(e=>e.date<=refDate);
+}
+// sample first officer log for ATPL mode (clearly sample data)
+function sampleLogATPL(refDate){
+  const L=[{kind:'totals',date:addDays(refDate,-400),total:Math.round(212.5*60),pic:110*60,xcpic:26*60,night:9*60,inst:12*60,sim:5*60,dual:100*60,xc:40*60,copilot:0,picus:0,xcpicNight:2*60,nightCo:0,q300:true,note:'Sample: CPL logbook totals'}];
+  const add=(daysAgo,type,h,o)=>L.push(Object.assign({kind:'flight',date:addDays(refDate,-daysAgo),type,dur:Math.round(h*60),inst:0,xc:false,night:false,ldg:0,q300:false,note:'Sample'},o||{}));
+  for(let i=0;i<8;i++)add(380-i,'sim',4,{});
+  for(let d=360;d>=2;d-=2){const k=d%10;
+    if(k===0)add(d,'picus',2.2,{xc:true,night:d%20===0,inst:30,me:true});
+    else add(d,'copilot',k%4===0?3.1:1.9,{xc:true,night:k===6,inst:k%3===0?25:10,me:true});}
+  for(let i=0;i<4;i++)add(50-i*12,'pic',1.5,{me:true,xc:true,note:'Sample: multi-engine PIC'});
+  return L.filter(e=>e.date<=refDate);
+}
+
+  </script>
+  <script>
+
+const $=id=>document.getElementById(id);
+function num(s){s=String(s).trim().replace(/\s+/g,'');if(/^[-+]?\d{1,3}(,\d{2,3})+(\.\d+)?$/.test(s)&&!/^[-+]?\d+,\d{1,2}$/.test(s))s=s.replace(/,/g,'');else s=s.replace(',','.');const x=parseFloat(s);return isFinite(x)?x:NaN}
+function v(id){const e=$(id);if(!e)return NaN;return num(e.value)}
+function fx(x,d){d=d||0;return isFinite(x)?Number(x).toLocaleString('en-IN',{minimumFractionDigits:d,maximumFractionDigits:d}):'–'}
+function kv(k,val,cls){return '<div class="kv '+(cls||'')+'"><div class="k">'+k+'</div><div class="v">'+val+'</div></div>'}
+function setVals(o){for(const k in o){const e=$(k);if(e){e.value=o[k]}}}
+function bindAll(fn){document.querySelectorAll('#calc input,#calc select').forEach(e=>{e.addEventListener('input',fn);e.addEventListener('change',fn)});}
+function segInit(id,fn){const g=$(id);g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-selected','false'));b.setAttribute('aria-selected','true');fn()}));}
+function segVal(id){const b=$(id).querySelector('button[aria-selected=true]');return b?b.dataset.v:null}
+function segSet(id,val){$(id).querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.v===val?'true':'false'))}
+function show(big,unit,sub,grid,warn,steps){$('rbig').innerHTML=big+(unit?' <small>'+unit+'</small>':'');$('rsub').innerHTML=sub||'';$('rgrid').innerHTML=grid||'';$('rwarn').innerHTML=warn||'';$('steps').textContent=steps||''}
+
+const STORE_KEY='pj_cpl_hours_v1';
+const TOT_FIELDS=[['total','ttotal'],['pic','tpic'],['xcpic','txc'],['night','tnight'],['inst','tinst'],['sim','tsim'],['dual','tdual'],['xc','txcall'],['copilot','tcop'],['picus','tpicus'],['xcpicNight','txcn'],['nightCo','tnco']];
+function sampleNote(){return LIC==='atpl'?'<strong>Sample data:</strong> a made-up first officer: CPL logbook totals brought forward, then about a year of airline flying as co-pilot with some PICUS sectors. Press Clear to remove it, or add your own entry to replace it.':'<strong>Sample data:</strong> a made-up student about nine months into training, with dual circuits, solo, PIC cross-countries, simulator and some night flying. Press Clear to remove it, or just add your own flight to replace it.'}
+let LOG=[],SAMPLE=false,EDIT=null,LIC='cpl';
+const LIC_KEY='pj_hours_licence';
+const LICN={cpl:{name:'CPL',need:200},atpl:{name:'ATPL',need:1500}};
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+// Saved shape is {version, updatedAt, sample, entries:[{id, updatedAt, ...}]} so a future login can sync and merge by id.
+function save(){try{localStorage.setItem(STORE_KEY,JSON.stringify({version:1,updatedAt:new Date().toISOString(),sample:SAMPLE,entries:LOG}))}catch(e){}}
+function load(){try{const o=JSON.parse(localStorage.getItem(STORE_KEY)||'null');if(o&&Array.isArray(o.entries)){LOG=o.entries;SAMPLE=!!o.sample}}catch(e){LOG=[]}}
+const stamp=e=>Object.assign(e,{id:e.id||uid(),updatedAt:new Date().toISOString()});
+const fmtD=s=>{const m=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];return +s.slice(8,10)+' '+m[+s.slice(5,7)-1]+' '+s.slice(0,4)};
+const TYPE={dual:'Dual',solo:'Solo',pic:'PIC',picus:'PICUS',copilot:'Co-pilot',sim:'Simulator'};
+function val(r){return r.unit==='min'?fmtHM(r.have)+' / '+fmtHM(r.need)+' h':r.unit==='count'?r.have+' / '+r.need:(r.have?'Done':'Not yet')}
+function render(){
+  const ref=validDate($('refdate').value)?$('refdate').value:today();
+  const sorted=LOG.slice().sort((a,b)=>a.date<b.date?1:a.date>b.date?-1:0);
+  $('logbody').innerHTML=sorted.map(e=>{let what,time;
+    if(e.kind==='totals'){what='Logbook totals'+(e.q300?' <span class="ht-tag">300 NM done</span>':'');time=fmtHM(e.total)+(e.sim?'<br>+'+fmtHM(e.sim)+' sim':'')}
+    else{what=TYPE[e.type]+(e.xc?' <span class="ht-tag">XC</span>':'')+(e.night?' <span class="ht-tag">Night'+(e.ldg?' ×'+e.ldg:'')+'</span>':'')+(e.inst?' <span class="ht-tag">IF '+fmtHM(e.inst)+'</span>':'')+(e.q300?' <span class="ht-tag">300 NM</span>':'')+(e.me?' <span class="ht-tag">ME</span>':'');time=fmtHM(e.dur)}
+    return '<tr><td>'+fmtD(e.date).replace(/ (\d\d)(\d\d)$/,' ’$2')+'</td><td>'+what+'</td><td>'+time+'</td><td><button type="button" class="ht-act" data-ed="'+e.id+'" aria-label="Edit entry">Edit</button><button type="button" class="ht-act" data-del="'+e.id+'" aria-label="Delete entry">✕</button></td></tr>'}).join('');
+  $('logempty').hidden=LOG.length>0;$('logtbl').hidden=!LOG.length;$('logcount').textContent=LOG.length?'('+LOG.length+(SAMPLE?' sample entries':' entries')+')':'';
+  const win5=LIC!=='cpl'||$('win5').checked;
+  const r=compute(LOG,ref,60,LIC,LIC==='cpl'?{windowYears:win5?5:0}:undefined);
+  const NEED=LICN[LIC].need;
+  $('rlabel').textContent=(r.hoursLeftMin===0&&!r.allDone&&LOG.length?'Status for ':'Hours left for ')+LICN[LIC].name;
+  $('rgrid').className='result-grid ht-bars';
+  if(!LOG.length){show(fx(NEED,0),'hours left','Add your flights or logbook totals to see your progress.','','','');$('exnote').innerHTML=SAMPLE?$('exnote').innerHTML:'';return}
+  const bars=r.rows.map(x=>'<div class="ht-bar'+(x.done?' done':x.key===r.furthest?' behind':'')+'"><div class="ht-bar-top"><span>'+(LIC==='atpl'?x.ref+') ':'')+x.label+(x.key===r.furthest?' · furthest behind':'')+'</span><b>'+val(x)+'</b></div><div class="ht-track" role="progressbar" aria-label="'+esc(x.label)+'" aria-valuemin="0" aria-valuemax="100" aria-valuenow="'+x.pct+'"><div class="ht-fill" style="width:'+x.pct+'%"></div></div></div>').join('');
+  const fb=r.rows.find(x=>x.key===r.furthest);
+  let fin=r.allDone?'All requirements met':r.finishDate?fmtD(r.finishDate):'Not enough recent flying';
+  const stats='<div class="ht-stats">'+kv('Furthest behind',fb?fb.label.replace(/ \(.*\)/,''):'–',fb?'':'good')+kv('Rough finish date',fin,r.allDone?'good':'')+kv('Flight time counted',fmtHM(r.sums.total)+' h')+kv('Simulator counted',fmtHM(r.simCounted)+' of '+fmtHM(r.sums.sim)+' h (max '+fmtHM(r.simMax)+')')+'</div>';
+  let warn='';
+  if(r.future)warn+=r.future+' entr'+(r.future>1?'ies are':'y is')+' dated after '+fmtD(ref)+' and not counted. ';
+  if(r.old&&LIC==='cpl'&&win5)warn+=r.old+' entr'+(r.old>1?'ies are':'y is')+' older than 5 years before '+fmtD(ref)+' and not counted. ';
+  if(!r.allDone&&r.noRate.length)warn+='No finish date: no recent '+r.noRate.map(k=>({total:'flying',pic:'PIC/PICUS flying',picRecent:'PIC flying',xcpic:'PIC cross-country',xcpicNight:'PIC night cross-country',xc:'cross-country',recent:'flying',night:'night flying',inst:'instrument time',nightLdg:'night PIC landings'}[k])).filter((v,i,a)=>a.indexOf(v)===i).join(', ')+' in the last 60 days. ';
+  if(r.sums.sim>r.simMax)warn+='Only '+fmtHM(r.simMax)+' h of your '+fmtHM(r.sums.sim)+' h simulator time counts towards instrument time. ';
+  const sub=r.hoursLeftMin===0?fx(NEED,0)+' hours done'+(r.allDone?' and every requirement met':', but some requirements are still open'):'of '+fx(NEED,0)+' hours still to fly · '+fmtHM(r.hoursLeftMin)+' (hh:mm)';
+  let st=LICN[LIC].name+' (aeroplanes), counted up to '+fmtD(ref)+(LIC==='cpl'?(win5?' (5-year window from '+fmtD(addMonths(ref,-60))+', ':' (all dates counted, '):' (')+'6-month window from '+fmtD(addMonths(ref,-6))+')'+(LIC==='atpl'?'\nOrdinary co-pilot time is credited at 50% towards total flight time, and PICUS at 100% towards the total and 50% towards PIC, as in the Note to Section M, paragraph 1(e). The 50% co-pilot credit on night and last-6-month time is DGCA application-form practice, not stated in that Note.':'')+'\n\n';
+  st+=r.rows.map(x=>(x.done?'✓ ':'· ')+x.label+'\n   have '+(x.unit==='min'?fmtHM(x.have)+' h':x.unit==='count'?x.have:(x.have?'yes':'no'))+', need '+(x.unit==='min'?fmtHM(x.need)+' h':x.unit==='count'?x.need:'1 flight')+(x.done?'':', left '+(x.unit==='min'?fmtHM(x.left)+' h':x.unit==='count'?x.left:'1 flight'))).join('\n');
+  const ir=r.rows.find(x=>x.key==='inst');st+='\n\nInstrument = in flight '+fmtHM(ir.actual)+' h + simulator '+fmtHM(r.simCounted)+' h (max '+fmtHM(r.simMax)+' counted)';
+  if(r.finishDate)st+='\n\nFinish estimate: each open requirement ÷ your rate for it over the last 60 days; the slowest one sets the date ('+r.finishDays+' days).';
+  const head=r.allDone||r.hoursLeftMin===0&&!LOG.length?'0':r.hoursLeftMin>0?fx(r.hoursLeft,1):'Still short';
+  const unit=r.hoursLeftMin===0&&!r.allDone&&LOG.length?'':'hours left';
+  show(head,unit,sub+(SAMPLE?'<br><span class="ht-sample">Sample log</span>':''),bars+stats,warn,st);
+}
+function setLic(l){LIC=l==='atpl'?'atpl':'cpl';segSet('lic',LIC);document.body.classList.toggle('lic-atpl',LIC==='atpl');try{localStorage.setItem(LIC_KEY,LIC)}catch(e){}}
+function setMode(m){segSet('mode',m);$('fflight').hidden=m!=='flight';$('ftotals').hidden=m!=='totals'}
+function simToggle(){const s=$('ftype').value==='sim';document.querySelectorAll('.ht-notsim').forEach(e=>e.hidden=s)}
+function clearForm(){['fdur','finst','fldg','ttotal','tpic','txc','tnight','tinst','tsim','tdual','tcop','tpicus','txcall','txcn','tnco'].forEach(k=>$(k).value='');['fxc','fnight','fq300','tq300','fme'].forEach(k=>$(k).checked=false);$('fdate').value=$('tdate').value=today();EDIT=null;$('addbtn').textContent='Add to log';$('cancelbtn').hidden=true;$('ferr').textContent=''}
+function readForm(){
+  const m=segVal('mode');
+  if(m==='flight'){const date=$('fdate').value,type=$('ftype').value,dur=parseDur($('fdur').value);
+    if(!validDate(date))return 'Pick the flight date.';if(dur===null||dur<=0)return 'Enter the duration as hh:mm (1:30) or decimal hours (1.5).';if(dur>24*60)return 'One flight can\u2019t be longer than 24 hours.';
+    if(type==='sim')return {kind:'flight',date,type,dur,inst:0,xc:false,night:false,ldg:0,q300:false};
+    const inst=$('finst').value.trim()?parseDur($('finst').value):0;if(inst===null)return 'Instrument time must be hh:mm or decimal hours.';if(inst>dur)return 'Instrument time can\u2019t be more than the flight.';
+    const ldg=parseCount($('fldg').value);if(ldg===null||ldg>99)return 'Night landings must be a whole number.';
+    const xc=$('fxc').checked,night=$('fnight').checked,q=$('fq300').checked,me=$('fme').checked;
+    if(q&&!(xc&&(type==='solo'||type==='pic')))return 'The 300 NM flight must be a cross-country flown as solo or PIC. Tick cross-country too.';
+    if(ldg&&!night)return 'Tick Night if this flight had night landings.';
+    return Object.assign({kind:'flight',date,type,dur,inst,xc,night,ldg,q300:q},me?{me:true}:{})}
+  const date=$('tdate').value;if(!validDate(date))return 'Pick the date of these totals.';const e={kind:'totals',date};
+  for(const [k,id] of TOT_FIELDS){const s=$(id).value.trim(),x=s?parseDur(s):0;if(x===null)return 'Check the times: use hh:mm or decimal hours.';e[k]=x}
+  if(!e.total&&!e.sim)return 'Enter at least your total flight time.';
+  if(e.pic>e.total||e.dual>e.total||e.night>e.total||e.inst>e.total||e.xc>e.total)return 'PIC, dual, night, cross-country and instrument can\u2019t be more than the total.';
+  if(e.pic+e.dual+e.copilot+e.picus>e.total)return 'PIC + dual + co-pilot + PICUS can\u2019t be more than the total.';
+  if(e.nightCo>e.night)return 'Night as co-pilot can\u2019t be more than night.';if(e.xcpicNight>e.xcpic)return 'Night PIC cross-country can\u2019t be more than PIC cross-country.';
+  if(e.xcpic>e.pic+e.picus)return 'Cross-country as PIC can\u2019t be more than PIC.';e.q300=$('tq300').checked;return e;
+}
+function startFresh(){if(SAMPLE){LOG=[];SAMPLE=false;$('exnote').textContent=''}}
+$('addbtn').addEventListener('click',()=>{const e=readForm();if(typeof e==='string'){$('ferr').textContent=e;return}
+  if(!EDIT)startFresh();
+  if(EDIT){const i=LOG.findIndex(x=>x.id===EDIT);if(i>=0){e.id=EDIT;e.note=LOG[i].note;LOG[i]=stamp(e)}}else LOG.push(stamp(e));
+  const keepDate=$('fdate').value;save();clearForm();$('fdate').value=keepDate;render()});
+$('cancelbtn').addEventListener('click',()=>{clearForm()});
+$('logbody').addEventListener('click',ev=>{const b=ev.target.closest('button');if(!b)return;
+  if(b.dataset.del){if(!confirm('Delete this entry?'))return;LOG=LOG.filter(x=>x.id!==b.dataset.del);if(!LOG.length)SAMPLE=false;save();render();return}
+  const e=LOG.find(x=>x.id===b.dataset.ed);if(!e)return;clearForm();EDIT=e.id;
+  if(e.kind==='totals'){setMode('totals');$('tdate').value=e.date;TOT_FIELDS.forEach(([k,id])=>$(id).value=e[k]?fmtHM(e[k]):'');$('tq300').checked=!!e.q300}
+  else{setMode('flight');$('fdate').value=e.date;$('ftype').value=e.type;$('fdur').value=fmtHM(e.dur);$('finst').value=e.inst?fmtHM(e.inst):'';$('fldg').value=e.ldg||'';$('fxc').checked=!!e.xc;$('fnight').checked=!!e.night;$('fq300').checked=!!e.q300;$('fme').checked=!!e.me}
+  simToggle();$('addbtn').textContent='Save changes';$('cancelbtn').hidden=false;$('calc').scrollIntoView({block:'start'})});
+segInit('mode',()=>setMode(segVal('mode')));
+segInit('lic',()=>{setLic(segVal('lic'));if(SAMPLE){LOG=(LIC==='atpl'?sampleLogATPL:sampleLog)(validDate($('refdate').value)?$('refdate').value:today()).map(stamp);save();$('exnote').innerHTML=sampleNote()}render()});
+$('ftype').addEventListener('change',simToggle);
+$('refdate').addEventListener('change',render);
+$('win5').addEventListener('change',render);
+$('expbtn').addEventListener('click',()=>{if(!LOG.length){$('impnote').textContent='Nothing to export yet.';return}
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([toCSV(LOG)],{type:'text/csv'}));a.download='cpl-hours-'+today()+'.csv';document.body.appendChild(a);a.click();a.remove();$('impnote').textContent='Backup saved to your downloads.'});
+$('impfile').addEventListener('change',ev=>{const f=ev.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{const res=fromCSV(rd.result);
+  if(!res.entries.length){$('impnote').textContent='Nothing imported. '+res.errors.slice(0,3).map(x=>'Line '+x.line+': '+x.msg).join('; ');return}
+  if(LOG.length&&!SAMPLE&&!confirm('Replace your current log ('+LOG.length+' entries) with the '+res.entries.length+' entries in this file?')){ev.target.value='';return}
+  LOG=res.entries.map(stamp);SAMPLE=false;$('exnote').textContent='';save();render();
+  $('impnote').textContent='Imported '+res.entries.length+' entries.'+(res.errors.length?' Skipped '+res.errors.length+' bad row'+(res.errors.length>1?'s':'')+': '+res.errors.slice(0,3).map(x=>'line '+x.line+' ('+x.msg+')').join('; ')+(res.errors.length>3?'…':''):'');ev.target.value=''};rd.readAsText(f)});
+$('exbtn').addEventListener('click',()=>{if(LOG.length&&!SAMPLE&&!confirm('Replace your log with the sample log? Export a backup first if you want to keep it.'))return;
+  const ref=validDate($('refdate').value)?$('refdate').value:today();LOG=(LIC==='atpl'?sampleLogATPL:sampleLog)(ref).map(stamp);SAMPLE=true;save();clearForm();
+  $('exnote').innerHTML=sampleNote();render()});
+$('clearbtn').addEventListener('click',()=>{if(LOG.length&&!SAMPLE&&!confirm('Delete your whole log from this device? Export a CSV backup first if you want to keep it.'))return;LOG=[];SAMPLE=false;save();clearForm();$('exnote').textContent='';render()});
+$('refdate').value=today();load();try{setLic(localStorage.getItem(LIC_KEY)||'cpl')}catch(e){setLic('cpl')}clearForm();setMode('flight');simToggle();
+if(SAMPLE)$('exnote').innerHTML='<strong>Sample data</strong> is loaded. Press Clear to remove it.';
+render();
+
+  </script>
+</body>
+</html>

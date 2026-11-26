@@ -1,0 +1,51 @@
+/* CPL hours tracker - page-specific styles. Uses only tools.css variables. */
+#rbig{color:var(--result)}
+#rbig small{color:var(--result)}
+.ht-seg{display:flex;gap:.35rem;margin:1rem 0 .2rem;padding:.25rem;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-control)}
+.ht-seg button{flex:1 1 0;min-width:0;font:600 .88rem var(--font-sans);color:var(--muted);background:transparent;border:0;border-radius:calc(var(--radius-control) - 2px);padding:.6rem .4rem;cursor:pointer}
+.ht-seg button[aria-selected=true]{background:var(--accent);color:var(--navy-deep)}
+.ht-form{margin-top:.6rem}
+.ht-checks{display:flex;flex-direction:column;gap:.5rem;margin-top:.8rem;font-size:.9rem;color:var(--body)}
+.ht-checks label{display:flex;gap:.55rem;align-items:flex-start;line-height:1.4;cursor:pointer}
+.ht-checks input{margin-top:.2rem;width:1.05rem;height:1.05rem;flex:0 0 auto;accent-color:var(--accent)}
+.ht-err{color:var(--error)}
+.ht-log .tbl td,.ht-log .tbl th{padding:.45rem .35rem;text-align:left;vertical-align:top}
+.ht-log .tbl td:nth-child(3){font-family:var(--font-mono);white-space:nowrap}
+.ht-log .tbl td:first-child{white-space:nowrap}
+.ht-log .tbl td:last-child{text-align:right;width:1%}
+.ht-log .tbl td:last-child .ht-act{display:block;width:100%;margin:0 0 .3rem}
+.ht-tag{display:inline-block;font-size:.7rem;padding:.05rem .35rem;margin:.1rem .15rem 0 0;border:1px solid var(--line);border-radius:999px;color:var(--muted)}
+.ht-act{font:600 .78rem var(--font-sans);background:transparent;border:1px solid var(--line);color:var(--body);border-radius:var(--radius-control);padding:.3rem .5rem;cursor:pointer;margin-left:.2rem}
+.ht-act:hover{border-color:var(--accent-line);color:var(--ink)}
+.ht-empty{font-size:.88rem;color:var(--muted)}
+.ht-empty[hidden]{display:none}
+.ht-file{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}
+.ht-privacy,.ht-source{font-size:.82rem;color:var(--muted);line-height:1.55;margin-top:.8rem}
+.ht-local{color:var(--body)}
+#result .result-grid.ht-bars{display:block}
+.ht-bar{margin:.75rem 0 0}
+.ht-bar-top{display:flex;justify-content:space-between;gap:.6rem;font-size:.84rem;color:var(--body);line-height:1.35}
+.ht-bar-top b{font-family:var(--font-mono);font-weight:600;color:var(--ink);white-space:nowrap}
+.ht-track{height:.55rem;margin-top:.3rem;background:var(--panel);border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.ht-fill{height:100%;background:var(--accent);border-radius:999px}
+.ht-bar.done .ht-fill{background:var(--success)}
+.ht-bar.behind .ht-fill{background:var(--result)}
+.ht-bar.behind .ht-bar-top span{color:var(--ink);font-weight:600}
+.ht-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem;margin-top:1rem}
+.ht-reqtbl td,.ht-reqtbl th{padding:.5rem .4rem;text-align:left;vertical-align:top}
+.ht-reqtbl td:nth-child(2){white-space:nowrap;font-family:var(--font-mono)}
+.ht-sample{display:inline-block;margin-top:.5rem;font-size:.78rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--navy-deep);background:var(--result);border-radius:999px;padding:.15rem .6rem}
+.tool-layout>div{min-width:0}
+.ht-reqtbl td.ht-wrap{white-space:normal;font-family:var(--font-sans)}
+body:not(.lic-atpl) .ht-atpl,body:not(.lic-atpl) .ht-atpl-i{display:none}
+body.lic-atpl .ht-cpl{display:none}
+.ht-licseg{margin-top:.3rem}
+.ht-lichead{margin-top:.6rem}
+.ht-reqtbl caption{text-align:left;font-weight:700;color:var(--ink);padding:.2rem 0 .5rem}
+.ht-bar.alt .ht-fill{background:var(--line)}
+.ht-bar.alt .ht-bar-top span{color:var(--muted)}
+#rbig small{white-space:nowrap}
+.ht-win5wrap{margin:.7rem 0 0}
+.ht-win5{display:flex;gap:.55rem;align-items:flex-start;line-height:1.4;font-size:.9rem;color:var(--body);cursor:pointer}
+.ht-win5 input{margin-top:.2rem;width:1.05rem;height:1.05rem;flex:0 0 auto;accent-color:var(--accent)}
+.ht-win5note{margin-top:.35rem}

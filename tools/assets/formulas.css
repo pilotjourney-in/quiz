@@ -1,0 +1,25 @@
+/* Formula library page. Uses tools.css variables only. */
+.fsearch{padding:1.1rem 1.25rem}
+.fsearch label{display:block;font-weight:600;color:var(--ink);margin-bottom:.4rem}
+.fsearch input{width:100%;font-size:1rem;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-control);padding:.7rem .75rem}
+.fsearch input:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+.fcount{font-size:.85rem;color:var(--muted);margin:.5rem 0 .3rem}
+.jump{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.4rem}
+.jump a{font-size:.82rem;padding:.35rem .6rem;border:1px solid var(--line);border-radius:999px;color:var(--body);text-decoration:none}
+.jump a:hover{border-color:var(--accent-line);color:var(--ink)}
+.fsub{margin-top:1.4rem;scroll-margin-top:80px}
+.fsub>h2{font-size:1.2rem;margin:0 0 .6rem;color:var(--ink)}
+.fsub .cnt{font-family:var(--font-mono);font-size:.8rem;color:var(--accent);margin-left:.3rem}
+.fcard{padding:1.05rem 1.15rem 1.15rem;margin-top:.75rem;scroll-margin-top:80px}
+.fcard h3{font-size:1.02rem;margin:0 0 .5rem;color:var(--ink)}
+.fcard .anchor{color:var(--faint);text-decoration:none;margin-right:.35rem;font-family:var(--font-mono)}
+.fcard .anchor:hover{color:var(--accent)}
+.fcard:target,.fcard.target{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.syms{list-style:none;padding:0;margin:.5rem 0;font-size:.86rem;color:var(--body);line-height:1.5}
+.syms b{font-family:var(--font-mono);color:var(--ink);margin-right:.3rem}
+.fex{font-size:.9rem;line-height:1.6;margin:.6rem 0 .4rem;color:var(--body)}
+.fex .kicker{display:block;margin-bottom:.15rem}
+.fnote{font-size:.8rem;color:var(--muted);margin:.3rem 0 .5rem;line-height:1.5}
+.btn.try{margin-top:.4rem;font-size:.85rem}
+.fnone{padding:1rem 1.2rem;margin-top:1rem}
+.tool-layout>*{min-width:0}
