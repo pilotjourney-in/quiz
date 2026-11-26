@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aviation Unit Converter: Knots, Feet, hPa &amp; More | Pilot Journey</title>
+  <meta name="description" content="Free aviation unit converter for knots, km/h, mph and m/s; feet, metres, nautical miles, statute miles and kilometres; hPa and inHg; °C and °F; and kg and lb. Optional Jet A-1 fuel volume to mass.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://quiz.pilotjourney.in/tools/unit-converter/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pilot Journey">
+  <meta property="og:url" content="https://quiz.pilotjourney.in/tools/unit-converter/">
+  <meta property="og:title" content="Aviation Unit Converter: Knots, Feet, hPa &amp; More | Pilot Journey">
+  <meta property="og:description" content="Convert aviation speed, distance, altitude, pressure, temperature and mass units, plus optional Jet A-1 fuel volume to mass.">
+  <meta property="og:image" content="https://quiz.pilotjourney.in/pj-logo-512.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Aviation Unit Converter: Knots, Feet, hPa &amp; More | Pilot Journey">
+  <meta name="twitter:description" content="Convert aviation speed, distance, altitude, pressure, temperature and mass units, plus optional Jet A-1 fuel volume to mass.">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "Aviation unit converter",
+        "url": "https://quiz.pilotjourney.in/tools/unit-converter/",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Any",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+        "description": "Free aviation unit converter for knots, km/h, mph and m/s; feet, metres, nautical miles, statute miles and kilometres; hPa and inHg; Celsius and Fahrenheit; kilograms and pounds; and optional Jet A-1 fuel volume to mass.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Pilot Journey",
+          "url": "https://quiz.pilotjourney.in/"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Pilot Journey Quiz", "item": "https://quiz.pilotjourney.in/" },
+          { "@type": "ListItem", "position": 2, "name": "Aviation tools", "item": "https://quiz.pilotjourney.in/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Aviation unit converter", "item": "https://quiz.pilotjourney.in/tools/unit-converter/" }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <div class="page">
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="accent-bar" aria-hidden="true"></div>
+    <div class="top-strip">
+      <div class="wrap top-strip-inner">
+        <span><span class="dot" aria-hidden="true"></span>Free study tools · no account needed</span>
+        <span class="hide-sm">For study only · always check official documents</span>
+      </div>
+    </div>
+    <header class="site-header">
+      <div class="wrap site-header-inner">
+        <a class="brand" href="/" aria-label="Pilot Journey home">
+          <img src="/pj-logo.png" alt="" width="40" height="40">
+          <span>
+            <span class="brand-name">Pilot Journey</span>
+            <span class="brand-tag">DGCA · ATPL · A320</span>
+          </span>
+        </a>
+        <nav class="nav" aria-label="Main navigation">
+          <a href="/subjects/">Question bank</a>
+          <a href="/type-rating/">Type rating</a>
+          <a href="/daily/">Daily check</a>
+          <a href="/tools/" aria-current="page">Tools</a>
+          <a href="/faq/">FAQ</a>
+        </nav>
+        <a class="btn btn-primary header-cta" href="/subjects/">Start practising</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <header class="hero">
+        <div class="wrap">
+          <nav aria-label="Breadcrumb">
+            <ol class="crumbs">
+              <li><a href="/">Quiz home</a></li>
+              <li><a href="/tools/">Aviation tools</a></li>
+              <li aria-current="page">Aviation unit converter</li>
+            </ol>
+          </nav>
+          <p class="kicker">Free aviation calculator</p>
+          <h1 class="display-lg">Aviation unit converter</h1>
+          <p class="lede">Convert knots, km/h, mph and m/s; feet, metres, nautical miles, statute miles and kilometres; hPa and inHg; °C and °F; and kg and lb. An optional Jet A-1 fuel section turns volume into mass using a density you can edit (default 0.8 kg/L).</p>
+          <p class="study-line">For training/study only, not for real flight planning.</p>
+          <noscript>
+            <p class="noscript">This converter needs JavaScript in your browser to run the calculations. The unit list and formulae are still on this page below.</p>
+          </noscript>
+        </div>
+      </header>
+
+      <div class="wrap tool-layout">
+        <div>
+          <div class="actions">
+            <button type="button" class="btn btn-outline" id="try-example">Try an example</button>
+          </div>
+          <section class="card result-card result-empty" id="result-card" aria-live="polite">
+            <p class="kicker">Converted value</p>
+            <div class="result-hero">
+              <span class="result-number" id="result-number">—</span>
+              <span class="result-unit" id="result-unit"></span>
+            </div>
+            <p class="result-sub" id="result-sub">Enter a value in any box. The main result shows a useful counterpart, such as knots to kilometres per hour.</p>
+            <dl class="result-grid" id="result-grid"></dl>
+          </section>
+          <div class="tabs" role="tablist" aria-label="Unit families">
+            <button type="button" role="tab" id="tab-speed" aria-controls="panel-speed" aria-selected="true">Speed</button>
+            <button type="button" role="tab" id="tab-distance" aria-controls="panel-distance" aria-selected="false">Distance &amp; altitude</button>
+            <button type="button" role="tab" id="tab-pressure" aria-controls="panel-pressure" aria-selected="false">Pressure</button>
+            <button type="button" role="tab" id="tab-temperature" aria-controls="panel-temperature" aria-selected="false">Temperature</button>
+            <button type="button" role="tab" id="tab-mass" aria-controls="panel-mass" aria-selected="false">Mass</button>
+            <button type="button" role="tab" id="tab-fuel" aria-controls="panel-fuel" aria-selected="false">Fuel (Jet A-1)</button>
+          </div>
+
+          <section class="card panel is-active" id="panel-speed" role="tabpanel" aria-labelledby="tab-speed" data-kind="speed">
+            <h2>Speed</h2>
+            <p class="panel-help">Type a value in any box. The others update using 1 knot = 1.852 km/h exactly.</p>
+            <div class="fields">
+              <div class="field">
+                <label for="speed-kt">Knots <span class="unit-hint">kt</span></label>
+                <input id="speed-kt" inputmode="decimal" enterkeyhint="done" data-unit="kt" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="speed-kmh">Kilometres per hour <span class="unit-hint">km/h</span></label>
+                <input id="speed-kmh" inputmode="decimal" enterkeyhint="done" data-unit="km/h" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="speed-mph">Miles per hour <span class="unit-hint">mph</span></label>
+                <input id="speed-mph" inputmode="decimal" enterkeyhint="done" data-unit="mph" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="speed-ms">Metres per second <span class="unit-hint">m/s</span></label>
+                <input id="speed-ms" inputmode="decimal" enterkeyhint="done" data-unit="m/s" autocomplete="off">
+              </div>
+            </div>
+          </section>
+
+          <section class="card panel" id="panel-distance" role="tabpanel" aria-labelledby="tab-distance" hidden data-kind="distance">
+            <h2>Distance and altitude</h2>
+            <p class="panel-help">Feet and metres for altitude; nautical miles, statute miles and kilometres for distance. 1 nautical mile = 1852 m exactly; 1 foot = 0.3048 m exactly.</p>
+            <div class="fields cols-wide">
+              <div class="field">
+                <label for="dist-ft">Feet <span class="unit-hint">ft</span></label>
+                <input id="dist-ft" inputmode="decimal" enterkeyhint="done" data-unit="ft" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="dist-m">Metres <span class="unit-hint">m</span></label>
+                <input id="dist-m" inputmode="decimal" enterkeyhint="done" data-unit="m" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="dist-nm">Nautical miles <span class="unit-hint">NM</span></label>
+                <input id="dist-nm" inputmode="decimal" enterkeyhint="done" data-unit="nm" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="dist-sm">Statute miles <span class="unit-hint">SM</span></label>
+                <input id="dist-sm" inputmode="decimal" enterkeyhint="done" data-unit="sm" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="dist-km">Kilometres <span class="unit-hint">km</span></label>
+                <input id="dist-km" inputmode="decimal" enterkeyhint="done" data-unit="km" autocomplete="off">
+              </div>
+            </div>
+          </section>
+
+          <section class="card panel" id="panel-pressure" role="tabpanel" aria-labelledby="tab-pressure" hidden data-kind="pressure">
+            <h2>Pressure</h2>
+            <p class="panel-help">Altimeter and QNH units. 1 inHg = 33.86389 hPa (ICAO). Standard sea-level pressure is 1013.25 hPa, about 29.92 inHg.</p>
+            <div class="fields">
+              <div class="field">
+                <label for="press-hpa">Hectopascals <span class="unit-hint">hPa</span></label>
+                <input id="press-hpa" inputmode="decimal" enterkeyhint="done" data-unit="hPa" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="press-inhg">Inches of mercury <span class="unit-hint">inHg</span></label>
+                <input id="press-inhg" inputmode="decimal" enterkeyhint="done" data-unit="inHg" autocomplete="off">
+              </div>
+            </div>
+          </section>
+
+          <section class="card panel" id="panel-temperature" role="tabpanel" aria-labelledby="tab-temperature" hidden data-kind="temperature">
+            <h2>Temperature</h2>
+            <p class="panel-help">ISA sea-level temperature is 15°C (59°F). Conversion is °F = °C × 9/5 + 32.</p>
+            <div class="fields">
+              <div class="field">
+                <label for="temp-c">Celsius <span class="unit-hint">°C</span></label>
+                <input id="temp-c" inputmode="decimal" enterkeyhint="done" data-unit="C" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="temp-f">Fahrenheit <span class="unit-hint">°F</span></label>
+                <input id="temp-f" inputmode="decimal" enterkeyhint="done" data-unit="F" autocomplete="off">
+              </div>
+            </div>
+          </section>
+
+          <section class="card panel" id="panel-mass" role="tabpanel" aria-labelledby="tab-mass" hidden data-kind="mass">
+            <h2>Mass</h2>
+            <p class="panel-help">1 kilogram = 2.2046226218 avoirdupois pounds.</p>
+            <div class="fields">
+              <div class="field">
+                <label for="mass-kg">Kilograms <span class="unit-hint">kg</span></label>
+                <input id="mass-kg" inputmode="decimal" enterkeyhint="done" data-unit="kg" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="mass-lb">Pounds <span class="unit-hint">lb</span></label>
+                <input id="mass-lb" inputmode="decimal" enterkeyhint="done" data-unit="lb" autocomplete="off">
+              </div>
+            </div>
+          </section>
+
+          <section class="card panel" id="panel-fuel" role="tabpanel" aria-labelledby="tab-fuel" hidden data-kind="fuel">
+            <h2>Fuel volume to mass (Jet A-1)</h2>
+            <p class="panel-help">Uses a typical Jet A-1 planning density of 0.8 kg/L. Change the density if you have a figure from the fuel slip or AFM. Actual density varies with temperature and batch.</p>
+            <div class="density-row">
+              <div class="field">
+                <label for="fuel-density">Jet A-1 density <span class="unit-hint">kg/L</span></label>
+                <input id="fuel-density" inputmode="decimal" enterkeyhint="done" value="0.8" autocomplete="off" aria-describedby="fuel-density-hint">
+              </div>
+              <p id="fuel-density-hint" class="panel-help" style="margin:0;flex:1 1 14rem">Default 0.8 kg/L. Typical Jet A-1 range is about 0.775–0.840 kg/L.</p>
+            </div>
+            <div class="fields">
+              <div class="field">
+                <label for="fuel-l">Litres <span class="unit-hint">L</span></label>
+                <input id="fuel-l" inputmode="decimal" enterkeyhint="done" data-unit="L" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="fuel-usgal">US gallons <span class="unit-hint">US gal</span></label>
+                <input id="fuel-usgal" inputmode="decimal" enterkeyhint="done" data-unit="usgal" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="fuel-kg">Kilograms <span class="unit-hint">kg</span></label>
+                <input id="fuel-kg" inputmode="decimal" enterkeyhint="done" data-unit="kg" autocomplete="off">
+              </div>
+              <div class="field">
+                <label for="fuel-lb">Pounds <span class="unit-hint">lb</span></label>
+                <input id="fuel-lb" inputmode="decimal" enterkeyhint="done" data-unit="lb" autocomplete="off">
+              </div>
+            </div>
+          </section>
+          <details class="working" id="working">
+            <summary>Show working</summary>
+            <div class="working-body" id="working-body">
+              <p>Enter a value to see the formula with your numbers.</p>
+            </div>
+          </details>
+        </div>
+
+        <aside class="side">
+          <div class="card">
+            <p class="kicker">How it is calculated</p>
+            <h2>Constants used</h2>
+            <ul>
+              <li>1 international nautical mile = 1852 metres exactly, so 1 knot = 1.852 km/h.</li>
+              <li>1 foot = 0.3048 metres exactly.</li>
+              <li>1 statute mile = 1609.344 metres exactly.</li>
+              <li>1 inHg = 33.86389 hPa (ICAO conventional value).</li>
+              <li>°F = °C × 9/5 + 32.</li>
+              <li>1 kg = 2.2046226218 lb.</li>
+              <li>Jet A-1 mass = volume × density. The default density is 0.8 kg/L and can be edited.</li>
+            </ul>
+            <p class="disclaimer">For study and flight-planning practice only. This is not a certified source for flight operations. Cross-check figures with official documents and the aircraft AFM.</p>
+          </div>
+          <div class="card">
+            <p class="kicker">More tools</p>
+            <h2>Also on Pilot Journey</h2>
+            <ul>
+              <li><a href="/tools/crosswind/">Crosswind component calculator</a></li>
+              <li><a href="/tools/density-altitude/">Pressure and density altitude calculator</a></li>
+              <li><a href="/tools/wind-triangle/">Wind triangle (E6B) calculator</a></li>
+              <li><a href="/tools/tas-mach/">TAS, CAS and Mach calculator</a></li>
+              <li><a href="/tools/one-in-sixty/">1 in 60 rule calculator</a></li>
+              <li><a href="/tools/pet-pnr/">PET and PNR calculator</a></li>
+              <li><a href="/tools/descent-planner/">Descent planning calculator</a></li>
+              <li><a href="/tools/altimetry/">QNH, QFE and cold temperature calculator</a></li>
+              <li><a href="/tools/mass-balance/">Mass and balance (CG) calculator</a></li>
+              <li><a href="/tools/utc-ist-sunrise/">UTC/IST and sunrise/sunset calculator</a></li>
+              <li><a href="/tools/">All aviation tools</a></li>
+              <li><a href="/subjects/">Free DGCA question bank</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+
+      <div class="wrap">
+        <section class="card explainer" id="explainer">
+          <h2>How aviation units convert</h2>
+          <p>Pilots move between several unit systems in the same sitting. A METAR gives wind in knots and visibility in metres or kilometres, an altimeter setting may be in hectopascals or inches of mercury, and a fuel slip may be in litres, kilograms or pounds. This converter keeps the official SI and ICAO factors in one place so you can check exam arithmetic and classroom exercises without flipping between tables.</p>
+          <p>Speed uses the international nautical mile of exactly 1852 metres, so one knot is exactly 1.852 kilometres per hour. Statute miles use the international mile of 1609.344 metres. Altitude and short distances use the international foot of exactly 0.3048 metres. Pressure uses the conventional ICAO factor of 33.86389 hectopascals in one inch of mercury; standard sea-level pressure is 1013.25 hectopascals, which is close to 29.92 inches. Temperature follows the usual formula: Fahrenheit equals Celsius times nine fifths, plus 32. Mass uses the avoirdupois pound, 2.2046226218 pounds in one kilogram.</p>
+          <p>The Jet A-1 section turns volume into mass, or the other way around, at a density you can edit. The default 0.8 kilograms per litre is a common planning figure, not a figure from a particular batch. Real Jet A-1 density changes with temperature, so replace the default when you have a value from a fuel slip or the aircraft manual. US gallons convert at 3.785411784 litres exactly. The Try an example button fills a 120 knot true airspeed, a typical study figure for a light aeroplane cruise, and shows the kilometre-per-hour equivalent in the result card.</p>
+          <p>The page is for training and study only and is not a source for operational flight planning.</p>
+        </section>
+        <nav class="page-links" aria-label="Study links">
+          <a href="https://quiz.pilotjourney.in/subjects/">Practise in the free DGCA question bank</a>
+          <a href="https://www.pilotjourney.in/guidance">Get free CPL career guidance</a>
+        </nav>
+      </div>
+
+      <div class="wrap">
+        <div class="card cta-band">
+          <div>
+            <p class="kicker">Career guidance</p>
+            <h2>Planning a CPL in India?</h2>
+            <p>Get a free, plain-English path from where you are now to a computer number, medicals and flying training.</p>
+          </div>
+          <a class="btn btn-primary" href="https://www.pilotjourney.in/guidance">Get free pilot career guidance</a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-grid">
+        <div>
+          <p class="kicker">Pilot Journey</p>
+          <p>Free DGCA study tools and practice questions for aspiring pilots. Independent study project. Not affiliated with DGCA, Airbus, Boeing or any airline.</p>
+          <p class="legal-note">Study material only.<br>Always check current official documents.</p>
+        </div>
+        <div>
+          <p class="kicker">Study</p>
+          <ul>
+            <li><a href="/subjects/">Question bank</a></li>
+            <li><a href="/type-rating/">Type rating: A320 / B737</a></li>
+            <li><a href="/tools/">Aviation tools</a></li>
+            <li><a href="/daily/">Daily check</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="kicker">About</p>
+          <ul>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a href="https://www.pilotjourney.in/">Read the Pilot Journey blog</a></li>
+            <li><a href="https://altitude.pilotjourney.in/">Pilot Journey Altitude store</a></li>
+            <li><a href="https://www.pilotjourney.in/guidance">Free guidance page</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bar">
+        <div class="wrap footer-bar-inner">
+          <span>© 2026 Pilot Journey · Study material only</span>
+          <span>Free study material for pilots. Always check current DGCA and manufacturer documents.</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="convert.js"></script>
+  <script>
+    (function () {
+      var U = window.AviationUnits;
+      if (!U) return;
+
+      var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+      var panels = Array.prototype.slice.call(document.querySelectorAll('[role="tabpanel"]'));
+      var card = document.getElementById('result-card');
+      var numberEl = document.getElementById('result-number');
+      var unitEl = document.getElementById('result-unit');
+      var subEl = document.getElementById('result-sub');
+      var gridEl = document.getElementById('result-grid');
+      var workingEl = document.getElementById('working-body');
+
+      var LABELS = {
+        kt: 'kt', 'km/h': 'km/h', mph: 'mph', 'm/s': 'm/s',
+        ft: 'ft', m: 'm', nm: 'NM', sm: 'SM', km: 'km',
+        hPa: 'hPa', inHg: 'inHg',
+        C: '°C', F: '°F',
+        kg: 'kg', lb: 'lb',
+        L: 'L', usgal: 'US gal'
+      };
+      var NAMES = {
+        kt: 'knots', 'km/h': 'kilometres per hour', mph: 'miles per hour', 'm/s': 'metres per second',
+        ft: 'feet', m: 'metres', nm: 'nautical miles', sm: 'statute miles', km: 'kilometres',
+        hPa: 'hectopascals', inHg: 'inches of mercury',
+        C: 'degrees Celsius', F: 'degrees Fahrenheit',
+        kg: 'kilograms', lb: 'pounds',
+        L: 'litres', usgal: 'US gallons'
+      };
+      var HERO_OF = {
+        kt: 'km/h', 'km/h': 'kt', mph: 'kt', 'm/s': 'kt',
+        ft: 'm', m: 'ft', nm: 'km', km: 'nm', sm: 'nm',
+        hPa: 'inHg', inHg: 'hPa',
+        C: 'F', F: 'C',
+        kg: 'lb', lb: 'kg',
+        L: 'kg', usgal: 'kg'
+      };
+
+      function showPanel(id) {
+        tabs.forEach(function (tab) {
+          var selected = tab.getAttribute('aria-controls') === id;
+          tab.setAttribute('aria-selected', selected ? 'true' : 'false');
+        });
+        panels.forEach(function (panel) {
+          var on = panel.id === id;
+          panel.classList.toggle('is-active', on);
+          if (on) panel.removeAttribute('hidden');
+          else panel.setAttribute('hidden', '');
+        });
+      }
+
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          showPanel(tab.getAttribute('aria-controls'));
+          refreshFromPanel(document.getElementById(tab.getAttribute('aria-controls')));
+        });
+      });
+
+      function emptyResult() {
+        card.classList.add('result-empty');
+        numberEl.textContent = '—';
+        unitEl.textContent = '';
+        subEl.textContent = 'Enter a value in any box. The main result shows a useful counterpart, such as knots to kilometres per hour.';
+        gridEl.innerHTML = '';
+        workingEl.innerHTML = '<p>Enter a value to see the formula with your numbers.</p>';
+      }
+
+      function heroOf(kind, fromUnit) {
+        if (kind === 'fuel' && (fromUnit === 'kg' || fromUnit === 'lb')) return 'L';
+        return HERO_OF[fromUnit] || fromUnit;
+      }
+
+      function describeStep(kind, value, fromUnit, toUnit, resultValue, density) {
+        var fromName = NAMES[fromUnit] || fromUnit;
+        var toName = NAMES[toUnit] || toUnit;
+        var shownFrom = U.formatValue(value, kind === 'fuel' ? (fromUnit === 'kg' || fromUnit === 'lb' ? 'mass' : 'volume') : kind);
+        var shownTo = U.formatValue(resultValue, kind === 'fuel' ? (toUnit === 'kg' || toUnit === 'lb' ? 'mass' : 'volume') : kind);
+        if (kind === 'speed' && fromUnit === 'kt' && toUnit === 'km/h') {
+          return shownFrom + ' kt × 1.852 = <code>' + shownTo + ' km/h</code> (1 knot = 1.852 km/h exactly).';
+        }
+        if (kind === 'speed' && fromUnit === 'km/h' && toUnit === 'kt') {
+          return shownFrom + ' km/h ÷ 1.852 = <code>' + shownTo + ' kt</code>.';
+        }
+        if (kind === 'distance' && fromUnit === 'ft' && toUnit === 'm') {
+          return shownFrom + ' ft × 0.3048 = <code>' + shownTo + ' m</code> (1 foot = 0.3048 m exactly).';
+        }
+        if (kind === 'distance' && fromUnit === 'm' && toUnit === 'ft') {
+          return shownFrom + ' m ÷ 0.3048 = <code>' + shownTo + ' ft</code>.';
+        }
+        if (kind === 'distance' && fromUnit === 'nm' && toUnit === 'km') {
+          return shownFrom + ' NM × 1.852 = <code>' + shownTo + ' km</code> (1 nautical mile = 1852 m exactly).';
+        }
+        if (kind === 'distance' && fromUnit === 'km' && toUnit === 'nm') {
+          return shownFrom + ' km ÷ 1.852 = <code>' + shownTo + ' NM</code>.';
+        }
+        if (kind === 'pressure' && fromUnit === 'hPa' && toUnit === 'inHg') {
+          return shownFrom + ' hPa ÷ 33.86389 = <code>' + shownTo + ' inHg</code>.';
+        }
+        if (kind === 'pressure' && fromUnit === 'inHg' && toUnit === 'hPa') {
+          return shownFrom + ' inHg × 33.86389 = <code>' + shownTo + ' hPa</code>.';
+        }
+        if (kind === 'temperature' && fromUnit === 'C' && toUnit === 'F') {
+          return shownFrom + ' °C × 9/5 + 32 = <code>' + shownTo + ' °F</code>.';
+        }
+        if (kind === 'temperature' && fromUnit === 'F' && toUnit === 'C') {
+          return '(' + shownFrom + ' − 32) × 5/9 = <code>' + shownTo + ' °C</code>.';
+        }
+        if (kind === 'mass' && fromUnit === 'kg' && toUnit === 'lb') {
+          return shownFrom + ' kg × 2.2046226218 = <code>' + shownTo + ' lb</code>.';
+        }
+        if (kind === 'mass' && fromUnit === 'lb' && toUnit === 'kg') {
+          return shownFrom + ' lb ÷ 2.2046226218 = <code>' + shownTo + ' kg</code>.';
+        }
+        if (kind === 'fuel') {
+          var d = density != null ? density : U.DEFAULT_JET_A1_KG_PER_L;
+          return shownFrom + ' ' + (LABELS[fromUnit] || fromUnit) + ' converts to <code>' +
+            shownTo + ' ' + (LABELS[toUnit] || toUnit) + '</code> at a Jet A-1 density of <code>' +
+            d + ' kg/L</code>. Mass = volume in litres × density.';
+        }
+        return shownFrom + ' ' + fromName + ' = <code>' + shownTo + ' ' + toName + '</code>.';
+      }
+
+      function fmtKind(kind, unit) {
+        if (kind === 'fuel') return (unit === 'kg' || unit === 'lb') ? 'mass' : 'volume';
+        return kind;
+      }
+
+      function updateResult(kind, value, fromUnit, all, density) {
+        if (value === null || !all) { emptyResult(); return; }
+        var heroUnit = heroOf(kind, fromUnit);
+        var heroVal = all[heroUnit];
+        if (heroVal === undefined || heroVal === null) { emptyResult(); return; }
+        card.classList.remove('result-empty');
+        numberEl.textContent = U.formatValue(heroVal, fmtKind(kind, heroUnit));
+        unitEl.textContent = LABELS[heroUnit] || heroUnit;
+        subEl.textContent = U.formatValue(value, fmtKind(kind, fromUnit)) + ' ' +
+          (LABELS[fromUnit] || fromUnit) + ' is ' +
+          U.formatValue(heroVal, fmtKind(kind, heroUnit)) + ' ' +
+          (LABELS[heroUnit] || heroUnit) + '.';
+        var order = Object.keys(all).filter(function (u) { return u !== fromUnit; });
+        gridEl.innerHTML = order.map(function (u) {
+          return '<div><dt class="lbl">' + (NAMES[u] || u) + '</dt><dd class="val">' +
+            U.formatValue(all[u], fmtKind(kind, u)) + ' ' + (LABELS[u] || u) + '</dd></div>';
+        }).join('');
+        var steps = [];
+        steps.push(describeStep(kind, value, fromUnit, heroUnit, heroVal, density));
+        order.forEach(function (u) {
+          if (u === heroUnit) return;
+          steps.push(describeStep(kind, value, fromUnit, u, all[u], density));
+        });
+        workingEl.innerHTML = '<ol>' + steps.map(function (s) { return '<li>' + s + '</li>'; }).join('') + '</ol>';
+      }
+
+      function snapshotFuel(result) {
+        return { L: result.L, usgal: result.usgal, kg: result.kg, lb: result.lb };
+      }
+
+      function refreshFromPanel(panel, source) {
+        if (!panel) { emptyResult(); return; }
+        var kind = panel.getAttribute('data-kind');
+        var inputs = Array.prototype.slice.call(panel.querySelectorAll('input[data-unit]'));
+        var src = source || panel.querySelector('input[data-unit][data-last="1"]') ||
+          inputs.filter(function (el) { return String(el.value).trim() !== ''; })[0];
+        if (!src || String(src.value).trim() === '') { emptyResult(); return; }
+        var raw = U.parseInput(src.value);
+        var fromUnit = src.getAttribute('data-unit');
+        if (raw === null) { emptyResult(); return; }
+        if (kind === 'fuel') {
+          var density = U.parseInput(document.getElementById('fuel-density').value);
+          if (density === null) density = U.DEFAULT_JET_A1_KG_PER_L;
+          var result = U.fuelFrom(raw, fromUnit, density);
+          if (!result) { emptyResult(); return; }
+          updateResult(kind, raw, fromUnit, snapshotFuel(result), density);
+          return;
+        }
+        var all = U.convertAll(kind, raw, fromUnit);
+        updateResult(kind, raw, fromUnit, all);
+      }
+
+      var updating = false;
+
+      function fillFamily(panel, source) {
+        var kind = panel.getAttribute('data-kind');
+        var inputs = Array.prototype.slice.call(panel.querySelectorAll('input[data-unit]'));
+        if (kind === 'fuel') {
+          var density = U.parseInput(document.getElementById('fuel-density').value);
+          if (density === null) density = U.DEFAULT_JET_A1_KG_PER_L;
+          var raw = U.parseInput(source.value);
+          if (raw === null) {
+            source.classList.toggle('is-invalid', String(source.value).trim() !== '');
+            if (String(source.value).trim() === '') {
+              inputs.forEach(function (el) {
+                if (el !== source) el.value = '';
+                el.classList.remove('is-invalid');
+              });
+              emptyResult();
+            }
+            return;
+          }
+          source.classList.remove('is-invalid');
+          var result = U.fuelFrom(raw, source.getAttribute('data-unit'), density);
+          if (!result) return;
+          updating = true;
+          inputs.forEach(function (el) {
+            var unit = el.getAttribute('data-unit');
+            if (el !== source) el.value = U.formatValue(result[unit], unit === 'kg' || unit === 'lb' ? 'mass' : 'volume');
+            el.classList.remove('is-invalid');
+          });
+          updating = false;
+          updateResult('fuel', raw, source.getAttribute('data-unit'), snapshotFuel(result), density);
+          return;
+        }
+
+        var rawVal = U.parseInput(source.value);
+        if (rawVal === null) {
+          source.classList.toggle('is-invalid', String(source.value).trim() !== '');
+          if (String(source.value).trim() === '') {
+            inputs.forEach(function (el) {
+              if (el !== source) el.value = '';
+              el.classList.remove('is-invalid');
+            });
+            emptyResult();
+          }
+          return;
+        }
+        source.classList.remove('is-invalid');
+        var all = U.convertAll(kind, rawVal, source.getAttribute('data-unit'));
+        updating = true;
+        inputs.forEach(function (el) {
+          var unit = el.getAttribute('data-unit');
+          if (el !== source) el.value = U.formatValue(all[unit], kind);
+          el.classList.remove('is-invalid');
+        });
+        updating = false;
+        updateResult(kind, rawVal, source.getAttribute('data-unit'), all);
+      }
+
+      panels.forEach(function (panel) {
+        panel.addEventListener('input', function (event) {
+          if (updating) return;
+          var target = event.target;
+          if (target.id === 'fuel-density') {
+            var filled = panel.querySelector('input[data-unit][data-last="1"]') || panel.querySelector('input[data-unit]');
+            var anyHas = Array.prototype.some.call(panel.querySelectorAll('input[data-unit]'), function (el) {
+              return String(el.value).trim() !== '';
+            });
+            if (anyHas && filled && String(filled.value).trim() !== '') fillFamily(panel, filled);
+            return;
+          }
+          if (!target.getAttribute('data-unit')) return;
+          panel.querySelectorAll('input[data-unit]').forEach(function (el) {
+            el.removeAttribute('data-last');
+          });
+          target.setAttribute('data-last', '1');
+          fillFamily(panel, target);
+        });
+      });
+
+      document.getElementById('try-example').addEventListener('click', function () {
+        showPanel('panel-speed');
+        var src = document.getElementById('speed-kt');
+        var panel = document.getElementById('panel-speed');
+        panel.querySelectorAll('input[data-unit]').forEach(function (el) { el.removeAttribute('data-last'); });
+        src.value = '120';
+        src.setAttribute('data-last', '1');
+        fillFamily(panel, src);
+        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    })();
+  </script>
+</body>
+</html>

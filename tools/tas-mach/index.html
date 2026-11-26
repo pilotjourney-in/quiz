@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TAS, CAS and Mach Number Calculator (ISA, compressible) | Pilot Journey</title>
+  <meta name="description" content="Free TAS calculator: convert CAS to TAS and Mach number from pressure altitude and OAT using the ICAO standard atmosphere, with step-by-step working for DGCA CPL/ATPL.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://quiz.pilotjourney.in/tools/tas-mach/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pilot Journey">
+  <meta property="og:url" content="https://quiz.pilotjourney.in/tools/tas-mach/">
+  <meta property="og:title" content="TAS, CAS and Mach Number Calculator (ISA, compressible) | Pilot Journey">
+  <meta property="og:description" content="Free TAS calculator: convert CAS to TAS and Mach number from pressure altitude and OAT using the ICAO standard atmosphere, with step-by-step working for DGCA CPL/ATPL.">
+  <meta property="og:image" content="https://quiz.pilotjourney.in/pj-logo-512.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="TAS, CAS and Mach Number Calculator (ISA, compressible) | Pilot Journey">
+  <meta name="twitter:description" content="Free TAS calculator: convert CAS to TAS and Mach number from pressure altitude and OAT using the ICAO standard atmosphere, with step-by-step working for DGCA CPL/ATPL.">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "TAS, CAS and Mach number calculator", "url": "https://quiz.pilotjourney.in/tools/tas-mach/", "applicationCategory": "EducationalApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"}, "publisher": {"@type": "Organization", "name": "Pilot Journey", "url": "https://quiz.pilotjourney.in/"}, "description": "Free TAS calculator: convert CAS to TAS and Mach number from pressure altitude and OAT using the ICAO standard atmosphere, with step-by-step working for DGCA CPL/ATPL."}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Pilot Journey Quiz", "item": "https://quiz.pilotjourney.in/"}, {"@type": "ListItem", "position": 2, "name": "Aviation tools", "item": "https://quiz.pilotjourney.in/tools/"}, {"@type": "ListItem", "position": 3, "name": "TAS, CAS and Mach calculator", "item": "https://quiz.pilotjourney.in/tools/tas-mach/"}]}]}</script>
+</head>
+<body class="hx">
+  <div class="page">
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="accent-bar" aria-hidden="true"></div>
+    <div class="top-strip">
+      <div class="wrap top-strip-inner">
+        <span><span class="dot" aria-hidden="true"></span>Free study tools · no account needed</span>
+        <span class="hide-sm">For study only · always check official documents</span>
+      </div>
+    </div>
+    <header class="site-header">
+      <div class="wrap site-header-inner">
+        <a class="brand" href="/" aria-label="Pilot Journey home">
+          <img src="../assets/pj-logo.png" alt="" width="40" height="40">
+          <span>
+            <span class="brand-name">Pilot Journey</span>
+            <span class="brand-tag">DGCA · ATPL · A320</span>
+          </span>
+        </a>
+        <nav class="nav" aria-label="Main navigation">
+          <a href="/subjects/">Question bank</a>
+          <a href="/type-rating/">Type rating</a>
+          <a href="/daily/">Daily check</a>
+          <a href="/tools/" aria-current="page">Tools</a>
+          <a href="/faq/">FAQ</a>
+        </nav>
+        <a class="btn btn-primary header-cta" href="/subjects/">Start practising</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <header class="hero">
+        <div class="wrap">
+          <nav aria-label="Breadcrumb">
+            <ol class="crumbs">
+              <li><a href="/">Quiz home</a></li>
+              <li><a href="/tools/">Aviation tools</a></li>
+              <li aria-current="page">TAS, CAS and Mach calculator</li>
+            </ol>
+          </nav>
+          <p class="kicker">Free aviation calculator</p>
+          <h1 class="display-lg">TAS, CAS and Mach number calculator</h1>
+          <p class="lede">Enter one speed, the pressure altitude and the outside air temperature. You get true airspeed, Mach number, CAS and EAS, worked out with the ICAO standard atmosphere and the compressible pitot formula.</p>
+          <p class="study-note">For training/study only, not for real flight planning.</p>
+          <noscript>
+            <p class="noscript">This calculator needs JavaScript in your browser to run the calculations. The formulae and a worked example are still on this page below.</p>
+          </noscript>
+        </div>
+      </header>
+
+      <div class="wrap tool-layout">
+        <div>
+          <section class="card calc-card" id="calc">
+            <h2>Airspeed inputs</h2>
+            <p class="panel-help">Pick the speed you know, then enter pressure altitude and OAT. Results update as you type.</p>
+<div class="tabs" id="mode" role="group" aria-label="Known speed">
+<button type="button" data-v="cas" aria-selected="true">I know CAS</button><button type="button" data-v="mach" aria-selected="false">I know Mach</button><button type="button" data-v="tas" aria-selected="false">I know TAS</button>
+</div>
+<div class="fields">
+<div class="field" id="f-speed"><label for="spd" id="spdlbl">Calibrated airspeed (CAS)</label><div class="inp"><input id="spd" type="number" inputmode="decimal" step="any" value="250"><select id="spdu" aria-label="Speed unit"><option value="kt">kt</option><option value="kmh">km/h</option><option value="mph">mph</option></select></div></div>
+<div class="field"><label for="pa">Pressure altitude</label><div class="inp"><input id="pa" type="number" inputmode="decimal" step="any" value="10000"><select id="pau" aria-label="Altitude unit"><option value="ft">ft</option><option value="m">m</option><option value="fl">FL</option></select></div></div>
+<div class="field"><label for="oat">Outside air temp (OAT / SAT)</label><div class="inp"><input id="oat" type="number" inputmode="decimal" step="any" value="-5"><select id="oatu" aria-label="Temperature unit"><option value="c">°C</option><option value="f">°F</option></select></div></div>
+</div>
+
+            <div class="actions"><button type="button" class="btn btn-primary" id="exbtn">Try an example</button><button type="button" class="btn btn-ghost" id="clearbtn">Clear</button><p class="exnote" id="exnote"></p></div>
+          </section>
+
+          <section class="card result-card" id="result" aria-live="polite">
+            <span class="kicker" id="rlabel">True airspeed (TAS)</span>
+            <div class="result-big" id="rbig">–</div>
+            <div class="result-sub" id="rsub"></div>
+            <div class="result-grid" id="rgrid"></div>
+            <div class="result-warn" id="rwarn"></div>
+          </section>
+
+          <details class="card working" open><summary>Show working</summary><div class="steps" id="steps"></div></details>
+
+          <section class="card prose">
+<h2>How TAS, CAS and Mach number are linked</h2>
+<p>Your airspeed indicator measures the difference between pitot (total) and static pressure, and it is calibrated as if you were always at sea level in the ISA. That reading, corrected for instrument and position error, is <strong>calibrated airspeed (CAS)</strong>. As you climb, the air gets thinner and colder, so the same CAS means you are moving faster through the air. That real speed is <strong>true airspeed (TAS)</strong>.</p>
+<p>Mach number is TAS divided by the local speed of sound, and the speed of sound depends only on temperature. This calculator first turns CAS into impact pressure, divides it by the ISA static pressure at your pressure altitude to get Mach, then multiplies Mach by the speed of sound at your actual OAT to get TAS. Because it uses the compressible formula, it stays accurate at jet speeds where the simple density method overstates TAS.</p>
+<div class="formula">a (kt) = 38.967854 × √(OAT + 273.15)
+qc/P0 = (1 + 0.2 (CAS/661.48)²)^3.5 − 1
+M = √(5 [ (qc/P + 1)^(2/7) − 1 ]),   P/P0 = δ = (1 − 6.8756×10⁻⁶ h)^5.2559
+TAS = M × a        EAS = 661.48 × M × √δ</div>
+<h3>Worked example</h3>
+<p>An A320 at FL350 with OAT −45 °C flies at 270 kt CAS. ISA at FL350 is −54.3 °C, so it is ISA+9. δ = 0.2353, giving M = 0.795. The speed of sound at −45 °C is 588.6 kt, so TAS = 0.795 × 588.6 ≈ <strong>468 kt</strong>. The exam rule of thumb (add 2% per 1,000 ft) would give 459 kt, which is close but ignores temperature and compressibility.</p>
+<p><small>Sources: ICAO Doc 7488 Manual of the ICAO Standard Atmosphere; FAA Pilot's Handbook of Aeronautical Knowledge (FAA-H-8083-25), Chapter 8 Flight Instruments.</small></p>
+
+          </section>
+        </div>
+
+        <aside class="side">
+          <div class="card">
+            <p class="kicker">Practice</p>
+            <h2>Test yourself</h2>
+            <p>Airspeed, Mach and the pitot-static system are tested in the DGCA Instruments paper.</p>
+            <p><a class="btn btn-primary" href="https://quiz.pilotjourney.in/subjects/instrumentation/">Practice DGCA Instruments questions</a></p>
+            <p class="disclaimer">For training/study only, not for real flight planning. This is not a certified source for flight operations. Cross-check figures with official documents, the current AIP and the aircraft AFM.</p>
+          </div>
+          <div class="card">
+            <p class="kicker">More tools</p>
+            <h2>Also on Pilot Journey</h2>
+            <ul>
+              <li><a href="/tools/crosswind/">Crosswind component calculator</a></li>
+              <li><a href="/tools/wind-triangle/">Wind triangle (E6B) calculator</a></li>
+              <li><a href="/tools/density-altitude/">Pressure and density altitude calculator</a></li>
+              <li><a href="/tools/unit-converter/">Aviation unit converter</a></li>
+              <li><a href="/tools/one-in-sixty/">1 in 60 rule calculator</a></li>
+              <li><a href="/tools/pet-pnr/">PET and PNR calculator</a></li>
+              <li><a href="/tools/descent-planner/">Descent planning calculator</a></li>
+              <li><a href="/tools/altimetry/">QNH, QFE and cold temperature calculator</a></li>
+              <li><a href="/tools/mass-balance/">Mass and balance (CG) calculator</a></li>
+              <li><a href="/tools/utc-ist-sunrise/">UTC/IST and sunrise/sunset calculator</a></li>
+              <li><a href="/tools/">All aviation tools</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+
+      <div class="wrap">
+        <div class="card cta-band">
+          <div>
+            <p class="kicker">Career guidance</p>
+            <h2>Planning a CPL in India?</h2>
+            <p>Get a free, plain-English path from where you are now to a computer number, medicals and flying training.</p>
+          </div>
+          <a class="btn btn-primary" href="https://www.pilotjourney.in/guidance">Get free pilot career guidance</a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-grid">
+        <div>
+          <p class="kicker">Pilot Journey</p>
+          <p>Free DGCA study tools and practice questions for aspiring pilots. Independent study project. Not affiliated with DGCA, Airbus, Boeing or any airline.</p>
+          <p class="legal-note">Study material only.<br>Always check current official documents.</p>
+        </div>
+        <div>
+          <p class="kicker">Study</p>
+          <ul>
+            <li><a href="/subjects/">Question bank</a></li>
+            <li><a href="/type-rating/">Type rating: A320 / B737</a></li>
+            <li><a href="/tools/">Aviation tools</a></li>
+            <li><a href="/daily/">Daily check</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="kicker">About</p>
+          <ul>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a href="https://www.pilotjourney.in/">Read the Pilot Journey blog</a></li>
+            <li><a href="https://altitude.pilotjourney.in/">Pilot Journey Altitude store</a></li>
+            <li><a href="https://www.pilotjourney.in/guidance">Free guidance page</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bar">
+        <div class="wrap footer-bar-inner">
+          <span>© 2026 Pilot Journey · Study material only</span>
+          <span>Free study material for pilots. Always check current DGCA and manufacturer documents.</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script id="calc-js">
+// TAS / CAS / Mach - ICAO Standard Atmosphere (Doc 7488), compressible subsonic pitot relations.
+// Units: kt, ft, degC. Valid 0..65 617 ft (troposphere + lower stratosphere), subsonic (M<1).
+var ISA_A0 = 661.4786;      // speed of sound at sea level ISA, kt (340.294 m/s)
+var ISA_TROP_FT = 36089.24; // 11 000 m
+function isaTempC(hft){ return hft <= ISA_TROP_FT ? 15 - 0.0019812 * hft : -56.5; }
+function isaDelta(hft){ // pressure ratio P/P0
+  if (hft <= ISA_TROP_FT) return Math.pow(1 - 6.8755856e-6 * hft, 5.2558797);
+  return 0.2233609 * Math.exp(-4.806346e-5 * (hft - ISA_TROP_FT));
+}
+function soundKt(oatC){ return 38.967854 * Math.sqrt(oatC + 273.15); }
+function casToMach(cas, hft){
+  var d = isaDelta(hft);
+  var qcP0 = Math.pow(1 + 0.2 * Math.pow(cas / ISA_A0, 2), 3.5) - 1; // impact pressure / P0
+  return Math.sqrt(5 * (Math.pow(qcP0 / d + 1, 2 / 7) - 1));
+}
+function machToCas(m, hft){
+  var d = isaDelta(hft);
+  var qcP = Math.pow(1 + 0.2 * m * m, 3.5) - 1; // impact pressure / P
+  return ISA_A0 * Math.sqrt(5 * (Math.pow(qcP * d + 1, 2 / 7) - 1));
+}
+// mode: 'cas' | 'mach' | 'tas'; val in kt (or Mach number)
+function airspeeds(mode, val, hft, oatC){
+  var a = soundKt(oatC), d = isaDelta(hft), M, cas, tas;
+  if (mode === 'cas') { cas = val; M = casToMach(val, hft); tas = M * a; }
+  else if (mode === 'mach') { M = val; tas = M * a; cas = machToCas(M, hft); }
+  else { tas = val; M = val / a; cas = machToCas(M, hft); }
+  var eas = ISA_A0 * M * Math.sqrt(d);
+  var sigma = d * 288.15 / (oatC + 273.15);
+  var isaT = isaTempC(hft);
+  return { cas: cas, mach: M, tas: tas, eas: eas, a: a, delta: d, sigma: sigma, pressHpa: 1013.25 * d,
+    isaT: isaT, isaDev: oatC - isaT, compCorr: cas - eas,
+    ruleTas: cas * (1 + 0.02 * hft / 1000),   // exam rule of thumb: +2% per 1000 ft
+    supersonic: M >= 1 };
+}
+
+  </script>
+  <script>
+
+const $=id=>document.getElementById(id);
+function v(id){const e=$(id);if(!e)return NaN;const x=parseFloat(String(e.value).trim().replace(',','.'));return isFinite(x)?x:NaN}
+function fx(x,d){d=d||0;return isFinite(x)?Number(x).toLocaleString('en-IN',{minimumFractionDigits:d,maximumFractionDigits:d}):'–'}
+function kv(k,val,cls){return '<div class="kv '+(cls||'')+'"><div class="k">'+k+'</div><div class="v">'+val+'</div></div>'}
+function setVals(o){for(const k in o){const e=$(k);if(e){e.value=o[k]}}}
+function bindAll(fn){document.querySelectorAll('#calc input,#calc select').forEach(e=>{e.addEventListener('input',fn);e.addEventListener('change',fn)});}
+function segInit(id,fn){const g=$(id);g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-selected','false'));b.setAttribute('aria-selected','true');fn()}));}
+function segVal(id){const b=$(id).querySelector('button[aria-selected=true]');return b?b.dataset.v:null}
+function segSet(id,val){$(id).querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.v===val?'true':'false'))}
+function show(big,unit,sub,grid,warn,steps){$('rbig').innerHTML=big+(unit?' <small>'+unit+'</small>':'');$('rsub').innerHTML=sub||'';$('rgrid').innerHTML=grid||'';$('rwarn').innerHTML=warn||'';$('steps').textContent=steps||''}
+
+const SPD={kt:1,kmh:1/1.852,mph:0.868976};const SPDN={kt:'kt',kmh:'km/h',mph:'mph'};
+function paFt(){const x=v('pa'),u=$('pau').value;return u==='m'?x/0.3048:u==='fl'?x*100:x}
+function oatC(){const x=v('oat');return $('oatu').value==='f'?(x-32)*5/9:x}
+function labels(){const m=segVal('mode');$('spdlbl').textContent=m==='cas'?'Calibrated airspeed (CAS)':m==='tas'?'True airspeed (TAS)':'Mach number';$('spdu').style.display=m==='mach'?'none':'';$('rlabel').textContent=m==='tas'?'Calibrated airspeed (CAS)':'True airspeed (TAS)'}
+function render(){
+  labels();const m=segVal('mode'),u=$('spdu').value,k=SPD[u],un=SPDN[u];
+  let s=v('spd');const h=paFt(),t=oatC();
+  if(!isFinite(s)||!isFinite(h)||!isFinite(t)){show('–','','Enter all three values','','');return}
+  if(h<-2000||h>65000){show('–','','Pressure altitude must be between −2,000 and 65,000 ft','','');return}
+  if(t<-100||t>60){show('–','','OAT looks out of range (−100 to +60 °C)','','');return}
+  if(s<=0){show('–','','Speed must be above zero','','');return}
+  const val=m==='mach'?s:s*k;const r=airspeeds(m,val,h,t);
+  const main=m==='tas'?r.cas:r.tas;
+  const g=kv('Mach',fx(r.mach,3))+kv(m==='tas'?'TAS':'CAS',fx((m==='tas'?r.tas:r.cas)/k,0)+' '+un)+kv('EAS',fx(r.eas/k,0)+' '+un)+kv('ISA deviation',(r.isaDev>=0?'+':'')+fx(r.isaDev,1)+' °C')+kv('Local speed of sound',fx(r.a/k,0)+' '+un)+kv('Rule of thumb TAS (+2%/1000 ft)',fx(r.ruleTas/k,0)+' '+un,'exact');
+  let w=r.supersonic?'Mach is 1.0 or more: the subsonic pitot formula no longer applies, so these figures are not valid.':'';
+  if(m==='mach'&&s>3)w='Enter Mach as a number like 0.78';
+  const st=[
+`1) ISA at pressure altitude ${fx(h,0)} ft
+   ISA temp = ${h<=36089.24?'15 − 1.98 × '+fx(h/1000,2):'−56.5 (above tropopause)'} = ${fx(r.isaT,1)} °C
+   ISA deviation = ${fx(t,1)} − (${fx(r.isaT,1)}) = ${(r.isaDev>=0?'+':'')+fx(r.isaDev,1)} °C
+   Static pressure P = 1013.25 × δ = 1013.25 × ${r.delta.toFixed(4)} = ${fx(r.pressHpa,1)} hPa`,
+`2) Local speed of sound a = 38.967854 × √(T K)
+   = 38.967854 × √(${fx(t+273.15,2)}) = ${fx(r.a,1)} kt`,
+m==='cas'?`3) CAS → impact pressure → Mach (compressible)
+   qc/P0 = (1 + 0.2 × (CAS/661.48)²)^3.5 − 1, with CAS = ${fx(r.cas,1)} kt
+   M = √(5 × ((qc/P + 1)^(2/7) − 1)) = ${r.mach.toFixed(4)}
+4) TAS = M × a = ${r.mach.toFixed(4)} × ${fx(r.a,1)} = ${fx(r.tas,1)} kt`:
+m==='mach'?`3) TAS = M × a = ${r.mach.toFixed(4)} × ${fx(r.a,1)} = ${fx(r.tas,1)} kt
+4) Mach → CAS: qc/P = (1 + 0.2M²)^3.5 − 1, then
+   CAS = 661.48 × √(5 × ((qc/P × δ + 1)^(2/7) − 1)) = ${fx(r.cas,1)} kt`:
+`3) M = TAS / a = ${fx(r.tas,1)} / ${fx(r.a,1)} = ${r.mach.toFixed(4)}
+4) Mach → CAS: CAS = 661.48 × √(5 × (((1+0.2M²)^3.5 − 1) × δ + 1)^(2/7) − 1)) = ${fx(r.cas,1)} kt`,
+`5) EAS = 661.48 × M × √δ = ${fx(r.eas,1)} kt  (compressibility correction CAS − EAS = ${fx(r.compCorr,1)} kt)
+6) Exam rule of thumb: TAS ≈ CAS × (1 + 2% per 1000 ft) = ${fx(r.cas,0)} × ${(1+0.02*h/1000).toFixed(3)} = ${fx(r.ruleTas,0)} kt
+   (quick mental check only; it ignores temperature and compressibility)`].join('\n\n');
+  show(fx(main/k,0),un,'Mach '+fx(r.mach,3)+' · '+fx(h,0)+' ft · OAT '+fx(t,1)+' °C',g,w,st+(u!=='kt'?`\n\n(Calculated in kt, shown in ${un}.)`:''));
+}
+segInit('mode',()=>{const m=segVal('mode');setVals({spd:m==='mach'?'0.78':m==='tas'?'450':'250'});render()});
+bindAll(render);
+$('exbtn').addEventListener('click',()=>{segSet('mode','cas');setVals({spd:270,spdu:'kt',pa:35000,pau:'ft',oat:-45,oatu:'c'});$('exnote').textContent='A320 cruising at FL350 between VIDP (Delhi) and VABB (Mumbai): CAS 270 kt, OAT −45 °C (ISA+9).';render()});
+$('clearbtn').addEventListener('click',()=>{setVals({spd:'',pa:'',oat:''});$('exnote').textContent='';render()});
+render();
+
+  </script>
+</body>
+</html>

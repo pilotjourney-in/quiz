@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>1 in 60 Rule Calculator: Track Error, Closing Angle and Correction | Pilot Journey</title>
+  <meta name="description" content="Free 1 in 60 rule calculator for DGCA CPL navigation: find track error, closing angle and total heading correction from distance gone, off track and to go, with working.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://quiz.pilotjourney.in/tools/one-in-sixty/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pilot Journey">
+  <meta property="og:url" content="https://quiz.pilotjourney.in/tools/one-in-sixty/">
+  <meta property="og:title" content="1 in 60 Rule Calculator: Track Error, Closing Angle and Correction | Pilot Journey">
+  <meta property="og:description" content="Free 1 in 60 rule calculator for DGCA CPL navigation: find track error, closing angle and total heading correction from distance gone, off track and to go, with working.">
+  <meta property="og:image" content="https://quiz.pilotjourney.in/pj-logo-512.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="1 in 60 Rule Calculator: Track Error, Closing Angle and Correction | Pilot Journey">
+  <meta name="twitter:description" content="Free 1 in 60 rule calculator for DGCA CPL navigation: find track error, closing angle and total heading correction from distance gone, off track and to go, with working.">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "1 in 60 rule calculator", "url": "https://quiz.pilotjourney.in/tools/one-in-sixty/", "applicationCategory": "EducationalApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"}, "publisher": {"@type": "Organization", "name": "Pilot Journey", "url": "https://quiz.pilotjourney.in/"}, "description": "Free 1 in 60 rule calculator for DGCA CPL navigation: find track error, closing angle and total heading correction from distance gone, off track and to go, with working."}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Pilot Journey Quiz", "item": "https://quiz.pilotjourney.in/"}, {"@type": "ListItem", "position": 2, "name": "Aviation tools", "item": "https://quiz.pilotjourney.in/tools/"}, {"@type": "ListItem", "position": 3, "name": "1 in 60 rule calculator", "item": "https://quiz.pilotjourney.in/tools/one-in-sixty/"}]}]}</script>
+</head>
+<body class="hx">
+  <div class="page">
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="accent-bar" aria-hidden="true"></div>
+    <div class="top-strip">
+      <div class="wrap top-strip-inner">
+        <span><span class="dot" aria-hidden="true"></span>Free study tools · no account needed</span>
+        <span class="hide-sm">For study only · always check official documents</span>
+      </div>
+    </div>
+    <header class="site-header">
+      <div class="wrap site-header-inner">
+        <a class="brand" href="/" aria-label="Pilot Journey home">
+          <img src="../assets/pj-logo.png" alt="" width="40" height="40">
+          <span>
+            <span class="brand-name">Pilot Journey</span>
+            <span class="brand-tag">DGCA · ATPL · A320</span>
+          </span>
+        </a>
+        <nav class="nav" aria-label="Main navigation">
+          <a href="/subjects/">Question bank</a>
+          <a href="/type-rating/">Type rating</a>
+          <a href="/daily/">Daily check</a>
+          <a href="/tools/" aria-current="page">Tools</a>
+          <a href="/faq/">FAQ</a>
+        </nav>
+        <a class="btn btn-primary header-cta" href="/subjects/">Start practising</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <header class="hero">
+        <div class="wrap">
+          <nav aria-label="Breadcrumb">
+            <ol class="crumbs">
+              <li><a href="/">Quiz home</a></li>
+              <li><a href="/tools/">Aviation tools</a></li>
+              <li aria-current="page">1 in 60 rule calculator</li>
+            </ol>
+          </nav>
+          <p class="kicker">Free aviation calculator</p>
+          <h1 class="display-lg">1 in 60 rule calculator</h1>
+          <p class="lede">Off track? Enter how far you have flown, how far off track you are and how far is left. You get the track error, the closing angle and the heading change to reach your destination, using the 1 in 60 rule with the exact trigonometry alongside.</p>
+          <p class="study-note">For training/study only, not for real flight planning.</p>
+          <noscript>
+            <p class="noscript">This calculator needs JavaScript in your browser to run the calculations. The formulae and a worked example are still on this page below.</p>
+          </noscript>
+        </div>
+      </header>
+
+      <div class="wrap tool-layout">
+        <div>
+          <section class="card calc-card" id="calc">
+            <h2>Off-track inputs</h2>
+            <p class="panel-help">Enter the distances from your last fix. The main answer uses the 1 in 60 rule; the exact trigonometric value is shown beside it.</p>
+<div class="fields">
+<div class="field"><label for="gone">Distance gone (from departure or last fix)</label><div class="inp"><input id="gone" type="number" inputmode="decimal" step="any" value="40"><select id="du" aria-label="Distance unit"><option value="NM">NM</option><option value="km">km</option><option value="SM">SM</option></select></div></div>
+<div class="field"><label for="off">Distance off track</label><input id="off" type="number" inputmode="decimal" step="any" value="4"></div>
+<div class="field"><label for="togo">Distance to go (to destination)</label><input id="togo" type="number" inputmode="decimal" step="any" value="84"></div>
+<div class="field"><label for="side">You are</label><select id="side"><option value="R">Right of track</option><option value="L">Left of track</option></select></div>
+<div class="field"><label for="hdg">Heading you have been flying (°M, optional)</label><input id="hdg" type="number" inputmode="decimal" step="any" placeholder="e.g. 214"></div>
+</div>
+<p class="panel-help" style="margin:.8rem 0 0">All three distances use the same unit; the angles do not depend on it.</p>
+
+            <div class="actions"><button type="button" class="btn btn-primary" id="exbtn">Try an example</button><button type="button" class="btn btn-ghost" id="clearbtn">Clear</button><p class="exnote" id="exnote"></p></div>
+          </section>
+
+          <section class="card result-card" id="result" aria-live="polite">
+            <span class="kicker" id="rlabel">Total heading correction</span>
+            <div class="result-big" id="rbig">–</div>
+            <div class="result-sub" id="rsub"></div>
+            <div class="result-grid" id="rgrid"></div>
+            <div class="result-warn" id="rwarn"></div>
+          </section>
+
+          <details class="card working" open><summary>Show working</summary><div class="steps" id="steps"></div></details>
+
+          <section class="card prose">
+<h2>How the 1 in 60 rule works</h2>
+<p>The 1 in 60 rule says that if you are 1 NM off track after flying 60 NM, your track has drifted about 1° from the plan. It works because, for small angles, the angle in degrees is almost exactly 60 times the ratio of the side opposite to the distance flown. That lets you fix a navigation error in your head without a calculator.</p>
+<p>When a fix shows you off track, two angles matter. The <strong>track error</strong> is how far your actual track has drifted from the planned one, based on the distance gone. The <strong>closing angle</strong> is the extra turn needed to converge on the destination, based on the distance still to go. Turn by the track error alone and you fly parallel to the planned track. Turn by both added together and you arrive over the destination.</p>
+<div class="formula">Track error (TE)     = 60 × distance off ÷ distance gone
+Closing angle (CA)   = 60 × distance off ÷ distance to go
+Total correction     = TE + CA   (turn towards the planned track)
+Exact check: angle = atan(off ÷ distance)</div>
+<h3>Worked example</h3>
+<p>Flying from Delhi (VIDP) to Jaipur (VIJP), about 124 NM, you fix your position 4 NM right of track after 40 NM. TE = 60 × 4 ÷ 40 = 6°. With 84 NM to go, CA = 60 × 4 ÷ 84 ≈ 2.9°. The total correction is about 8.9°, so turn left roughly 9°: from a heading of 214° to about 205°. Exact trigonometry gives 8.4°, which shows how close the rule is.</p>
+<p>The rule reads slightly high because it uses 60 where the true figure is 57.3, and the gap grows at larger angles. Above about 20°, use the exact value.</p>
+<p><small>Sources: standard ATPL/DGCA General Navigation syllabus texts (1 in 60 rule); plane trigonometry for the exact values.</small></p>
+
+          </section>
+        </div>
+
+        <aside class="side">
+          <div class="card">
+            <p class="kicker">Practice</p>
+            <h2>Test yourself</h2>
+            <p>Track error and closing angle questions come from the DGCA Air Navigation paper.</p>
+            <p><a class="btn btn-primary" href="https://quiz.pilotjourney.in/subjects/air-navigation/">Practice DGCA Air Navigation questions</a></p>
+            <p class="disclaimer">For training/study only, not for real flight planning. This is not a certified source for flight operations. Cross-check figures with official documents, the current AIP and the aircraft AFM.</p>
+          </div>
+          <div class="card">
+            <p class="kicker">More tools</p>
+            <h2>Also on Pilot Journey</h2>
+            <ul>
+              <li><a href="/tools/crosswind/">Crosswind component calculator</a></li>
+              <li><a href="/tools/wind-triangle/">Wind triangle (E6B) calculator</a></li>
+              <li><a href="/tools/density-altitude/">Pressure and density altitude calculator</a></li>
+              <li><a href="/tools/unit-converter/">Aviation unit converter</a></li>
+              <li><a href="/tools/tas-mach/">TAS, CAS and Mach calculator</a></li>
+              <li><a href="/tools/pet-pnr/">PET and PNR calculator</a></li>
+              <li><a href="/tools/descent-planner/">Descent planning calculator</a></li>
+              <li><a href="/tools/altimetry/">QNH, QFE and cold temperature calculator</a></li>
+              <li><a href="/tools/mass-balance/">Mass and balance (CG) calculator</a></li>
+              <li><a href="/tools/utc-ist-sunrise/">UTC/IST and sunrise/sunset calculator</a></li>
+              <li><a href="/tools/">All aviation tools</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+
+      <div class="wrap">
+        <div class="card cta-band">
+          <div>
+            <p class="kicker">Career guidance</p>
+            <h2>Planning a CPL in India?</h2>
+            <p>Get a free, plain-English path from where you are now to a computer number, medicals and flying training.</p>
+          </div>
+          <a class="btn btn-primary" href="https://www.pilotjourney.in/guidance">Get free pilot career guidance</a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-grid">
+        <div>
+          <p class="kicker">Pilot Journey</p>
+          <p>Free DGCA study tools and practice questions for aspiring pilots. Independent study project. Not affiliated with DGCA, Airbus, Boeing or any airline.</p>
+          <p class="legal-note">Study material only.<br>Always check current official documents.</p>
+        </div>
+        <div>
+          <p class="kicker">Study</p>
+          <ul>
+            <li><a href="/subjects/">Question bank</a></li>
+            <li><a href="/type-rating/">Type rating: A320 / B737</a></li>
+            <li><a href="/tools/">Aviation tools</a></li>
+            <li><a href="/daily/">Daily check</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="kicker">About</p>
+          <ul>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a href="https://www.pilotjourney.in/">Read the Pilot Journey blog</a></li>
+            <li><a href="https://altitude.pilotjourney.in/">Pilot Journey Altitude store</a></li>
+            <li><a href="https://www.pilotjourney.in/guidance">Free guidance page</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bar">
+        <div class="wrap footer-bar-inner">
+          <span>© 2026 Pilot Journey · Study material only</span>
+          <span>Free study material for pilots. Always check current DGCA and manufacturer documents.</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script id="calc-js">
+// 1 in 60 rule (standard ATPL/DGCA General Navigation): angle(deg) ~= 60 x off / distance.
+// Exact values use trigonometry: angle = atan(off / distance).
+function norm360(h){ h = h % 360; if (h < 0) h += 360; return h === 0 ? 360 : h; }
+function oneInSixty(gone, off, togo, side, hdg){
+  var te = 60 * off / gone, ca = 60 * off / togo, total = te + ca;
+  var deg = 180 / Math.PI;
+  var teX = Math.atan(off / gone) * deg, caX = Math.atan(off / togo) * deg, totalX = teX + caX;
+  var turn = side === 'R' ? 'L' : 'R'; // right of track -> turn left
+  var r = { te: te, ca: ca, total: total, teX: teX, caX: caX, totalX: totalX, turn: turn,
+    parallel: te, parallelX: teX, newHdg: null, newHdgX: null, parHdg: null };
+  if (hdg !== null && hdg !== undefined && isFinite(hdg)) {
+    var s = turn === 'L' ? -1 : 1;
+    r.newHdg = norm360(hdg + s * total); r.newHdgX = norm360(hdg + s * totalX); r.parHdg = norm360(hdg + s * te);
+  }
+  return r;
+}
+
+  </script>
+  <script>
+
+const $=id=>document.getElementById(id);
+function v(id){const e=$(id);if(!e)return NaN;const x=parseFloat(String(e.value).trim().replace(',','.'));return isFinite(x)?x:NaN}
+function fx(x,d){d=d||0;return isFinite(x)?Number(x).toLocaleString('en-IN',{minimumFractionDigits:d,maximumFractionDigits:d}):'–'}
+function kv(k,val,cls){return '<div class="kv '+(cls||'')+'"><div class="k">'+k+'</div><div class="v">'+val+'</div></div>'}
+function setVals(o){for(const k in o){const e=$(k);if(e){e.value=o[k]}}}
+function bindAll(fn){document.querySelectorAll('#calc input,#calc select').forEach(e=>{e.addEventListener('input',fn);e.addEventListener('change',fn)});}
+function segInit(id,fn){const g=$(id);g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-selected','false'));b.setAttribute('aria-selected','true');fn()}));}
+function segVal(id){const b=$(id).querySelector('button[aria-selected=true]');return b?b.dataset.v:null}
+function segSet(id,val){$(id).querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.v===val?'true':'false'))}
+function show(big,unit,sub,grid,warn,steps){$('rbig').innerHTML=big+(unit?' <small>'+unit+'</small>':'');$('rsub').innerHTML=sub||'';$('rgrid').innerHTML=grid||'';$('rwarn').innerHTML=warn||'';$('steps').textContent=steps||''}
+
+function render(){
+  const g=v('gone'),o=v('off'),t=v('togo'),side=$('side').value,h=v('hdg'),du=$('du').value;
+  if(![g,o,t].every(isFinite)){show('–','','Enter distance gone, off track and to go','','');return}
+  if(g<=0||t<=0||o<0){show('–','','Distances must be above zero','','');return}
+  if(o===0){show('0°','','On track: no correction needed','','','Distance off track is zero, so track error and closing angle are both 0°.');return}
+  const r=oneInSixty(g,o,t,side,isFinite(h)?h:null);const tn=r.turn==='L'?'left':'right';
+  let w='';if(o>g/3||o>t/3)w='The off-track distance is large compared with the distances: the 1 in 60 rule loses accuracy above about 20°, so trust the exact value.';
+  if(isFinite(h)&&(h<0||h>360))w='Heading should be 0–360°.';
+  const grid=kv('Track error (TE)',fx(r.te,1)+'°')+kv('Exact TE (trig)',fx(r.teX,1)+'°','exact')+kv('Closing angle (CA)',fx(r.ca,1)+'°')+kv('Exact CA (trig)',fx(r.caX,1)+'°','exact')+kv('Total correction',fx(r.total,1)+'° '+tn)+kv('Exact total (trig)',fx(r.totalX,1)+'° '+tn,'exact')+
+   (r.newHdg!==null?kv('New heading to destination',String(Math.round(r.newHdg)).padStart(3,'0')+'°')+kv('Heading to parallel track',String(Math.round(r.parHdg)).padStart(3,'0')+'°'):'');
+  const st=`1) Track error (angle you have drifted off the planned track)
+   TE = 60 × off ÷ gone = 60 × ${fx(o,2)} ÷ ${fx(g,2)} = ${fx(r.te,2)}°
+   Exact: atan(${fx(o,2)} ÷ ${fx(g,2)}) = ${fx(r.teX,2)}°
+
+2) Closing angle (extra turn needed to arrive at the destination)
+   CA = 60 × off ÷ to go = 60 × ${fx(o,2)} ÷ ${fx(t,2)} = ${fx(r.ca,2)}°
+   Exact: atan(${fx(o,2)} ÷ ${fx(t,2)}) = ${fx(r.caX,2)}°
+
+3) Total correction = TE + CA = ${fx(r.te,2)} + ${fx(r.ca,2)} = ${fx(r.total,2)}°
+   You are ${side==='R'?'right':'left'} of track, so turn ${tn}.
+   • To fly parallel to the planned track: turn ${tn} by TE only (${fx(r.te,1)}°).
+   • To reach the destination: turn ${tn} by TE + CA (${fx(r.total,1)}°).`+
+   (r.newHdg!==null?`\n\n4) New heading = ${fx(h,0)} ${r.turn==='L'?'−':'+'} ${fx(r.total,1)} = ${String(Math.round(r.newHdg)).padStart(3,'0')}°`:'')+
+   `\n\nWhy two answers? The 1 in 60 rule uses the fact that 1 NM off track after 60 NM is very close to 1°. DGCA exam answers normally use this rule, so it is the main result. The exact trigonometric value (blue) differs by only a few tenths of a degree at small angles, and the gap grows as the angle gets bigger.`;
+  show(fx(r.total,1)+'°',tn.toUpperCase(),'TE '+fx(r.te,1)+'° + CA '+fx(r.ca,1)+'° · exact '+fx(r.totalX,1)+'°',grid,w,st+(du!=='NM'?`\n(Distances in ${du}; the ratio is unit-free.)`:''));
+}
+bindAll(render);
+$('exbtn').addEventListener('click',()=>{setVals({gone:40,off:4,togo:84,side:'R',hdg:214,du:'NM'});$('exnote').textContent='VIDP (Delhi) to VIJP (Jaipur), about 124 NM direct on a track of about 214°. After 40 NM a fix shows you 4 NM right of track.';render()});
+$('clearbtn').addEventListener('click',()=>{setVals({gone:'',off:'',togo:'',hdg:''});$('exnote').textContent='';render()});
+render();
+
+  </script>
+</body>
+</html>

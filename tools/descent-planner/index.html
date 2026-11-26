@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Descent Planning Calculator: Top of Descent and 3° Rate of Descent | Pilot Journey</title>
+  <meta name="description" content="Free top of descent calculator: descent distance, rate of descent and 3 degree glide path heights using the DGCA exam rule of thumb (300 ft/NM, 5 × GS) and exact trigonometry.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://quiz.pilotjourney.in/tools/descent-planner/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pilot Journey">
+  <meta property="og:url" content="https://quiz.pilotjourney.in/tools/descent-planner/">
+  <meta property="og:title" content="Descent Planning Calculator: Top of Descent and 3° Rate of Descent | Pilot Journey">
+  <meta property="og:description" content="Free top of descent calculator: descent distance, rate of descent and 3 degree glide path heights using the DGCA exam rule of thumb (300 ft/NM, 5 × GS) and exact trigonometry.">
+  <meta property="og:image" content="https://quiz.pilotjourney.in/pj-logo-512.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Descent Planning Calculator: Top of Descent and 3° Rate of Descent | Pilot Journey">
+  <meta name="twitter:description" content="Free top of descent calculator: descent distance, rate of descent and 3 degree glide path heights using the DGCA exam rule of thumb (300 ft/NM, 5 × GS) and exact trigonometry.">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Descent planning calculator", "url": "https://quiz.pilotjourney.in/tools/descent-planner/", "applicationCategory": "EducationalApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"}, "publisher": {"@type": "Organization", "name": "Pilot Journey", "url": "https://quiz.pilotjourney.in/"}, "description": "Free top of descent calculator: descent distance, rate of descent and 3 degree glide path heights using the DGCA exam rule of thumb (300 ft/NM, 5 \u00d7 GS) and exact trigonometry."}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Pilot Journey Quiz", "item": "https://quiz.pilotjourney.in/"}, {"@type": "ListItem", "position": 2, "name": "Aviation tools", "item": "https://quiz.pilotjourney.in/tools/"}, {"@type": "ListItem", "position": 3, "name": "Descent planning calculator", "item": "https://quiz.pilotjourney.in/tools/descent-planner/"}]}]}</script>
+</head>
+<body class="hx">
+  <div class="page">
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="accent-bar" aria-hidden="true"></div>
+    <div class="top-strip">
+      <div class="wrap top-strip-inner">
+        <span><span class="dot" aria-hidden="true"></span>Free study tools · no account needed</span>
+        <span class="hide-sm">For study only · always check official documents</span>
+      </div>
+    </div>
+    <header class="site-header">
+      <div class="wrap site-header-inner">
+        <a class="brand" href="/" aria-label="Pilot Journey home">
+          <img src="../assets/pj-logo.png" alt="" width="40" height="40">
+          <span>
+            <span class="brand-name">Pilot Journey</span>
+            <span class="brand-tag">DGCA · ATPL · A320</span>
+          </span>
+        </a>
+        <nav class="nav" aria-label="Main navigation">
+          <a href="/subjects/">Question bank</a>
+          <a href="/type-rating/">Type rating</a>
+          <a href="/daily/">Daily check</a>
+          <a href="/tools/" aria-current="page">Tools</a>
+          <a href="/faq/">FAQ</a>
+        </nav>
+        <a class="btn btn-primary header-cta" href="/subjects/">Start practising</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <header class="hero">
+        <div class="wrap">
+          <nav aria-label="Breadcrumb">
+            <ol class="crumbs">
+              <li><a href="/">Quiz home</a></li>
+              <li><a href="/tools/">Aviation tools</a></li>
+              <li aria-current="page">Descent planning calculator</li>
+            </ol>
+          </nav>
+          <p class="kicker">Free aviation calculator</p>
+          <h1 class="display-lg">Descent planning calculator</h1>
+          <p class="lede">Find your top of descent, the rate of descent for your groundspeed and the heights on a 3° glide path. The main answers use the exam rule of thumb (300 ft per NM, ROD = 5 × groundspeed), with the exact trigonometric values beside them.</p>
+          <p class="study-note">For training/study only, not for real flight planning.</p>
+          <noscript>
+            <p class="noscript">This calculator needs JavaScript in your browser to run the calculations. The formulae and a worked example are still on this page below.</p>
+          </noscript>
+        </div>
+      </header>
+
+      <div class="wrap tool-layout">
+        <div>
+          <section class="card calc-card" id="calc">
+            <h2>Descent inputs</h2>
+            <p class="panel-help">The main answers use the exam rule of thumb (300 ft/NM for 3°, ROD = 5 × GS); exact trigonometry is shown in blue.</p>
+<div class="fields">
+<div class="field"><label for="from">Cruise altitude</label><div class="inp"><input id="from" type="number" inputmode="decimal" step="any" value="10000"><select id="fromu" aria-label="Altitude unit"><option value="ft">ft</option><option value="fl">FL</option><option value="m">m</option></select></div></div>
+<div class="field"><label for="to">Level-off / target altitude (ft)</label><input id="to" type="number" inputmode="decimal" step="any" value="2000"></div>
+<div class="field"><label for="gs">Average groundspeed in descent</label><div class="inp"><input id="gs" type="number" inputmode="decimal" step="any" value="180"><select id="gsu" aria-label="Speed unit"><option value="kt">kt</option><option value="kmh">km/h</option></select></div></div>
+<div class="field"><label for="ang">Descent path angle (°)</label><input id="ang" type="number" inputmode="decimal" step="any" value="3"></div>
+<div class="field"><label for="rod">Or a fixed rate of descent (ft/min, optional)</label><input id="rod" type="number" inputmode="decimal" step="any" placeholder="e.g. 1500"></div>
+</div>
+
+            <div class="actions"><button type="button" class="btn btn-primary" id="exbtn">Try an example</button><button type="button" class="btn btn-ghost" id="clearbtn">Clear</button><p class="exnote" id="exnote"></p></div>
+          </section>
+
+          <section class="card result-card" id="result" aria-live="polite">
+            <span class="kicker" id="rlabel">Start descent (top of descent)</span>
+            <div class="result-big" id="rbig">–</div>
+            <div class="result-sub" id="rsub"></div>
+            <div class="result-grid" id="rgrid"></div>
+            <div class="result-warn" id="rwarn"></div>
+          </section>
+
+          <details class="card working" open><summary>Show working</summary><div class="steps" id="steps"></div></details>
+
+          <section class="card prose">
+<h2>Planning a descent with the 3° rule</h2>
+<p>Most airliner descents and instrument approaches follow a path of about 3°. The 1 in 60 rule turns that angle into easy numbers: 1° of path is about 100 ft of height for every nautical mile flown, so a 3° path loses about <strong>300 ft per NM</strong>. Divide the height you need to lose by 300 and you get how many miles before the level-off point to start down. That point is your top of descent.</p>
+<p>The rate of descent follows from your groundspeed. At 300 ft per NM and, say, 120 kt (2 NM a minute), you need 600 ft/min. The shortcut is <strong>ROD = 5 × groundspeed</strong>. That is why ATC and approach charts care about your groundspeed and not your indicated speed: a tailwind means a higher rate of descent.</p>
+<div class="formula">Gradient (rule)   ≈ 100 × angle  ft/NM      (3° → 300 ft/NM)
+Gradient (exact)  = tan(angle) × 6,076 ft/NM (3° → 318 ft/NM)
+Descent distance  = height to lose ÷ gradient
+Rate of descent   = groundspeed × gradient ÷ 60   (3° → 5 × GS)</div>
+<h3>Worked example</h3>
+<p>Descending from 10,000 ft to 2,000 ft on a 3° path at 180 kt groundspeed: height to lose 8,000 ft. Rule of thumb: 8,000 ÷ 300 = <strong>26.7 NM</strong> and 5 × 180 = <strong>900 ft/min</strong>. Exact trigonometry gives 25.1 NM and 955 ft/min. Exam answers usually use the rule; the exact figure shows how far apart the two are.</p>
+<p>On final approach, the same rule tells you the height to expect: 5 NM out on a 3° glide path you should be about 1,500 ft above the touchdown zone (exact 1,590 ft).</p>
+<p><small>Sources: standard ATPL/DGCA General Navigation texts (1 in 60 rule); FAA Instrument Procedures Handbook (FAA-H-8083-16), descent planning and 3° glide path; ICAO Doc 8168 PANS-OPS (3° optimum final approach descent gradient).</small></p>
+
+          </section>
+        </div>
+
+        <aside class="side">
+          <div class="card">
+            <p class="kicker">Practice</p>
+            <h2>Test yourself</h2>
+            <p>Descent gradient and 3° glide path questions come from the DGCA Air Navigation paper.</p>
+            <p><a class="btn btn-primary" href="https://quiz.pilotjourney.in/subjects/air-navigation/">Practice DGCA Air Navigation questions</a></p>
+            <p class="disclaimer">For training/study only, not for real flight planning. This is not a certified source for flight operations. Cross-check figures with official documents, the current AIP and the aircraft AFM.</p>
+          </div>
+          <div class="card">
+            <p class="kicker">More tools</p>
+            <h2>Also on Pilot Journey</h2>
+            <ul>
+              <li><a href="/tools/crosswind/">Crosswind component calculator</a></li>
+              <li><a href="/tools/wind-triangle/">Wind triangle (E6B) calculator</a></li>
+              <li><a href="/tools/density-altitude/">Pressure and density altitude calculator</a></li>
+              <li><a href="/tools/unit-converter/">Aviation unit converter</a></li>
+              <li><a href="/tools/tas-mach/">TAS, CAS and Mach calculator</a></li>
+              <li><a href="/tools/one-in-sixty/">1 in 60 rule calculator</a></li>
+              <li><a href="/tools/pet-pnr/">PET and PNR calculator</a></li>
+              <li><a href="/tools/altimetry/">QNH, QFE and cold temperature calculator</a></li>
+              <li><a href="/tools/mass-balance/">Mass and balance (CG) calculator</a></li>
+              <li><a href="/tools/utc-ist-sunrise/">UTC/IST and sunrise/sunset calculator</a></li>
+              <li><a href="/tools/">All aviation tools</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+
+      <div class="wrap">
+        <div class="card cta-band">
+          <div>
+            <p class="kicker">Career guidance</p>
+            <h2>Planning a CPL in India?</h2>
+            <p>Get a free, plain-English path from where you are now to a computer number, medicals and flying training.</p>
+          </div>
+          <a class="btn btn-primary" href="https://www.pilotjourney.in/guidance">Get free pilot career guidance</a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-grid">
+        <div>
+          <p class="kicker">Pilot Journey</p>
+          <p>Free DGCA study tools and practice questions for aspiring pilots. Independent study project. Not affiliated with DGCA, Airbus, Boeing or any airline.</p>
+          <p class="legal-note">Study material only.<br>Always check current official documents.</p>
+        </div>
+        <div>
+          <p class="kicker">Study</p>
+          <ul>
+            <li><a href="/subjects/">Question bank</a></li>
+            <li><a href="/type-rating/">Type rating: A320 / B737</a></li>
+            <li><a href="/tools/">Aviation tools</a></li>
+            <li><a href="/daily/">Daily check</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="kicker">About</p>
+          <ul>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a href="https://www.pilotjourney.in/">Read the Pilot Journey blog</a></li>
+            <li><a href="https://altitude.pilotjourney.in/">Pilot Journey Altitude store</a></li>
+            <li><a href="https://www.pilotjourney.in/guidance">Free guidance page</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bar">
+        <div class="wrap footer-bar-inner">
+          <span>© 2026 Pilot Journey · Study material only</span>
+          <span>Free study material for pilots. Always check current DGCA and manufacturer documents.</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script id="calc-js">
+// Descent planning. Rule of thumb (1 in 60): gradient ft/NM = 100 x angle (3 deg -> 300 ft/NM), ROD = GS x ft/NM / 60 (3 deg -> 5 x GS).
+// Exact: ft/NM = tan(angle) x 6076.12 (1 NM = 1852 m = 6076.12 ft), ROD = GS x ft/NM / 60.
+var FT_PER_NM = 1852 / 0.3048; // 6076.115...
+function descent(fromFt, toFt, gs, angDeg, fixedRod){
+  var h = fromFt - toFt;
+  var gRule = 100 * angDeg, gExact = Math.tan(angDeg * Math.PI / 180) * FT_PER_NM;
+  var r = { height: h, gradRule: gRule, gradExact: gExact,
+    distRule: h / gRule, distExact: h / gExact,
+    rodRule: gs * gRule / 60, rodExact: gs * gExact / 60 };
+  r.timeRuleMin = r.distRule / gs * 60; r.timeExactMin = r.distExact / gs * 60;
+  if (fixedRod > 0) { r.fixTimeMin = h / fixedRod; r.fixDist = gs * r.fixTimeMin / 60;
+    r.fixAngleExact = Math.atan(fixedRod * 60 / gs / FT_PER_NM) * 180 / Math.PI; r.fixAngleRule = fixedRod * 60 / gs / 100; }
+  return r;
+}
+// Height above touchdown on a glide path at distance d NM
+function glideHeight(dNm, angDeg){ return { rule: dNm * 100 * angDeg, exact: dNm * Math.tan(angDeg * Math.PI / 180) * FT_PER_NM }; }
+
+  </script>
+  <script>
+
+const $=id=>document.getElementById(id);
+function v(id){const e=$(id);if(!e)return NaN;const x=parseFloat(String(e.value).trim().replace(',','.'));return isFinite(x)?x:NaN}
+function fx(x,d){d=d||0;return isFinite(x)?Number(x).toLocaleString('en-IN',{minimumFractionDigits:d,maximumFractionDigits:d}):'–'}
+function kv(k,val,cls){return '<div class="kv '+(cls||'')+'"><div class="k">'+k+'</div><div class="v">'+val+'</div></div>'}
+function setVals(o){for(const k in o){const e=$(k);if(e){e.value=o[k]}}}
+function bindAll(fn){document.querySelectorAll('#calc input,#calc select').forEach(e=>{e.addEventListener('input',fn);e.addEventListener('change',fn)});}
+function segInit(id,fn){const g=$(id);g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-selected','false'));b.setAttribute('aria-selected','true');fn()}));}
+function segVal(id){const b=$(id).querySelector('button[aria-selected=true]');return b?b.dataset.v:null}
+function segSet(id,val){$(id).querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.v===val?'true':'false'))}
+function show(big,unit,sub,grid,warn,steps){$('rbig').innerHTML=big+(unit?' <small>'+unit+'</small>':'');$('rsub').innerHTML=sub||'';$('rgrid').innerHTML=grid||'';$('rwarn').innerHTML=warn||'';$('steps').textContent=steps||''}
+
+function mins(m){if(!isFinite(m))return '–';const s=Math.round(m*60);return Math.floor(s/60)+' min '+String(s%60).padStart(2,'0')+' s'}
+function render(){
+  let f=v('from');const fu=$('fromu').value;if(fu==='fl')f*=100;if(fu==='m')f/=0.3048;
+  const t=v('to');let gs=v('gs');if($('gsu').value==='kmh')gs/=1.852;const a=v('ang'),rod=v('rod');
+  if(![f,t,gs,a].every(isFinite)){show('–','','Enter cruise altitude, target altitude, groundspeed and angle','','');return}
+  if(f<=t){show('–','','Cruise altitude must be above the target altitude','','');return}
+  if(gs<=0||a<=0||a>=20){show('–','','Groundspeed must be above zero and the angle between 0 and 20°','','');return}
+  const r=descent(f,t,gs,a,isFinite(rod)?rod:0);
+  let grid=kv('Descent distance (rule)',fx(r.distRule,1)+' NM')+kv('Exact (trig)',fx(r.distExact,1)+' NM','exact')+kv('Rate of descent (rule)',fx(r.rodRule,0)+' ft/min')+kv('Exact (trig)',fx(r.rodExact,0)+' ft/min','exact')+kv('Gradient (rule)',fx(r.gradRule,0)+' ft/NM')+kv('Exact (trig)',fx(r.gradExact,1)+' ft/NM','exact')+kv('Time in descent',mins(r.timeRuleMin))+kv('Height to lose',fx(r.height,0)+' ft');
+  if(r.fixDist!==undefined)grid+=kv('At '+fx(rod,0)+' ft/min: distance',fx(r.fixDist,1)+' NM')+kv('…path angle',fx(r.fixAngleRule,2)+'° (exact '+fx(r.fixAngleExact,2)+'°)');
+  let tbl='\n\n5) Height above touchdown on a '+fx(a,1)+'° path (rule / exact):';
+  [10,8,6,5,4,3,2,1].forEach(d=>{const g=glideHeight(d,a);tbl+=`\n   ${String(d).padStart(2)} NM: ${fx(g.rule,0).padStart(5)} ft / ${fx(g.exact,0).padStart(5)} ft`});
+  const st=`1) Height to lose = ${fx(f,0)} − ${fx(t,0)} = ${fx(r.height,0)} ft
+
+2) Gradient
+   Rule of thumb (1 in 60): ${fx(a,1)}° × 100 = ${fx(r.gradRule,0)} ft per NM
+   Exact: tan(${fx(a,1)}°) × 6,076 ft = ${fx(r.gradExact,1)} ft per NM
+
+3) Descent distance = height ÷ gradient
+   Rule: ${fx(r.height,0)} ÷ ${fx(r.gradRule,0)} = ${fx(r.distRule,1)} NM before the level-off point
+   Exact: ${fx(r.height,0)} ÷ ${fx(r.gradExact,1)} = ${fx(r.distExact,1)} NM
+
+4) Rate of descent = groundspeed × gradient ÷ 60
+   Rule: ${fx(gs,0)} × ${fx(r.gradRule,0)} ÷ 60 = ${fx(r.rodRule,0)} ft/min${Math.abs(a-3)<1e-9?'  (same as 5 × GS)':''}
+   Exact: ${fx(gs,0)} × ${fx(r.gradExact,1)} ÷ 60 = ${fx(r.rodExact,0)} ft/min`+
+  (r.fixDist!==undefined?`\n\n   At a fixed ${fx(rod,0)} ft/min: time = ${fx(r.height,0)} ÷ ${fx(rod,0)} = ${fx(r.fixTimeMin,2)} min, distance = ${fx(gs,0)} × ${fx(r.fixTimeMin,2)} ÷ 60 = ${fx(r.fixDist,1)} NM`:'')+tbl+
+  `\n\nWhy two answers? The 1 in 60 rule treats 1° as 1 in 60, so 1° ≈ 6,076 ÷ 60 ≈ 100 ft per NM and 3° ≈ 300 ft/NM. DGCA exam answers usually use these round numbers. Exact trigonometry gives 318 ft/NM for 3°, about 6% more, so the exact descent is a little shorter and the exact rate of descent a little higher.`;
+  show(fx(r.distRule,0),'NM out','ROD '+fx(r.rodRule,0)+' ft/min (rule) · exact '+fx(r.distExact,0)+' NM, '+fx(r.rodExact,0)+' ft/min',grid,'',st);
+}
+bindAll(render);
+$('exbtn').addEventListener('click',()=>{setVals({from:350,fromu:'fl',to:3000,gs:360,gsu:'kt',ang:3,rod:''});$('exnote').textContent='A320 arriving at VABB (Mumbai, elevation 39 ft) for runway 27: descend from FL350 to 3,000 ft at an average 360 kt groundspeed on a 3° path.';render()});
+$('clearbtn').addEventListener('click',()=>{setVals({from:'',to:'',gs:'',ang:'',rod:''});$('exnote').textContent='';render()});
+render();
+
+  </script>
+</body>
+</html>

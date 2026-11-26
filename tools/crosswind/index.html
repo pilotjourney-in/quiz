@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crosswind Component Calculator: Headwind &amp; Crosswind | Pilot Journey</title>
+  <meta name="description" content="Free crosswind component calculator for DGCA study. Enter a runway number or heading, wind direction, speed and gust to get headwind or tailwind and a left or right crosswind, with a runway diagram.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://quiz.pilotjourney.in/tools/crosswind/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pilot Journey">
+  <meta property="og:url" content="https://quiz.pilotjourney.in/tools/crosswind/">
+  <meta property="og:title" content="Crosswind Component Calculator | Pilot Journey">
+  <meta property="og:description" content="Find headwind, tailwind and left or right crosswind from a runway heading and a METAR-style wind, with a worked example for VIDP runway 28.">
+  <meta property="og:image" content="https://quiz.pilotjourney.in/pj-logo-512.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Crosswind Component Calculator | Pilot Journey">
+  <meta name="twitter:description" content="Find headwind, tailwind and left or right crosswind from a runway heading and a METAR-style wind, with a worked example for VIDP runway 28.">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "Crosswind component calculator",
+        "url": "https://quiz.pilotjourney.in/tools/crosswind/",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Any",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+        "description": "Find headwind, tailwind and left or right crosswind from a runway heading and a METAR-style wind, with a worked example for VIDP runway 28.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Pilot Journey",
+          "url": "https://quiz.pilotjourney.in/"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Pilot Journey Quiz", "item": "https://quiz.pilotjourney.in/" },
+          { "@type": "ListItem", "position": 2, "name": "Aviation tools", "item": "https://quiz.pilotjourney.in/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Crosswind component calculator", "item": "https://quiz.pilotjourney.in/tools/crosswind/" }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <div class="page">
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="accent-bar" aria-hidden="true"></div>
+    <div class="top-strip">
+      <div class="wrap top-strip-inner">
+        <span><span class="dot" aria-hidden="true"></span>Free study tools · no account needed</span>
+        <span class="hide-sm">For study only · always check official documents</span>
+      </div>
+    </div>
+    <header class="site-header">
+      <div class="wrap site-header-inner">
+        <a class="brand" href="/" aria-label="Pilot Journey home">
+          <img src="/pj-logo.png" alt="" width="40" height="40">
+          <span>
+            <span class="brand-name">Pilot Journey</span>
+            <span class="brand-tag">DGCA · ATPL · A320</span>
+          </span>
+        </a>
+        <nav class="nav" aria-label="Main navigation">
+          <a href="/subjects/">Question bank</a>
+          <a href="/type-rating/">Type rating</a>
+          <a href="/daily/">Daily check</a>
+          <a href="/tools/" aria-current="page">Tools</a>
+          <a href="/faq/">FAQ</a>
+        </nav>
+        <a class="btn btn-primary header-cta" href="/subjects/">Start practising</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <header class="hero">
+        <div class="wrap">
+          <nav aria-label="Breadcrumb">
+            <ol class="crumbs">
+              <li><a href="/">Quiz home</a></li>
+              <li><a href="/tools/">Aviation tools</a></li>
+              <li aria-current="page">Crosswind component calculator</li>
+            </ol>
+          </nav>
+          <p class="kicker">Free aviation calculator</p>
+          <h1 class="display-lg">Crosswind component calculator</h1>
+          <p class="lede">Find the headwind or tailwind and the left or right crosswind for a runway. Type a runway number or a published heading, then the wind direction, speed and an optional gust. The example is VIDP runway 28 at heading 281°, with a 310°/18G26 wind.</p>
+          <p class="study-line">For training/study only, not for real flight planning.</p>
+          <noscript>
+            <p class="noscript">This calculator needs JavaScript in your browser to run. The formulae are still written on this page below.</p>
+          </noscript>
+        </div>
+      </header>
+
+      <div class="wrap tool-layout">
+        <div>
+          <div class="actions">
+            <button type="button" class="btn btn-outline" id="try-example">Try an example</button>
+          </div>
+          <section class="card result-card result-empty" id="result-card" aria-live="polite">
+            <p class="kicker">Crosswind component</p>
+            <div class="result-hero">
+              <span class="result-number" id="result-number">—</span>
+              <span class="result-unit" id="result-unit">kt crosswind</span>
+            </div>
+            <p class="result-sub" id="result-sub">Enter a runway and a wind to see the components.</p>
+            <dl class="result-grid" id="result-grid">
+              <div><dt class="lbl">Headwind / tailwind</dt><dd class="val" id="out-hw">—</dd></div>
+              <div><dt class="lbl">Crosswind</dt><dd class="val" id="out-xw">—</dd></div>
+              <div><dt class="lbl">Runway heading</dt><dd class="val" id="out-hdg">—</dd></div>
+              <div><dt class="lbl">Wind angle</dt><dd class="val" id="out-ang">—</dd></div>
+            </dl>
+          </section>
+          <section class="card panel is-active" style="display:block">
+            <h2>Runway and wind</h2>
+            <p class="panel-help">Enter a runway number such as 28 or 27, or a published heading. Wind is the direction it is coming from, in degrees, with speed in knots. Gust is optional.</p>
+            <div class="fields">
+              <div class="field">
+                <label for="runway">Runway number <span class="unit-hint">e.g. 28 or 10L</span></label>
+                <input id="runway" inputmode="text" enterkeyhint="done" autocomplete="off" placeholder="28">
+              </div>
+              <div class="field">
+                <label for="heading">Heading <span class="unit-hint">optional, °</span></label>
+                <input id="heading" inputmode="decimal" enterkeyhint="done" autocomplete="off" placeholder="281">
+              </div>
+              <div class="field">
+                <label for="wind-dir">Wind direction <span class="unit-hint">degrees</span></label>
+                <input id="wind-dir" inputmode="decimal" enterkeyhint="done" autocomplete="off" placeholder="310">
+              </div>
+              <div class="field">
+                <label for="speed">Wind speed <span class="unit-hint">kt</span></label>
+                <input id="speed" inputmode="decimal" enterkeyhint="done" autocomplete="off" placeholder="18">
+              </div>
+              <div class="field">
+                <label for="gust">Gust <span class="unit-hint">optional, kt</span></label>
+                <input id="gust" inputmode="decimal" enterkeyhint="done" autocomplete="off" placeholder="26">
+              </div>
+            </div>
+            <div class="diagram" id="diagram" hidden>
+              <svg id="wx-svg" viewBox="0 0 300 420" role="img" aria-labelledby="diagram-title">
+                <title id="diagram-title">Runway and wind diagram</title>
+                <rect x="0" y="0" width="300" height="420" fill="#071426"></rect>
+                <rect x="122" y="48" width="56" height="324" rx="6" fill="#0d2443" stroke="#4db8ff" stroke-width="2"></rect>
+                <line x1="150" y1="64" x2="150" y2="356" stroke="#4db8ff" stroke-width="1.5" stroke-dasharray="8 8" opacity="0.85"></line>
+                <text id="rwy-far" x="150" y="86" text-anchor="middle" fill="#4db8ff" font-family="Poppins, Inter, sans-serif" font-size="20" font-weight="700">10</text>
+                <text id="rwy-near" x="150" y="350" text-anchor="middle" fill="#ffffff" font-family="Poppins, Inter, sans-serif" font-size="22" font-weight="700">28</text>
+                <line id="wind-line" x1="150" y1="50" x2="150" y2="150" stroke="#4db8ff" stroke-width="3" stroke-linecap="round"></line>
+                <polygon id="wind-head" points="150,158 144,140 156,140" fill="#4db8ff"></polygon>
+                <line id="gust-line" x1="150" y1="30" x2="150" y2="150" stroke="#93a9cb" stroke-width="2" stroke-dasharray="6 5" stroke-linecap="round" hidden></line>
+                <polygon id="gust-head" points="150,158 144,140 156,140" fill="#93a9cb" hidden></polygon>
+                <text id="wind-label" x="150" y="28" text-anchor="middle" fill="#d2e1f5" font-family="Inter, sans-serif" font-size="12">Wind</text>
+              </svg>
+            </div>
+          </section>
+          <details class="working" id="working">
+            <summary>Show working</summary>
+            <div class="working-body" id="working-body">
+              <p>Enter the values above to see the formula with your numbers.</p>
+            </div>
+          </details>
+        </div>
+        <aside class="side">
+          <div class="card">
+            <p class="kicker">How it is calculated</p>
+            <h2>Formulae used</h2>
+            <ul>
+              <li>Runway number × 10 is the heading, with 36 as 360°. You can override this with a published heading such as 281° for VIDP runway 28.</li>
+              <li>Angle = wind direction − heading, normalised to −180°…+180°.</li>
+              <li>Headwind = speed × cos(angle). A negative value is a tailwind.</li>
+              <li>Crosswind = speed × sin(angle). Positive is from the right; negative is from the left.</li>
+              <li>A gust re-runs the same two formulae at the gust speed.</li>
+            </ul>
+            <p class="disclaimer">For training/study only, not for real flight planning. Wind in a METAR is true; runway headings are magnetic.</p>
+          </div>
+          <div class="card">
+            <p class="kicker">More tools</p>
+            <h2>Also on Pilot Journey</h2>
+            <ul>
+              <li><a href="/tools/unit-converter/">Aviation unit converter</a></li>
+              <li><a href="/tools/wind-triangle/">Wind triangle (E6B) calculator</a></li>
+              <li><a href="/tools/density-altitude/">Pressure and density altitude calculator</a></li>
+              <li><a href="/tools/tas-mach/">TAS, CAS and Mach calculator</a></li>
+              <li><a href="/tools/one-in-sixty/">1 in 60 rule calculator</a></li>
+              <li><a href="/tools/pet-pnr/">PET and PNR calculator</a></li>
+              <li><a href="/tools/descent-planner/">Descent planning calculator</a></li>
+              <li><a href="/tools/altimetry/">QNH, QFE and cold temperature calculator</a></li>
+              <li><a href="/tools/mass-balance/">Mass and balance (CG) calculator</a></li>
+              <li><a href="/tools/utc-ist-sunrise/">UTC/IST and sunrise/sunset calculator</a></li>
+              <li><a href="/tools/">All aviation tools</a></li>
+              <li><a href="https://quiz.pilotjourney.in/subjects/">Free DGCA question bank</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+
+      <div class="wrap">
+        <section class="card explainer" id="explainer">
+          <h2>How the crosswind component is found</h2>
+          <p>A runway number is the magnetic heading of the centreline, rounded to the nearest ten degrees and written as two digits. Runway 28 means about 280 degrees, but at Indira Gandhi International Airport in Delhi the published heading for runway 28 is 281 degrees, so this calculator lets you type the exact figure when you have it. Wind in a METAR is reported in degrees true. Across most of India the magnetic variation is only about one degree, so the gap is small for exam practice, but in real flying you still convert the METAR wind to magnetic before you compare it with a runway heading.</p>
+          <p>The angle between the wind and the runway is wind direction minus heading, folded into the range from minus 180 to plus 180 degrees. The headwind is wind speed times the cosine of that angle. A negative result is a tailwind. The crosswind is wind speed times the sine of the angle. A positive sine means the wind is coming from the right of the nose; a negative sine means it is coming from the left. If you enter a gust, the same two formulae are run again with the gust speed so you can see the peak components as well as the sustained ones.</p>
+          <p>These figures are the same ones you would read from an E6B wind face or from a crosswind table in a training manual. They tell you whether a landing sits inside a typical training or aircraft limit, but they do not replace the aircraft flight manual, the ATIS or a current METAR. Use the diagram and the worked steps to check your own arithmetic, not to plan a real approach.</p>
+        </section>
+        <nav class="page-links" aria-label="Study links">
+          <a href="https://quiz.pilotjourney.in/subjects/">Practise in the free DGCA question bank</a>
+          <a href="https://www.pilotjourney.in/guidance">Get free CPL career guidance</a>
+        </nav>
+      </div>
+      <div class="wrap">
+        <div class="card cta-band">
+          <div>
+            <p class="kicker">Career guidance</p>
+            <h2>Planning a CPL in India?</h2>
+            <p>Get a free, plain-English path from where you are now to a computer number, medicals and flying training.</p>
+          </div>
+          <a class="btn btn-primary" href="https://www.pilotjourney.in/guidance">Get free pilot career guidance</a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-grid">
+        <div>
+          <p class="kicker">Pilot Journey</p>
+          <p>Free DGCA study tools and practice questions for aspiring pilots. Independent study project. Not affiliated with DGCA, Airbus, Boeing or any airline.</p>
+          <p class="legal-note">Study material only.<br>Always check current official documents.</p>
+        </div>
+        <div>
+          <p class="kicker">Study</p>
+          <ul>
+            <li><a href="/subjects/">Question bank</a></li>
+            <li><a href="/type-rating/">Type rating: A320 / B737</a></li>
+            <li><a href="/tools/">Aviation tools</a></li>
+            <li><a href="/daily/">Daily check</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="kicker">About</p>
+          <ul>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a href="https://www.pilotjourney.in/">Read the Pilot Journey blog</a></li>
+            <li><a href="https://altitude.pilotjourney.in/">Pilot Journey Altitude store</a></li>
+            <li><a href="https://www.pilotjourney.in/guidance">Free guidance page</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bar">
+        <div class="wrap footer-bar-inner">
+          <span>© 2026 Pilot Journey · Study material only</span>
+          <span>Free study material for pilots. Always check current DGCA and manufacturer documents.</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="crosswind.js"></script>
+  <script>
+    (function () {
+      var C = window.Crosswind;
+      if (!C) return;
+
+      var els = {
+        runway: document.getElementById('runway'),
+        heading: document.getElementById('heading'),
+        windDir: document.getElementById('wind-dir'),
+        speed: document.getElementById('speed'),
+        gust: document.getElementById('gust'),
+        card: document.getElementById('result-card'),
+        number: document.getElementById('result-number'),
+        unit: document.getElementById('result-unit'),
+        sub: document.getElementById('result-sub'),
+        hw: document.getElementById('out-hw'),
+        xw: document.getElementById('out-xw'),
+        hdg: document.getElementById('out-hdg'),
+        ang: document.getElementById('out-ang'),
+        working: document.getElementById('working-body'),
+        diagram: document.getElementById('diagram')
+      };
+
+      function identFrom(heading, raw) {
+        var text = String(raw || '').trim().toUpperCase();
+        var m = text.match(/^0?([1-9]|[12][0-9]|3[0-6])([LRC])?$/);
+        if (m) return String(Number(m[1])).padStart(2, '0') + (m[2] || '');
+        if (!isFinite(heading)) return '';
+        var n = Math.round(((heading % 360) + 360) % 360 / 10);
+        if (n === 0 || n === 36) return '36';
+        return String(n).padStart(2, '0');
+      }
+
+      function reciprocal(ident) {
+        var m = String(ident).match(/^(\d{2})([LRC])?$/);
+        if (!m) return '';
+        var n = Number(m[1]);
+        var rec = n > 18 ? n - 18 : n + 18;
+        var side = m[2] ? { L: 'R', R: 'L', C: 'C' }[m[2]] : '';
+        return String(rec).padStart(2, '0') + side;
+      }
+
+      function arrowPoints(angleDeg, r0, r1) {
+        var cx = 150, cy = 210;
+        var rad = (angleDeg * Math.PI) / 180;
+        var x0 = cx + r0 * Math.sin(rad);
+        var y0 = cy - r0 * Math.cos(rad);
+        var x1 = cx + r1 * Math.sin(rad);
+        var y1 = cy - r1 * Math.cos(rad);
+        var ux = x1 - x0, uy = y1 - y0;
+        var len = Math.sqrt(ux * ux + uy * uy) || 1;
+        ux /= len; uy /= len;
+        var px = -uy, py = ux;
+        var tip = [x1, y1];
+        var b1 = [x1 - ux * 16 + px * 7, y1 - uy * 16 + py * 7];
+        var b2 = [x1 - ux * 16 - px * 7, y1 - uy * 16 - py * 7];
+        return { x0: x0, y0: y0, x1: x1, y1: y1, tip: tip, b1: b1, b2: b2 };
+      }
+
+      function applyArrow(lineId, headId, pts, hidden) {
+        var line = document.getElementById(lineId);
+        var head = document.getElementById(headId);
+        if (hidden) {
+          line.setAttribute('hidden', '');
+          head.setAttribute('hidden', '');
+          return;
+        }
+        line.removeAttribute('hidden');
+        head.removeAttribute('hidden');
+        line.setAttribute('x1', pts.x0.toFixed(1));
+        line.setAttribute('y1', pts.y0.toFixed(1));
+        line.setAttribute('x2', pts.x1.toFixed(1));
+        line.setAttribute('y2', pts.y1.toFixed(1));
+        head.setAttribute('points', pts.b1[0].toFixed(1) + ',' + pts.b1[1].toFixed(1) + ' ' +
+          pts.tip[0].toFixed(1) + ',' + pts.tip[1].toFixed(1) + ' ' +
+          pts.b2[0].toFixed(1) + ',' + pts.b2[1].toFixed(1));
+      }
+
+      function updateDiagram(result) {
+        var ident = identFrom(result.heading, els.runway.value);
+        document.getElementById('rwy-near').textContent = ident || '—';
+        document.getElementById('rwy-far').textContent = ident ? reciprocal(ident) : '—';
+        var angle = result.sustained.angle;
+        applyArrow('wind-line', 'wind-head', arrowPoints(angle, 155, 70), false);
+        var label = document.getElementById('wind-label');
+        var lp = arrowPoints(angle, 175, 175);
+        label.setAttribute('x', lp.x0.toFixed(1));
+        label.setAttribute('y', lp.y0.toFixed(1));
+        label.textContent = C.formatKt(result.sustained.speed) + ' kt' +
+          (result.gusted ? ' G' + C.formatKt(result.gusted.speed) : '');
+        if (result.gusted) {
+          applyArrow('gust-line', 'gust-head', arrowPoints(angle, 175, 64), false);
+        } else {
+          applyArrow('gust-line', 'gust-head', arrowPoints(angle, 175, 64), true);
+        }
+        els.diagram.hidden = false;
+        var title = document.getElementById('diagram-title');
+        title.textContent = 'Runway ' + (ident || '') + ' with wind from ' +
+          Math.round(C.norm360(result.sustained.windDir)) + '°';
+      }
+
+      function fmtDeg(v) { return String(Number(v.toFixed(1))) + '°'; }
+
+      function empty() {
+        els.card.classList.add('result-empty');
+        els.number.textContent = '—';
+        els.unit.textContent = 'kt crosswind';
+        els.sub.textContent = 'Enter a runway and a wind to see the components.';
+        els.hw.textContent = '—';
+        els.xw.textContent = '—';
+        els.hdg.textContent = '—';
+        els.ang.textContent = '—';
+        els.working.innerHTML = '<p>Enter the values above to see the formula with your numbers.</p>';
+        els.diagram.hidden = true;
+      }
+
+      function describe(result) {
+        var s = result.sustained;
+        var steps = [];
+        var rwy = String(els.runway.value).trim();
+        var hdgEntered = String(els.heading.value).trim();
+        if (hdgEntered !== '') {
+          steps.push('The heading used is <code>' + C.formatKt(result.heading) + '°</code>' +
+            (rwy ? ' (runway ' + rwy + ', published heading entered).' : '.'));
+        } else if (rwy) {
+          steps.push('Runway <code>' + rwy + '</code> gives a heading of <code>' +
+            C.formatKt(result.heading) + '°</code> (runway number × 10, with 36 as 360°).');
+        } else {
+          steps.push('The heading used is <code>' + C.formatKt(result.heading) + '°</code>.');
+        }
+        steps.push('Angle = wind direction − heading = <code>' +
+          C.formatKt(s.windDir) + ' − ' + C.formatKt(result.heading) + ' = ' +
+          Number(s.angle.toFixed(1)) + '°</code>, folded into −180°…+180°.');
+        steps.push('Headwind = speed × cos(angle) = <code>' +
+          C.formatKt(s.speed) + ' × cos(' + Number(s.angle.toFixed(1)) + '°) = ' +
+          C.formatKt(s.headwind) + ' kt</code>. ' +
+          (s.headwind >= 0 ? 'The result is a headwind.' : 'A negative result is a tailwind of ' +
+            C.formatKt(s.headwindAbs) + ' kt.'));
+        steps.push('Crosswind = speed × sin(angle) = <code>' +
+          C.formatKt(s.speed) + ' × sin(' + Number(s.angle.toFixed(1)) + '°) = ' +
+          C.formatKt(s.crosswind) + ' kt</code>, which is <code>' +
+          C.formatKt(s.crosswindAbs) + ' kt from the ' + s.side + '</code>.');
+        if (result.gusted) {
+          var g = result.gusted;
+          steps.push('At a gust of <code>' + C.formatKt(g.speed) + ' kt</code>, headwind = <code>' +
+            C.formatKt(g.headwind) + ' kt</code> and crosswind = <code>' +
+            C.formatKt(g.crosswindAbs) + ' kt from the ' + g.side + '</code>.');
+        }
+        return '<ol>' + steps.map(function (s) { return '<li>' + s + '</li>'; }).join('') + '</ol>';
+      }
+
+      function render() {
+        var result = C.calculate({
+          runway: els.runway.value,
+          heading: els.heading.value,
+          windDir: els.windDir.value,
+          speed: els.speed.value,
+          gust: els.gust.value
+        });
+        if (!result) { empty(); return; }
+        var s = result.sustained;
+        els.card.classList.remove('result-empty');
+        els.number.textContent = C.formatKt(s.crosswindAbs);
+        els.unit.textContent = 'kt ' + s.side + ' crosswind';
+        var flowTxt = s.flow === 'headwind'
+          ? C.formatKt(s.headwindAbs) + ' kt headwind'
+          : C.formatKt(s.headwindAbs) + ' kt tailwind';
+        var gustTxt = '';
+        if (result.gusted) {
+          gustTxt = ' Gust crosswind ' + C.formatKt(result.gusted.crosswindAbs) + ' kt from the ' +
+            result.gusted.side + '.';
+        }
+        els.sub.textContent = flowTxt + ' on heading ' + Math.round(result.heading) + '°.' + gustTxt;
+        els.hw.textContent = flowTxt;
+        els.xw.textContent = C.formatKt(s.crosswindAbs) + ' kt from the ' + s.side;
+        els.hdg.textContent = Math.round(result.heading) + '°';
+        els.ang.textContent = fmtDeg(s.angle);
+        els.working.innerHTML = describe(result);
+        updateDiagram(result);
+      }
+
+      ['runway', 'heading', 'windDir', 'speed', 'gust'].forEach(function (key) {
+        els[key].addEventListener('input', render);
+      });
+
+      document.getElementById('try-example').addEventListener('click', function () {
+        var ex = C.EXAMPLE;
+        els.runway.value = ex.runway;
+        els.heading.value = ex.heading;
+        els.windDir.value = ex.windDir;
+        els.speed.value = ex.speed;
+        els.gust.value = ex.gust;
+        render();
+        document.getElementById('result-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      empty();
+    })();
+  </script>
+</body>
+</html>

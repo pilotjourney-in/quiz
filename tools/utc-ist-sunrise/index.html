@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>UTC to IST Converter with Sunrise and Sunset at Indian Airports | Pilot Journey</title>
+  <meta name="description" content="Free UTC to IST time converter for pilots, plus sunrise, sunset and civil twilight times at Indian airports such as VIDP and VABB using the NOAA solar algorithm.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://quiz.pilotjourney.in/tools/utc-ist-sunrise/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pilot Journey">
+  <meta property="og:url" content="https://quiz.pilotjourney.in/tools/utc-ist-sunrise/">
+  <meta property="og:title" content="UTC to IST Converter with Sunrise and Sunset at Indian Airports | Pilot Journey">
+  <meta property="og:description" content="Free UTC to IST time converter for pilots, plus sunrise, sunset and civil twilight times at Indian airports such as VIDP and VABB using the NOAA solar algorithm.">
+  <meta property="og:image" content="https://quiz.pilotjourney.in/pj-logo-512.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="UTC to IST Converter with Sunrise and Sunset at Indian Airports | Pilot Journey">
+  <meta name="twitter:description" content="Free UTC to IST time converter for pilots, plus sunrise, sunset and civil twilight times at Indian airports such as VIDP and VABB using the NOAA solar algorithm.">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "UTC \u21c4 IST converter with sunrise and sunset at Indian airports", "url": "https://quiz.pilotjourney.in/tools/utc-ist-sunrise/", "applicationCategory": "EducationalApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"}, "publisher": {"@type": "Organization", "name": "Pilot Journey", "url": "https://quiz.pilotjourney.in/"}, "description": "Free UTC to IST time converter for pilots, plus sunrise, sunset and civil twilight times at Indian airports such as VIDP and VABB using the NOAA solar algorithm."}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Pilot Journey Quiz", "item": "https://quiz.pilotjourney.in/"}, {"@type": "ListItem", "position": 2, "name": "Aviation tools", "item": "https://quiz.pilotjourney.in/tools/"}, {"@type": "ListItem", "position": 3, "name": "UTC/IST and sunrise/sunset calculator", "item": "https://quiz.pilotjourney.in/tools/utc-ist-sunrise/"}]}]}</script>
+</head>
+<body class="hx">
+  <div class="page">
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="accent-bar" aria-hidden="true"></div>
+    <div class="top-strip">
+      <div class="wrap top-strip-inner">
+        <span><span class="dot" aria-hidden="true"></span>Free study tools · no account needed</span>
+        <span class="hide-sm">For study only · always check official documents</span>
+      </div>
+    </div>
+    <header class="site-header">
+      <div class="wrap site-header-inner">
+        <a class="brand" href="/" aria-label="Pilot Journey home">
+          <img src="../assets/pj-logo.png" alt="" width="40" height="40">
+          <span>
+            <span class="brand-name">Pilot Journey</span>
+            <span class="brand-tag">DGCA · ATPL · A320</span>
+          </span>
+        </a>
+        <nav class="nav" aria-label="Main navigation">
+          <a href="/subjects/">Question bank</a>
+          <a href="/type-rating/">Type rating</a>
+          <a href="/daily/">Daily check</a>
+          <a href="/tools/" aria-current="page">Tools</a>
+          <a href="/faq/">FAQ</a>
+        </nav>
+        <a class="btn btn-primary header-cta" href="/subjects/">Start practising</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <header class="hero">
+        <div class="wrap">
+          <nav aria-label="Breadcrumb">
+            <ol class="crumbs">
+              <li><a href="/">Quiz home</a></li>
+              <li><a href="/tools/">Aviation tools</a></li>
+              <li aria-current="page">UTC/IST and sunrise/sunset calculator</li>
+            </ol>
+          </nav>
+          <p class="kicker">Free aviation calculator</p>
+          <h1 class="display-lg">UTC ⇄ IST converter with sunrise and sunset at Indian airports</h1>
+          <p class="lede">Convert any time between UTC (Zulu) and IST, then pick an Indian airport and a date to get sunrise, sunset, civil twilight and solar noon in both IST and UTC.</p>
+          <p class="study-note">For training/study only, not for real flight planning.</p>
+          <noscript>
+            <p class="noscript">This calculator needs JavaScript in your browser to run the calculations. The formulae and a worked example are still on this page below.</p>
+          </noscript>
+        </div>
+      </header>
+
+      <div class="wrap tool-layout">
+        <div>
+          <section class="card calc-card" id="calc">
+            <h2>Time and airport inputs</h2>
+            <p class="panel-help">IST is always UTC + 5 h 30 min; India does not use daylight saving time. Sun times are for the airport's reference point with a sea-level horizon.</p>
+            <div class="fields">
+              <div class="field"><label for="tt">Time to convert</label><div class="inp"><input id="tt" type="time" value="09:30"><select id="tz" aria-label="Time zone of entered time"><option value="UTC">UTC (Z)</option><option value="IST">IST</option></select></div></div>
+              <div class="field"><label for="dt">Date (of the entered time)</label><input id="dt" type="date" value="2026-12-21"></div>
+            </div>
+            <p class="subhead">Sunrise and sunset</p>
+            <div class="fields">
+              <div class="field"><label for="ap">Airport</label><select id="ap">
+                <option value="VIDP">VIDP · New Delhi</option>
+                <option value="VABB">VABB · Mumbai</option>
+                <option value="VOBL">VOBL · Bengaluru</option>
+                <option value="VOMM">VOMM · Chennai</option>
+                <option value="VECC">VECC · Kolkata</option>
+                <option value="VOHS">VOHS · Hyderabad</option>
+                <option value="VOCI">VOCI · Kochi</option>
+                <option value="VAAH">VAAH · Ahmedabad</option>
+                <option value="VOGO">VOGO · Goa (Dabolim)</option>
+                <option value="VOGA">VOGA · Goa (Mopa)</option>
+                <option value="VIJP">VIJP · Jaipur</option>
+                <option value="VILK">VILK · Lucknow</option>
+                <option value="VEGT">VEGT · Guwahati</option>
+                <option value="VOTV">VOTV · Thiruvananthapuram</option>
+                <option value="VIAR">VIAR · Amritsar</option>
+                <option value="VOPB">VOPB · Port Blair</option>
+                <option value="VILH">VILH · Leh</option>
+                <option value="VEBS">VEBS · Bhubaneswar</option>
+                <option value="VANP">VANP · Nagpur</option>
+                <option value="VAPO">VAPO · Pune</option>
+                <option value="VISR">VISR · Srinagar</option>
+                <option value="VEBN">VEBN · Varanasi</option>
+                <option value="VOTR">VOTR · Tiruchirappalli</option>
+                <option value="VIDN">VIDN · Dehradun</option>
+                <option value="custom">Custom latitude / longitude</option>
+              </select></div>
+              <div class="field"><label for="lat">Latitude (°N, decimal)</label><input id="lat" inputmode="decimal" value="28.5556"></div>
+              <div class="field"><label for="lon">Longitude (°E, decimal)</label><input id="lon" inputmode="decimal" value="77.0952"></div>
+            </div>
+
+            <div class="actions"><button type="button" class="btn btn-primary" id="exbtn">Try an example</button><button type="button" class="btn btn-ghost" id="clearbtn">Clear</button><p class="exnote" id="exnote"></p></div>
+          </section>
+
+          <section class="card result-card" id="result" aria-live="polite">
+            <span class="kicker" id="rlabel">Sunrise · Sunset (IST)</span>
+            <div class="result-big" id="rbig">–</div>
+            <div class="result-sub" id="rsub"></div>
+            <div class="result-grid" id="rgrid"></div>
+            <div class="result-warn" id="rwarn"></div>
+          </section>
+
+          <details class="card working" open><summary>Show working</summary><div class="steps" id="steps"></div></details>
+
+          <section class="card prose">
+<h2>UTC, IST and sun times for pilots</h2>
+<p>Aviation runs on <strong>UTC</strong>, also called Zulu time. METARs, TAFs, NOTAMs and flight plans all use it, so an Indian pilot converts constantly. <strong>IST is UTC + 5 hours 30 minutes</strong> all year, because India has no daylight saving. Add 5:30 to go from UTC to IST and subtract 5:30 to go back, and watch the date: 2000Z on 1 January is 01:30 IST on 2 January.</p>
+<p>Sunrise and sunset matter for VFR flying, night rating hours and when runway lights must be on. They change with latitude and the time of year. In December, Leh sees the sun for more than an hour less than Thiruvananthapuram. They also change with longitude, because the whole country shares one clock: the sun rises in Guwahati about an hour and a quarter earlier than in Ahmedabad.</p>
+<p>This calculator uses the NOAA solar algorithm. It works out the sun's declination and the equation of time for the date, then the hour angle at which the sun's centre is 0.833° below the horizon. That 0.833° allows for atmospheric refraction and the sun's radius. Civil twilight is when the centre is 6° below.</p>
+<div class="formula">IST = UTC + 05:30
+Solar noon (UTC, min) = 720 − 4 × longitude(°E) − equation of time
+cos HA = cos 90.833° ÷ (cos φ · cos δ) − tan φ · tan δ
+Sunrise = solar noon − 4 × HA,   Sunset = solar noon + 4 × HA</div>
+<h3>Worked example</h3>
+<p>At Delhi (VIDP, 28.56°N 77.10°E) on 21 December 2026, the declination is about −23.4° and the equation of time is about +2 min. Solar noon is 720 − 308.4 − 2 ≈ 409.6 min UTC, which is 06:50Z or 12:20 IST. HA is about 77.4°, so sunrise is about 310 min earlier, at roughly <strong>01:40Z (07:10 IST)</strong>, and sunset is at about 17:29 IST.</p>
+<p><small>Sources: NOAA Global Monitoring Laboratory Solar Calculator and "General Solar Position Calculations"; ICAO Annex 1 definition of night; airport coordinates from OurAirports open data.</small></p>
+
+          </section>
+        </div>
+
+        <aside class="side">
+          <div class="card">
+            <p class="kicker">Practice</p>
+            <h2>Test yourself</h2>
+            <p>Time conversion, sunrise and sunset are part of the DGCA Air Navigation (general navigation) syllabus.</p>
+            <p><a class="btn btn-primary" href="https://quiz.pilotjourney.in/subjects/air-navigation/">Practice DGCA Air Navigation questions</a></p>
+            <p class="disclaimer">For training/study only, not for real flight planning. This is not a certified source for flight operations. Cross-check figures with official documents, the current AIP and the aircraft AFM.</p>
+          </div>
+          <div class="card">
+            <p class="kicker">More tools</p>
+            <h2>Also on Pilot Journey</h2>
+            <ul>
+              <li><a href="/tools/crosswind/">Crosswind component calculator</a></li>
+              <li><a href="/tools/wind-triangle/">Wind triangle (E6B) calculator</a></li>
+              <li><a href="/tools/density-altitude/">Pressure and density altitude calculator</a></li>
+              <li><a href="/tools/unit-converter/">Aviation unit converter</a></li>
+              <li><a href="/tools/tas-mach/">TAS, CAS and Mach calculator</a></li>
+              <li><a href="/tools/one-in-sixty/">1 in 60 rule calculator</a></li>
+              <li><a href="/tools/pet-pnr/">PET and PNR calculator</a></li>
+              <li><a href="/tools/descent-planner/">Descent planning calculator</a></li>
+              <li><a href="/tools/altimetry/">QNH, QFE and cold temperature calculator</a></li>
+              <li><a href="/tools/mass-balance/">Mass and balance (CG) calculator</a></li>
+              <li><a href="/tools/">All aviation tools</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+
+      <div class="wrap">
+        <div class="card cta-band">
+          <div>
+            <p class="kicker">Career guidance</p>
+            <h2>Planning a CPL in India?</h2>
+            <p>Get a free, plain-English path from where you are now to a computer number, medicals and flying training.</p>
+          </div>
+          <a class="btn btn-primary" href="https://www.pilotjourney.in/guidance">Get free pilot career guidance</a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-grid">
+        <div>
+          <p class="kicker">Pilot Journey</p>
+          <p>Free DGCA study tools and practice questions for aspiring pilots. Independent study project. Not affiliated with DGCA, Airbus, Boeing or any airline.</p>
+          <p class="legal-note">Study material only.<br>Always check current official documents.</p>
+        </div>
+        <div>
+          <p class="kicker">Study</p>
+          <ul>
+            <li><a href="/subjects/">Question bank</a></li>
+            <li><a href="/type-rating/">Type rating: A320 / B737</a></li>
+            <li><a href="/tools/">Aviation tools</a></li>
+            <li><a href="/daily/">Daily check</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="kicker">About</p>
+          <ul>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a href="https://www.pilotjourney.in/">Read the Pilot Journey blog</a></li>
+            <li><a href="https://altitude.pilotjourney.in/">Pilot Journey Altitude store</a></li>
+            <li><a href="https://www.pilotjourney.in/guidance">Free guidance page</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bar">
+        <div class="wrap footer-bar-inner">
+          <span>© 2026 Pilot Journey · Study material only</span>
+          <span>Free study material for pilots. Always check current DGCA and manufacturer documents.</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script id="calc-js">
+var AIRPORTS = {"VIDP": {"name": "New Delhi", "lat": 28.5556, "lon": 77.0952, "elev": 777}, "VABB": {"name": "Mumbai", "lat": 19.0887, "lon": 72.8679, "elev": 39}, "VOBL": {"name": "Bengaluru", "lat": 13.1979, "lon": 77.7063, "elev": 3000}, "VOMM": {"name": "Chennai", "lat": 12.99, "lon": 80.1693, "elev": 52}, "VECC": {"name": "Kolkata", "lat": 22.654, "lon": 88.4476, "elev": 16}, "VOHS": {"name": "Hyderabad", "lat": 17.2313, "lon": 78.4299, "elev": 2024}, "VOCI": {"name": "Kochi", "lat": 10.151, "lon": 76.4008, "elev": 30}, "VAAH": {"name": "Ahmedabad", "lat": 23.0772, "lon": 72.6347, "elev": 189}, "VOGO": {"name": "Goa (Dabolim)", "lat": 15.3801, "lon": 73.8333, "elev": 150}, "VOGA": {"name": "Goa (Mopa)", "lat": 15.7443, "lon": 73.8606, "elev": 552}, "VIJP": {"name": "Jaipur", "lat": 26.8242, "lon": 75.8122, "elev": 1263}, "VILK": {"name": "Lucknow", "lat": 26.7606, "lon": 80.8893, "elev": 410}, "VEGT": {"name": "Guwahati", "lat": 26.1067, "lon": 91.5852, "elev": 162}, "VOTV": {"name": "Thiruvananthapuram", "lat": 8.4819, "lon": 76.92, "elev": 15}, "VIAR": {"name": "Amritsar", "lat": 31.7096, "lon": 74.7973, "elev": 756}, "VOPB": {"name": "Port Blair", "lat": 11.6402, "lon": 92.729, "elev": 13}, "VILH": {"name": "Leh", "lat": 34.1359, "lon": 77.5465, "elev": 10682}, "VEBS": {"name": "Bhubaneswar", "lat": 20.251, "lon": 85.8147, "elev": 138}, "VANP": {"name": "Nagpur", "lat": 21.0922, "lon": 79.0472, "elev": 1033}, "VAPO": {"name": "Pune", "lat": 18.5821, "lon": 73.9197, "elev": 1942}, "VISR": {"name": "Srinagar", "lat": 33.9871, "lon": 74.7742, "elev": 5429}, "VEBN": {"name": "Varanasi", "lat": 25.4522, "lon": 82.8625, "elev": 266}, "VOTR": {"name": "Tiruchirappalli", "lat": 10.7629, "lon": 78.7177, "elev": 288}, "VIDN": {"name": "Dehradun", "lat": 30.1892, "lon": 78.1767, "elev": 1831}}; // coordinates & elevation: OurAirports open data
+// NOAA solar calculator algorithm (NOAA Global Monitoring Laboratory "General Solar Position Calculations" / NOAA Solar Calculator).
+// Times returned in minutes from 00:00 UTC of the date.
+function rad(d){ return d * Math.PI / 180; } function deg(r){ return r * 180 / Math.PI; }
+function julianDay(y, m, d){ if (m <= 2) { y -= 1; m += 12; } var A = Math.floor(y / 100), B = 2 - A + Math.floor(A / 4);
+  return Math.floor(365.25 * (y + 4716)) + Math.floor(30.6001 * (m + 1)) + d + B - 1524.5; }
+function sunParams(jd){
+  var T = (jd - 2451545.0) / 36525.0;
+  var L0 = (280.46646 + T * (36000.76983 + T * 0.0003032)) % 360; if (L0 < 0) L0 += 360;
+  var M = 357.52911 + T * (35999.05029 - 0.0001537 * T);
+  var e = 0.016708634 - T * (0.000042037 + 0.0000001267 * T);
+  var C = Math.sin(rad(M)) * (1.914602 - T * (0.004817 + 0.000014 * T)) + Math.sin(rad(2 * M)) * (0.019993 - 0.000101 * T) + Math.sin(rad(3 * M)) * 0.000289;
+  var omega = 125.04 - 1934.136 * T, lambda = L0 + C - 0.00569 - 0.00478 * Math.sin(rad(omega));
+  var eps0 = 23 + (26 + (21.448 - T * (46.815 + T * (0.00059 - T * 0.001813))) / 60) / 60;
+  var eps = eps0 + 0.00256 * Math.cos(rad(omega));
+  var decl = deg(Math.asin(Math.sin(rad(eps)) * Math.sin(rad(lambda))));
+  var y = Math.pow(Math.tan(rad(eps / 2)), 2);
+  var eqt = 4 * deg(y * Math.sin(2 * rad(L0)) - 2 * e * Math.sin(rad(M)) + 4 * e * y * Math.sin(rad(M)) * Math.cos(2 * rad(L0))
+    - 0.5 * y * y * Math.sin(4 * rad(L0)) - 1.25 * e * e * Math.sin(2 * rad(M)));
+  return { decl: decl, eqt: eqt };
+}
+function hourAngle(lat, decl, zenith){ var c = Math.cos(rad(zenith)) / (Math.cos(rad(lat)) * Math.cos(rad(decl))) - Math.tan(rad(lat)) * Math.tan(rad(decl));
+  if (c > 1 || c < -1) return NaN; return deg(Math.acos(c)); }
+// rising: true for sunrise/dawn. lon east positive. zenith 90.833 (sunrise/sunset), 96 (civil twilight)
+function sunEventUTC(y, m, d, lat, lon, rising, zenith){
+  var jd = julianDay(y, m, d), t = 720 - 4 * lon - sunParams(jd).eqt;
+  for (var i = 0; i < 3; i++) { var p = sunParams(jd + t / 1440), ha = hourAngle(lat, p.decl, zenith); if (isNaN(ha)) return NaN;
+    t = 720 - 4 * (lon + (rising ? ha : -ha)) - p.eqt; }
+  return t;
+}
+function solarNoonUTC(y, m, d, lon){ var jd = julianDay(y, m, d), t = 720 - 4 * lon - sunParams(jd).eqt; return 720 - 4 * lon - sunParams(jd + t / 1440).eqt; }
+function sunTimes(y, m, d, lat, lon){
+  var p = sunParams(julianDay(y, m, d) + 0.5);
+  return { sunrise: sunEventUTC(y, m, d, lat, lon, true, 90.833), sunset: sunEventUTC(y, m, d, lat, lon, false, 90.833),
+    dawn: sunEventUTC(y, m, d, lat, lon, true, 96), dusk: sunEventUTC(y, m, d, lat, lon, false, 96), noon: solarNoonUTC(y, m, d, lon),
+    decl: p.decl, eqt: p.eqt };
+}
+// IST = UTC + 330 min. Returns {min (0..1439), dayShift}
+function convertTime(minutes, fromZone){ var t = fromZone === 'UTC' ? minutes + 330 : minutes - 330; var shift = Math.floor(t / 1440); return { min: ((t % 1440) + 1440) % 1440, dayShift: shift }; }
+
+  </script>
+  <script>
+
+const $=id=>document.getElementById(id);
+function v(id){const e=$(id);if(!e)return NaN;const x=parseFloat(String(e.value).trim().replace(',','.'));return isFinite(x)?x:NaN}
+function fx(x,d){d=d||0;return isFinite(x)?Number(x).toLocaleString('en-IN',{minimumFractionDigits:d,maximumFractionDigits:d}):'–'}
+function kv(k,val,cls){return '<div class="kv '+(cls||'')+'"><div class="k">'+k+'</div><div class="v">'+val+'</div></div>'}
+function setVals(o){for(const k in o){const e=$(k);if(e){e.value=o[k]}}}
+function bindAll(fn){document.querySelectorAll('#calc input,#calc select').forEach(e=>{e.addEventListener('input',fn);e.addEventListener('change',fn)});}
+function segInit(id,fn){const g=$(id);g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-selected','false'));b.setAttribute('aria-selected','true');fn()}));}
+function segVal(id){const b=$(id).querySelector('button[aria-selected=true]');return b?b.dataset.v:null}
+function segSet(id,val){$(id).querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.v===val?'true':'false'))}
+function show(big,unit,sub,grid,warn,steps){$('rbig').innerHTML=big+(unit?' <small>'+unit+'</small>':'');$('rsub').innerHTML=sub||'';$('rgrid').innerHTML=grid||'';$('rwarn').innerHTML=warn||'';$('steps').textContent=steps||''}
+
+function hhmm(m){if(!isFinite(m))return '–';let t=Math.round(m);t=((t%1440)+1440)%1440;return String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0')}
+function addDays(ds,n){const d=new Date(ds+'T00:00:00Z');d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)}
+function niceDate(ds){const d=new Date(ds+'T00:00:00Z');return d.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric',weekday:'short',timeZone:'UTC'})}
+function syncAirport(){const a=AIRPORTS[$('ap').value];if(a){$('lat').value=a.lat;$('lon').value=a.lon}}
+function render(){
+  const ds=$('dt').value,tt=$('tt').value,tz=$('tz').value,lat=v('lat'),lon=v('lon'),code=$('ap').value,ap=AIRPORTS[code];
+  if(!ds){show('–','','Pick a date','','');return}
+  const [Y,M,D]=ds.split('-').map(Number);let g='',st='';
+  if(tt){const [h,mi]=tt.split(':').map(Number);const c=convertTime(h*60+mi,tz);const other=tz==='UTC'?'IST':'UTC';
+    const od=addDays(ds,c.dayShift);g+=kv(tt.replace(':','')+(tz==='UTC'?'Z':' IST')+' →',hhmm(c.min)+(other==='UTC'?'Z':' IST')+(c.dayShift?' ('+niceDate(od)+')':''));
+    st+=`1) Time conversion: IST = UTC + 5 h 30 min (no daylight saving in India)\n   ${tt} ${tz} ${tz==='UTC'?'+':'−'} 05:30 = ${hhmm(c.min)} ${other}${c.dayShift?` on ${niceDate(od)} (date ${c.dayShift>0?'moves forward':'moves back'} one day)`:', same date'}\n\n`;}
+  if(!isFinite(lat)||!isFinite(lon)||Math.abs(lat)>90||Math.abs(lon)>180){show('–','','Enter a valid latitude and longitude',g,'',st);return}
+  const s=sunTimes(Y,M,D,lat,lon);const I=m=>hhmm(m+330),Z=m=>hhmm(m)+'Z';
+  g+=kv('Sunrise',I(s.sunrise)+' IST / '+Z(s.sunrise))+kv('Sunset',I(s.sunset)+' IST / '+Z(s.sunset))+kv('Civil dawn (sun 6° below)',I(s.dawn)+' IST / '+Z(s.dawn))+kv('Civil dusk (sun 6° below)',I(s.dusk)+' IST / '+Z(s.dusk))+kv('Solar noon',I(s.noon)+' IST')+kv('Daylight',isFinite(s.sunset-s.sunrise)?Math.floor((s.sunset-s.sunrise)/60)+' h '+String(Math.round((s.sunset-s.sunrise)%60)).padStart(2,'0')+' min':'–');
+  st+=`${tt?'2':'1'}) Sun position for ${niceDate(ds)} at ${fx(lat,4)}°N, ${fx(lon,4)}°E${ap&&code!=='custom'?' ('+code+')':''}
+   Solar declination ≈ ${fx(s.decl,2)}°, equation of time ≈ ${fx(s.eqt,2)} min
+   Solar noon (UTC) = 720 − 4 × longitude − EoT = 720 − 4 × ${fx(lon,4)} − (${fx(s.eqt,2)}) = ${fx(s.noon,1)} min = ${Z(s.noon)}
+   Hour angle for sunrise/sunset uses zenith 90.833° (refraction + sun's radius):
+   cos(HA) = cos(90.833°) ÷ (cos φ cos δ) − tan φ tan δ
+   Sunrise = noon − 4 × HA → ${Z(s.sunrise)} = ${I(s.sunrise)} IST
+   Sunset  = noon + 4 × HA → ${Z(s.sunset)} = ${I(s.sunset)} IST
+   (NOAA method; each event is re-solved at its own time, accurate to about ±1 min.)
+   Civil twilight uses zenith 96° (sun 6° below the horizon). ICAO Annex 1 defines night as end of evening to beginning of morning civil twilight, unless the State prescribes otherwise.`;
+  let warn=ap&&ap.elev>5000&&code!=='custom'?'High aerodrome: times assume a sea-level horizon, so actual sunrise is slightly earlier and sunset slightly later; nearby mountains can change it a lot.':'';
+  $('rlabel').textContent='Sunrise · Sunset (IST)'+(ap&&code!=='custom'?' · '+code:'');
+  show(I(s.sunrise)+' · '+I(s.sunset),'IST',niceDate(ds)+' · '+Z(s.sunrise)+' / '+Z(s.sunset),g,warn,st);
+}
+bindAll(render);
+$('ap').addEventListener('change',()=>{syncAirport();render()});
+$('lat').addEventListener('input',()=>{$('ap').value='custom'});$('lon').addEventListener('input',()=>{$('ap').value='custom'});
+(function(){const n=new Date(Date.now()+330*60000);$('dt').value=n.toISOString().slice(0,10)})();
+$('exbtn').addEventListener('click',()=>{setVals({ap:'VIDP',dt:'2026-12-21',tt:'01:30',tz:'UTC'});syncAirport();$('exnote').textContent='Winter fog season at VIDP (Delhi): on 21 Dec 2026, a METAR issued at 0130Z is 07:00 IST. Is it before or after sunrise?';render()});
+$('clearbtn').addEventListener('click',()=>{setVals({tt:''});$('exnote').textContent='';render()});
+syncAirport();render();
+
+  </script>
+</body>
+</html>

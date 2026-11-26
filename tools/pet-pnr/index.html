@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PNR and PET Calculator (Point of No Return, Equal Time) with ETA | Pilot Journey</title>
+  <meta name="description" content="Free PNR and PET calculator for DGCA flight planning: point of no return, point of equal time (critical point) and ETA in IST and UTC from distance, TAS, wind and endurance.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://quiz.pilotjourney.in/tools/pet-pnr/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pilot Journey">
+  <meta property="og:url" content="https://quiz.pilotjourney.in/tools/pet-pnr/">
+  <meta property="og:title" content="PNR and PET Calculator (Point of No Return, Equal Time) with ETA | Pilot Journey">
+  <meta property="og:description" content="Free PNR and PET calculator for DGCA flight planning: point of no return, point of equal time (critical point) and ETA in IST and UTC from distance, TAS, wind and endurance.">
+  <meta property="og:image" content="https://quiz.pilotjourney.in/pj-logo-512.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="PNR and PET Calculator (Point of No Return, Equal Time) with ETA | Pilot Journey">
+  <meta name="twitter:description" content="Free PNR and PET calculator for DGCA flight planning: point of no return, point of equal time (critical point) and ETA in IST and UTC from distance, TAS, wind and endurance.">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "ETA, PNR and PET calculator", "url": "https://quiz.pilotjourney.in/tools/pet-pnr/", "applicationCategory": "EducationalApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"}, "publisher": {"@type": "Organization", "name": "Pilot Journey", "url": "https://quiz.pilotjourney.in/"}, "description": "Free PNR and PET calculator for DGCA flight planning: point of no return, point of equal time (critical point) and ETA in IST and UTC from distance, TAS, wind and endurance."}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Pilot Journey Quiz", "item": "https://quiz.pilotjourney.in/"}, {"@type": "ListItem", "position": 2, "name": "Aviation tools", "item": "https://quiz.pilotjourney.in/tools/"}, {"@type": "ListItem", "position": 3, "name": "PET and PNR calculator", "item": "https://quiz.pilotjourney.in/tools/pet-pnr/"}]}]}</script>
+</head>
+<body class="hx">
+  <div class="page">
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="accent-bar" aria-hidden="true"></div>
+    <div class="top-strip">
+      <div class="wrap top-strip-inner">
+        <span><span class="dot" aria-hidden="true"></span>Free study tools · no account needed</span>
+        <span class="hide-sm">For study only · always check official documents</span>
+      </div>
+    </div>
+    <header class="site-header">
+      <div class="wrap site-header-inner">
+        <a class="brand" href="/" aria-label="Pilot Journey home">
+          <img src="../assets/pj-logo.png" alt="" width="40" height="40">
+          <span>
+            <span class="brand-name">Pilot Journey</span>
+            <span class="brand-tag">DGCA · ATPL · A320</span>
+          </span>
+        </a>
+        <nav class="nav" aria-label="Main navigation">
+          <a href="/subjects/">Question bank</a>
+          <a href="/type-rating/">Type rating</a>
+          <a href="/daily/">Daily check</a>
+          <a href="/tools/" aria-current="page">Tools</a>
+          <a href="/faq/">FAQ</a>
+        </nav>
+        <a class="btn btn-primary header-cta" href="/subjects/">Start practising</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <header class="hero">
+        <div class="wrap">
+          <nav aria-label="Breadcrumb">
+            <ol class="crumbs">
+              <li><a href="/">Quiz home</a></li>
+              <li><a href="/tools/">Aviation tools</a></li>
+              <li aria-current="page">PET and PNR calculator</li>
+            </ol>
+          </nav>
+          <p class="kicker">Free aviation calculator</p>
+          <h1 class="display-lg">ETA, PNR and PET calculator</h1>
+          <p class="lede">Enter the leg distance, TAS, wind component and safe endurance. You get the point of equal time (PET, also called the critical point), the point of no return (PNR) and your ETA in IST and UTC.</p>
+          <p class="study-note">For training/study only, not for real flight planning.</p>
+          <noscript>
+            <p class="noscript">This calculator needs JavaScript in your browser to run the calculations. The formulae and a worked example are still on this page below.</p>
+          </noscript>
+        </div>
+      </header>
+
+      <div class="wrap tool-layout">
+        <div>
+          <section class="card calc-card" id="calc">
+            <h2>Leg inputs</h2>
+            <p class="panel-help">Use the wind component along the outbound track. Endurance should exclude reserves.</p>
+<div class="fields">
+<div class="field"><label for="dist">Leg distance (departure to destination)</label><div class="inp"><input id="dist" type="number" inputmode="decimal" step="any" value="500"><select id="du" aria-label="Distance unit"><option value="NM">NM</option><option value="km">km</option></select></div></div>
+<div class="field"><label for="tas">True airspeed (TAS)</label><div class="inp"><input id="tas" type="number" inputmode="decimal" step="any" value="200"><select id="su" aria-label="Speed unit"><option value="kt">kt</option><option value="kmh">km/h</option></select></div></div>
+<div class="field"><label for="wind">Wind component on the outbound track</label><div class="inp"><input id="wind" type="number" inputmode="decimal" step="any" value="20"><select id="wt" aria-label="Wind type"><option value="H">Headwind</option><option value="T">Tailwind</option></select></div></div>
+<div class="field"><label for="tasp">TAS for PET case (optional, e.g. one engine out)</label><input id="tasp" type="number" inputmode="decimal" step="any" placeholder="same as TAS"></div>
+<div class="field"><label for="endh">Safe endurance (excluding reserves)</label><div class="inp"><input id="endh" type="number" inputmode="numeric" step="1" value="4" aria-label="Hours"><span style="align-self:center">h</span><input id="endm" type="number" inputmode="numeric" step="1" value="0" aria-label="Minutes"><span style="align-self:center">min</span></div></div>
+<div class="field"><label for="dep">Departure time (optional)</label><div class="inp"><input id="dep" type="time" value="09:30"><select id="tz" aria-label="Time zone"><option value="IST">IST</option><option value="UTC">UTC</option></select></div></div>
+</div>
+
+            <div class="actions"><button type="button" class="btn btn-primary" id="exbtn">Try an example</button><button type="button" class="btn btn-ghost" id="clearbtn">Clear</button><p class="exnote" id="exnote"></p></div>
+          </section>
+
+          <section class="card result-card" id="result" aria-live="polite">
+            <span class="kicker" id="rlabel">Point of equal time (PET)</span>
+            <div class="result-big" id="rbig">–</div>
+            <div class="result-sub" id="rsub"></div>
+            <div class="result-grid" id="rgrid"></div>
+            <div class="result-warn" id="rwarn"></div>
+          </section>
+
+          <details class="card working" open><summary>Show working</summary><div class="steps" id="steps"></div></details>
+
+          <section class="card prose">
+<h2>PET and PNR in plain words</h2>
+<p>The <strong>point of equal time (PET)</strong>, also called the critical point, is the place on the route where flying on to the destination takes exactly as long as turning back. It matters if something goes wrong, such as a medical emergency or an engine failure, because past the PET it is quicker to continue. With a headwind on the way out, the PET moves towards the destination, since the trip home is downwind and faster.</p>
+<p>The <strong>point of no return (PNR)</strong> is the furthest you can fly out and still get back to the departure airfield with the fuel you have, not counting reserves. It depends on endurance, whereas the PET does not depend on fuel at all.</p>
+<div class="formula">O = TAS − headwind (groundspeed out)   H = TAS + headwind (groundspeed home)
+PET distance from departure = D × H ÷ (O + H)
+PNR time = Endurance × H ÷ (O + H),   PNR distance = PNR time × O
+ETA = departure time + D ÷ O,   IST = UTC + 5 h 30 min</div>
+<p>For an engine-out PET, use the reduced TAS for both O and H in the PET formula. This calculator does that when you fill the optional PET TAS box.</p>
+<h3>Worked example</h3>
+<p>A 500 NM leg, TAS 200 kt, 20 kt headwind outbound and 4 hours of safe endurance. O = 180 kt and H = 220 kt. PET = 500 × 220 ÷ 400 = <strong>275 NM</strong> from departure, reached after 1 h 32 min. PNR time = 4 × 220 ÷ 400 = 2.2 h (2 h 12 min), so the PNR is 2.2 × 180 = <strong>396 NM</strong> out.</p>
+<p><small>Sources: standard ATPL/DGCA Flight Planning &amp; Monitoring and General Navigation texts (PET/critical point and PNR formulas); IST offset per Indian Standard Time (UTC+05:30).</small></p>
+
+          </section>
+        </div>
+
+        <aside class="side">
+          <div class="card">
+            <p class="kicker">Practice</p>
+            <h2>Test yourself</h2>
+            <p>PET and PNR questions are part of the DGCA Flight Planning &amp; Monitoring paper.</p>
+            <p><a class="btn btn-primary" href="https://quiz.pilotjourney.in/subjects/flight-planning-monitoring/">Practice DGCA Flight Planning questions</a></p>
+            <p class="disclaimer">For training/study only, not for real flight planning. This is not a certified source for flight operations. Cross-check figures with official documents, the current AIP and the aircraft AFM.</p>
+          </div>
+          <div class="card">
+            <p class="kicker">More tools</p>
+            <h2>Also on Pilot Journey</h2>
+            <ul>
+              <li><a href="/tools/crosswind/">Crosswind component calculator</a></li>
+              <li><a href="/tools/wind-triangle/">Wind triangle (E6B) calculator</a></li>
+              <li><a href="/tools/density-altitude/">Pressure and density altitude calculator</a></li>
+              <li><a href="/tools/unit-converter/">Aviation unit converter</a></li>
+              <li><a href="/tools/tas-mach/">TAS, CAS and Mach calculator</a></li>
+              <li><a href="/tools/one-in-sixty/">1 in 60 rule calculator</a></li>
+              <li><a href="/tools/descent-planner/">Descent planning calculator</a></li>
+              <li><a href="/tools/altimetry/">QNH, QFE and cold temperature calculator</a></li>
+              <li><a href="/tools/mass-balance/">Mass and balance (CG) calculator</a></li>
+              <li><a href="/tools/utc-ist-sunrise/">UTC/IST and sunrise/sunset calculator</a></li>
+              <li><a href="/tools/">All aviation tools</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+
+      <div class="wrap">
+        <div class="card cta-band">
+          <div>
+            <p class="kicker">Career guidance</p>
+            <h2>Planning a CPL in India?</h2>
+            <p>Get a free, plain-English path from where you are now to a computer number, medicals and flying training.</p>
+          </div>
+          <a class="btn btn-primary" href="https://www.pilotjourney.in/guidance">Get free pilot career guidance</a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-grid">
+        <div>
+          <p class="kicker">Pilot Journey</p>
+          <p>Free DGCA study tools and practice questions for aspiring pilots. Independent study project. Not affiliated with DGCA, Airbus, Boeing or any airline.</p>
+          <p class="legal-note">Study material only.<br>Always check current official documents.</p>
+        </div>
+        <div>
+          <p class="kicker">Study</p>
+          <ul>
+            <li><a href="/subjects/">Question bank</a></li>
+            <li><a href="/type-rating/">Type rating: A320 / B737</a></li>
+            <li><a href="/tools/">Aviation tools</a></li>
+            <li><a href="/daily/">Daily check</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="kicker">About</p>
+          <ul>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a href="https://www.pilotjourney.in/">Read the Pilot Journey blog</a></li>
+            <li><a href="https://altitude.pilotjourney.in/">Pilot Journey Altitude store</a></li>
+            <li><a href="https://www.pilotjourney.in/guidance">Free guidance page</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bar">
+        <div class="wrap footer-bar-inner">
+          <span>© 2026 Pilot Journey · Study material only</span>
+          <span>Free study material for pilots. Always check current DGCA and manufacturer documents.</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script id="calc-js">
+// PET / PNR / ETA - standard flight planning formulas (ATPL/DGCA Flight Planning & General Navigation).
+// d in NM, speeds in kt, wind = component on outbound track (+ headwind, - tailwind), endurance in hours.
+// PET:  distance from departure = D x H / (O + H)   (O, H = groundspeeds on and home at the PET TAS)
+// PNR:  time = E x H / (O + H),  distance = time x O (normal TAS)
+function petPnr(d, tas, wind, endHr, tasPet){
+  if (!(tasPet > 0)) tasPet = tas;
+  var O = tas - wind, H = tas + wind;           // normal ops groundspeeds out / home
+  var Op = tasPet - wind, Hp = tasPet + wind;   // PET-case groundspeeds on / home
+  var petDist = d * Hp / (Op + Hp);
+  var petTime = petDist / O;                    // time to reach PET at normal cruise
+  var pnrTime = endHr * H / (O + H);
+  var pnrDist = pnrTime * O;
+  var eteHr = d / O;
+  return { O: O, H: H, Op: Op, Hp: Hp, petDist: petDist, petTime: petTime, petFromDest: d - petDist,
+    pnrTime: pnrTime, pnrDist: pnrDist, eteHr: eteHr, pnrBeyondDest: pnrDist > d, cannotReach: eteHr > endHr };
+}
+// minutes since midnight + hours -> {h, m, dayOffset}
+function addHours(minOfDay, hrs){
+  var t = Math.round(minOfDay + hrs * 60), day = Math.floor(t / 1440);
+  t = ((t % 1440) + 1440) % 1440;
+  return { h: Math.floor(t / 60), m: t % 60, day: day };
+}
+function istToUtcMin(m){ return ((m - 330) % 1440 + 1440) % 1440; }
+function utcToIstMin(m){ return (m + 330) % 1440; }
+
+  </script>
+  <script>
+
+const $=id=>document.getElementById(id);
+function v(id){const e=$(id);if(!e)return NaN;const x=parseFloat(String(e.value).trim().replace(',','.'));return isFinite(x)?x:NaN}
+function fx(x,d){d=d||0;return isFinite(x)?Number(x).toLocaleString('en-IN',{minimumFractionDigits:d,maximumFractionDigits:d}):'–'}
+function kv(k,val,cls){return '<div class="kv '+(cls||'')+'"><div class="k">'+k+'</div><div class="v">'+val+'</div></div>'}
+function setVals(o){for(const k in o){const e=$(k);if(e){e.value=o[k]}}}
+function bindAll(fn){document.querySelectorAll('#calc input,#calc select').forEach(e=>{e.addEventListener('input',fn);e.addEventListener('change',fn)});}
+function segInit(id,fn){const g=$(id);g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-selected','false'));b.setAttribute('aria-selected','true');fn()}));}
+function segVal(id){const b=$(id).querySelector('button[aria-selected=true]');return b?b.dataset.v:null}
+function segSet(id,val){$(id).querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.v===val?'true':'false'))}
+function show(big,unit,sub,grid,warn,steps){$('rbig').innerHTML=big+(unit?' <small>'+unit+'</small>':'');$('rsub').innerHTML=sub||'';$('rgrid').innerHTML=grid||'';$('rwarn').innerHTML=warn||'';$('steps').textContent=steps||''}
+
+function hm(h){if(!isFinite(h))return '–';const t=Math.round(h*60);return Math.floor(t/60)+' h '+String(t%60).padStart(2,'0')+' min'}
+function clk(o){return String(o.h).padStart(2,'0')+':'+String(o.m).padStart(2,'0')+(o.day>0?' (+'+o.day+'d)':o.day<0?' ('+o.day+'d)':'')}
+function render(){
+  const km=$('du').value==='km',kmh=$('su').value==='kmh';
+  let d=v('dist'),tas=v('tas'),w=v('wind'),tp=v('tasp');const eh=v('endh'),em=v('endm')||0;
+  if(![d,tas,w,eh].every(isFinite)){show('–','','Enter distance, TAS, wind and endurance','','');return}
+  if(km)d=d/1.852; if(kmh){tas/=1.852;w/=1.852;if(isFinite(tp))tp/=1.852}
+  w=Math.abs(w)*($('wt').value==='H'?1:-1);const E=eh+em/60;
+  if(d<=0||tas<=0||E<=0){show('–','','Distance, TAS and endurance must be above zero','','');return}
+  if(Math.abs(w)>=tas||(isFinite(tp)&&Math.abs(w)>=tp)){show('–','','Wind component must be smaller than TAS','','');return}
+  const r=petPnr(d,tas,w,E,isFinite(tp)&&tp>0?tp:tas);const du=km?'km':'NM',k=km?1.852:1,ks=kmh?1.852:1,su=kmh?'km/h':'kt';
+  let grid=kv('PET from departure',fx(r.petDist*k,1)+' '+du)+kv('Time to PET',hm(r.petTime))+kv('PNR from departure',fx(r.pnrDist*k,1)+' '+du)+kv('Time to PNR',hm(r.pnrTime))+kv('Groundspeed out (O)',fx(r.O*ks,0)+' '+su)+kv('Groundspeed home (H)',fx(r.H*ks,0)+' '+su)+kv('Flight time (ETE)',hm(r.eteHr));
+  const dep=$('dep').value;let etaLine='';
+  if(dep){const [hh,mm]=dep.split(':').map(Number);const m0=hh*60+mm;const ist=$('tz').value==='IST'?m0:utcToIstMin(m0);const utc=$('tz').value==='UTC'?m0:istToUtcMin(m0);
+    const eI=addHours(ist,r.eteHr),eU=addHours(utc,r.eteHr),pI=addHours(ist,r.petTime),nI=addHours(ist,r.pnrTime);
+    grid+=kv('ETA',clk(eI)+' IST / '+clk(eU)+'Z')+kv('At PET / PNR (IST)',clk(pI)+' / '+clk(nI));
+    etaLine=`\n\n4) ETA = departure + ETE = ${String(Math.floor(ist/60)).padStart(2,'0')}:${String(ist%60).padStart(2,'0')} IST + ${hm(r.eteHr)} = ${clk(eI)} IST (${clk(eU)} UTC, IST = UTC + 5:30)`;}
+  let warn='';if(r.cannotReach)warn='Flight time is longer than the safe endurance: you cannot reach the destination with this fuel.';else if(r.pnrBeyondDest)warn='PNR lies beyond the destination, so you can always turn back before arriving.';
+  const st=`1) Groundspeeds (wind ${w>=0?'headwind':'tailwind'} ${fx(Math.abs(w),0)} kt outbound)
+   O (out)  = TAS − wind = ${fx(tas,0)} − ${fx(w,0)} = ${fx(r.O,0)} kt
+   H (home) = TAS + wind = ${fx(tas,0)} + ${fx(w,0)} = ${fx(r.H,0)} kt${r.Op!==r.O?`\n   PET case at TAS ${fx(r.Op+w,0)} kt: on = ${fx(r.Op,0)} kt, home = ${fx(r.Hp,0)} kt`:''}
+
+2) Point of equal time (PET)
+   Distance = D × H ÷ (O + H) = ${fx(d,1)} × ${fx(r.Hp,0)} ÷ (${fx(r.Op,0)} + ${fx(r.Hp,0)}) = ${fx(r.petDist,1)} NM
+   Time to PET = ${fx(r.petDist,1)} ÷ ${fx(r.O,0)} = ${hm(r.petTime)}
+   (From the PET it takes the same time to go on or turn back.)
+
+3) Point of no return (PNR)
+   Time = E × H ÷ (O + H) = ${fx(E,2)} h × ${fx(r.H,0)} ÷ (${fx(r.O,0)} + ${fx(r.H,0)}) = ${fx(r.pnrTime,3)} h = ${hm(r.pnrTime)}
+   Distance = time × O = ${fx(r.pnrTime,3)} × ${fx(r.O,0)} = ${fx(r.pnrDist,1)} NM`+etaLine+(km||kmh?'\n\n(Calculated in NM and kt, shown in your units.)':'');
+  show(fx(r.petDist*k,0),du,'from departure · PNR '+fx(r.pnrDist*k,0)+' '+du+' ('+hm(r.pnrTime)+')',grid,warn,st);
+}
+bindAll(render);
+$('exbtn').addEventListener('click',()=>{setVals({dist:229,du:'NM',tas:270,su:'kt',wind:25,wt:'H',tasp:'',endh:2,endm:30,dep:'09:30',tz:'IST'});$('exnote').textContent='Turboprop from VABB (Mumbai) to VOGO (Goa), about 229 NM direct: TAS 270 kt, 25 kt headwind, 2 h 30 min safe endurance, off-blocks 09:30 IST.';render()});
+$('clearbtn').addEventListener('click',()=>{setVals({dist:'',tas:'',wind:'',tasp:'',endh:'',endm:'',dep:''});$('exnote').textContent='';render()});
+render();
+
+  </script>
+</body>
+</html>

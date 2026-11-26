@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Density Altitude Calculator: Pressure Altitude &amp; ISA | Pilot Journey</title>
+  <meta name="description" content="Free density altitude calculator for DGCA study. Enter field elevation, QNH in hPa and outside air temperature in °C to get pressure altitude, ISA temperature and deviation, and density altitude.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://quiz.pilotjourney.in/tools/density-altitude/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pilot Journey">
+  <meta property="og:url" content="https://quiz.pilotjourney.in/tools/density-altitude/">
+  <meta property="og:title" content="Density Altitude Calculator | Pilot Journey">
+  <meta property="og:description" content="Estimate pressure altitude, ISA deviation and density altitude from elevation, QNH and OAT, with a worked example for VIDP at 777 ft.">
+  <meta property="og:image" content="https://quiz.pilotjourney.in/pj-logo-512.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Density Altitude Calculator | Pilot Journey">
+  <meta name="twitter:description" content="Estimate pressure altitude, ISA deviation and density altitude from elevation, QNH and OAT, with a worked example for VIDP at 777 ft.">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "Density altitude calculator",
+        "url": "https://quiz.pilotjourney.in/tools/density-altitude/",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Any",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+        "description": "Estimate pressure altitude, ISA deviation and density altitude from elevation, QNH and OAT, with a worked example for VIDP at 777 ft.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Pilot Journey",
+          "url": "https://quiz.pilotjourney.in/"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Pilot Journey Quiz", "item": "https://quiz.pilotjourney.in/" },
+          { "@type": "ListItem", "position": 2, "name": "Aviation tools", "item": "https://quiz.pilotjourney.in/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Density altitude calculator", "item": "https://quiz.pilotjourney.in/tools/density-altitude/" }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <div class="page">
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="accent-bar" aria-hidden="true"></div>
+    <div class="top-strip">
+      <div class="wrap top-strip-inner">
+        <span><span class="dot" aria-hidden="true"></span>Free study tools · no account needed</span>
+        <span class="hide-sm">For study only · always check official documents</span>
+      </div>
+    </div>
+    <header class="site-header">
+      <div class="wrap site-header-inner">
+        <a class="brand" href="/" aria-label="Pilot Journey home">
+          <img src="/pj-logo.png" alt="" width="40" height="40">
+          <span>
+            <span class="brand-name">Pilot Journey</span>
+            <span class="brand-tag">DGCA · ATPL · A320</span>
+          </span>
+        </a>
+        <nav class="nav" aria-label="Main navigation">
+          <a href="/subjects/">Question bank</a>
+          <a href="/type-rating/">Type rating</a>
+          <a href="/daily/">Daily check</a>
+          <a href="/tools/" aria-current="page">Tools</a>
+          <a href="/faq/">FAQ</a>
+        </nav>
+        <a class="btn btn-primary header-cta" href="/subjects/">Start practising</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <header class="hero">
+        <div class="wrap">
+          <nav aria-label="Breadcrumb">
+            <ol class="crumbs">
+              <li><a href="/">Quiz home</a></li>
+              <li><a href="/tools/">Aviation tools</a></li>
+              <li aria-current="page">Density altitude calculator</li>
+            </ol>
+          </nav>
+          <p class="kicker">Free aviation calculator</p>
+          <h1 class="display-lg">Density altitude calculator</h1>
+          <p class="lede">Estimate pressure altitude, ISA temperature and density altitude from field elevation, QNH in hPa and outside air temperature in °C. The example uses the published elevation of VIDP, 777 ft, with QNH 1008 hPa and an OAT of 38 °C.</p>
+          <p class="study-line">For training/study only, not for real flight planning.</p>
+          <noscript>
+            <p class="noscript">This calculator needs JavaScript in your browser to run. The formulae are still written on this page below.</p>
+          </noscript>
+        </div>
+      </header>
+
+      <div class="wrap tool-layout">
+        <div>
+          <div class="actions">
+            <button type="button" class="btn btn-outline" id="try-example">Try an example</button>
+          </div>
+          <section class="card result-card result-empty" id="result-card" aria-live="polite">
+            <p class="kicker">Density altitude</p>
+            <div class="result-hero">
+              <span class="result-number" id="result-number">—</span>
+              <span class="result-unit" id="result-unit">ft DA</span>
+            </div>
+            <p class="result-sub" id="result-sub">Enter elevation, QNH and OAT to estimate density altitude.</p>
+            <dl class="result-grid" id="result-grid">
+              <div><dt class="lbl">Pressure altitude</dt><dd class="val" id="out-pa">—</dd></div>
+              <div><dt class="lbl">ISA temperature</dt><dd class="val" id="out-isa">—</dd></div>
+              <div><dt class="lbl">ISA deviation</dt><dd class="val" id="out-dev">—</dd></div>
+              <div><dt class="lbl">QNH</dt><dd class="val" id="out-qnh">—</dd></div>
+            </dl>
+          </section>
+          <section class="card panel is-active" style="display:block">
+            <h2>Field conditions</h2>
+            <p class="panel-help">Enter the field elevation in feet, QNH in hectopascals and the outside air temperature in degrees Celsius. The example uses VIDP at 777 ft.</p>
+            <div class="fields">
+              <div class="field">
+                <label for="elevation">Field elevation <span class="unit-hint">ft</span></label>
+                <input id="elevation" inputmode="decimal" enterkeyhint="done" autocomplete="off" placeholder="777">
+              </div>
+              <div class="field">
+                <label for="qnh">QNH <span class="unit-hint">hPa</span></label>
+                <input id="qnh" inputmode="decimal" enterkeyhint="done" autocomplete="off" placeholder="1008">
+              </div>
+              <div class="field">
+                <label for="oat">Outside air temperature <span class="unit-hint">°C</span></label>
+                <input id="oat" inputmode="decimal" enterkeyhint="done" autocomplete="off" placeholder="38">
+              </div>
+            </div>
+          </section>
+          <details class="working" id="working">
+            <summary>Show working</summary>
+            <div class="working-body" id="working-body">
+              <p>Enter the values above to see the formula with your numbers.</p>
+            </div>
+          </details>
+        </div>
+        <aside class="side">
+          <div class="card">
+            <p class="kicker">How it is calculated</p>
+            <h2>Formulae used</h2>
+            <ul>
+              <li>Pressure altitude = elevation + (1013.25 − QNH) × (1000 ÷ 33.86389) ft.</li>
+              <li>ISA temperature = 15 − 2 × (pressure altitude ÷ 1000) °C.</li>
+              <li>ISA deviation = OAT − ISA.</li>
+              <li>Density altitude ≈ pressure altitude + 120 × (OAT − ISA) ft.</li>
+              <li>The VIDP example uses the published elevation of 777 ft.</li>
+            </ul>
+            <p class="disclaimer">For training/study only, not for real flight planning. This is the classroom rule of thumb, not AFM performance.</p>
+          </div>
+          <div class="card">
+            <p class="kicker">More tools</p>
+            <h2>Also on Pilot Journey</h2>
+            <ul>
+              <li><a href="/tools/unit-converter/">Aviation unit converter</a></li>
+              <li><a href="/tools/crosswind/">Crosswind component calculator</a></li>
+              <li><a href="/tools/wind-triangle/">Wind triangle (E6B) calculator</a></li>
+              <li><a href="/tools/tas-mach/">TAS, CAS and Mach calculator</a></li>
+              <li><a href="/tools/one-in-sixty/">1 in 60 rule calculator</a></li>
+              <li><a href="/tools/pet-pnr/">PET and PNR calculator</a></li>
+              <li><a href="/tools/descent-planner/">Descent planning calculator</a></li>
+              <li><a href="/tools/altimetry/">QNH, QFE and cold temperature calculator</a></li>
+              <li><a href="/tools/mass-balance/">Mass and balance (CG) calculator</a></li>
+              <li><a href="/tools/utc-ist-sunrise/">UTC/IST and sunrise/sunset calculator</a></li>
+              <li><a href="/tools/">All aviation tools</a></li>
+              <li><a href="https://quiz.pilotjourney.in/subjects/">Free DGCA question bank</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+
+      <div class="wrap">
+        <section class="card explainer" id="explainer">
+          <h2>How density altitude is estimated</h2>
+          <p>Density altitude is the pressure altitude corrected for temperature. It is the altitude in the International Standard Atmosphere at which the air would have the same density as the air around the aircraft. Pilots use it because a hot, high or low-pressure airfield behaves like a higher one: the take-off roll grows, climb rate falls and true airspeed for a given indicated airspeed is higher. The method on this page is the rule of thumb taught in many DGCA and FAA study courses, not a certified performance calculation.</p>
+          <p>Pressure altitude is field elevation plus a correction for QNH. This calculator uses 1000 feet for every 33.86389 hectopascals, which is the usual 1000 feet per inch of mercury method with the ICAO inch-to-hectopascal factor. Standard sea-level pressure is 1013.25 hectopascals, so when QNH is below standard the pressure altitude is above the elevation. ISA temperature is 15 degrees Celsius at sea level, falling two degrees for every thousand feet of pressure altitude. Density altitude is then pressure altitude plus 120 feet for every degree the outside air is warmer than ISA, or minus 120 feet for every degree it is colder.</p>
+          <p>The worked example uses the published elevation of Delhi’s Indira Gandhi International Airport, 777 feet, with a slightly below-standard QNH of 1008 hectopascals and a hot afternoon temperature of 38 degrees Celsius. Those inputs are typical of a pre-monsoon day at VIDP and give a density altitude well above the field elevation. Always check the aircraft flight manual for real performance figures.</p>
+        </section>
+        <nav class="page-links" aria-label="Study links">
+          <a href="https://quiz.pilotjourney.in/subjects/">Practise in the free DGCA question bank</a>
+          <a href="https://www.pilotjourney.in/guidance">Get free CPL career guidance</a>
+        </nav>
+      </div>
+      <div class="wrap">
+        <div class="card cta-band">
+          <div>
+            <p class="kicker">Career guidance</p>
+            <h2>Planning a CPL in India?</h2>
+            <p>Get a free, plain-English path from where you are now to a computer number, medicals and flying training.</p>
+          </div>
+          <a class="btn btn-primary" href="https://www.pilotjourney.in/guidance">Get free pilot career guidance</a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-grid">
+        <div>
+          <p class="kicker">Pilot Journey</p>
+          <p>Free DGCA study tools and practice questions for aspiring pilots. Independent study project. Not affiliated with DGCA, Airbus, Boeing or any airline.</p>
+          <p class="legal-note">Study material only.<br>Always check current official documents.</p>
+        </div>
+        <div>
+          <p class="kicker">Study</p>
+          <ul>
+            <li><a href="/subjects/">Question bank</a></li>
+            <li><a href="/type-rating/">Type rating: A320 / B737</a></li>
+            <li><a href="/tools/">Aviation tools</a></li>
+            <li><a href="/daily/">Daily check</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="kicker">About</p>
+          <ul>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a href="https://www.pilotjourney.in/">Read the Pilot Journey blog</a></li>
+            <li><a href="https://altitude.pilotjourney.in/">Pilot Journey Altitude store</a></li>
+            <li><a href="https://www.pilotjourney.in/guidance">Free guidance page</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bar">
+        <div class="wrap footer-bar-inner">
+          <span>© 2026 Pilot Journey · Study material only</span>
+          <span>Free study material for pilots. Always check current DGCA and manufacturer documents.</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="density-altitude.js"></script>
+  <script>
+    (function () {
+      var D = window.DensityAltitude;
+      if (!D) return;
+
+      var elevation = document.getElementById('elevation');
+      var qnh = document.getElementById('qnh');
+      var oat = document.getElementById('oat');
+      var card = document.getElementById('result-card');
+      var number = document.getElementById('result-number');
+      var unit = document.getElementById('result-unit');
+      var sub = document.getElementById('result-sub');
+      var outPa = document.getElementById('out-pa');
+      var outIsa = document.getElementById('out-isa');
+      var outDev = document.getElementById('out-dev');
+      var outQnh = document.getElementById('out-qnh');
+      var working = document.getElementById('working-body');
+
+      function empty() {
+        card.classList.add('result-empty');
+        number.textContent = '—';
+        unit.textContent = 'ft DA';
+        sub.textContent = 'Enter elevation, QNH and OAT to estimate density altitude.';
+        outPa.textContent = '—';
+        outIsa.textContent = '—';
+        outDev.textContent = '—';
+        outQnh.textContent = '—';
+        working.innerHTML = '<p>Enter the values above to see the formula with your numbers.</p>';
+      }
+
+      function describe(r) {
+        var delta = Number((D.STD_HPA - r.qnhHpa).toFixed(2));
+        var steps = [];
+        steps.push('Pressure altitude = elevation + (1013.25 − QNH) × (1000 ÷ 33.86389) = <code>' +
+          r.elevationFt + ' + (' + D.STD_HPA + ' − ' + r.qnhHpa + ') × ' +
+          Number(D.FT_PER_HPA.toFixed(4)) + ' = ' + D.formatFt(r.pa) + ' ft</code>.');
+        steps.push('ISA temperature = 15 − 2 × (PA ÷ 1000) = <code>15 − 2 × (' +
+          D.formatFt(r.pa) + ' ÷ 1000) = ' + D.formatTemp(r.isa) + ' °C</code>.');
+        steps.push('ISA deviation = OAT − ISA = <code>' +
+          D.formatTemp(r.oatC) + ' − ' + D.formatTemp(r.isa) + ' = ' +
+          D.formatTemp(r.dev) + ' °C</code>.');
+        steps.push('Density altitude ≈ PA + 120 × (OAT − ISA) = <code>' +
+          D.formatFt(r.pa) + ' + 120 × (' + D.formatTemp(r.dev) + ') = ' +
+          D.formatFt(r.da) + ' ft</code>.');
+        return '<ol>' + steps.map(function (s) { return '<li>' + s + '</li>'; }).join('') + '</ol>';
+      }
+
+      function render() {
+        var elev = D.parseInput(elevation.value);
+        var q = D.parseInput(qnh.value);
+        var t = D.parseInput(oat.value);
+        if (elev === null || q === null || t === null) { empty(); return; }
+        var r = D.calculate(elev, q, t);
+        if (!r) { empty(); return; }
+        card.classList.remove('result-empty');
+        number.textContent = D.formatFt(r.da);
+        unit.textContent = 'ft DA';
+        var vs = r.da >= r.pa ? 'above' : 'below';
+        sub.textContent = 'Pressure altitude ' + D.formatFt(r.pa) + ' ft, ISA ' +
+          D.formatTemp(r.isa) + ' °C, deviation ' + D.formatTemp(r.dev) + ' °C. DA is ' +
+          vs + ' PA.';
+        outPa.textContent = D.formatFt(r.pa) + ' ft';
+        outIsa.textContent = D.formatTemp(r.isa) + ' °C';
+        outDev.textContent = (r.dev >= 0 ? '+' : '') + D.formatTemp(r.dev) + ' °C';
+        outQnh.textContent = r.qnhHpa + ' hPa (' + Number(r.qnhInHg.toFixed(2)) + ' inHg)';
+        working.innerHTML = describe(r);
+      }
+
+      [elevation, qnh, oat].forEach(function (node) {
+        node.addEventListener('input', render);
+      });
+
+      document.getElementById('try-example').addEventListener('click', function () {
+        var ex = D.EXAMPLE;
+        elevation.value = ex.elevation;
+        qnh.value = ex.qnh;
+        oat.value = ex.oat;
+        render();
+        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      empty();
+    })();
+  </script>
+</body>
+</html>

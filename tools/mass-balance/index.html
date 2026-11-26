@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mass and Balance Calculator: CG Position, Moments and Fuel Mass | Pilot Journey</title>
+  <meta name="description" content="Free aircraft CG calculator for DGCA mass and balance: total mass, moments, centre of gravity, %MAC and fuel mass from litres or gallons and specific gravity, with working.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://quiz.pilotjourney.in/tools/mass-balance/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pilot Journey">
+  <meta property="og:url" content="https://quiz.pilotjourney.in/tools/mass-balance/">
+  <meta property="og:title" content="Mass and Balance Calculator: CG Position, Moments and Fuel Mass | Pilot Journey">
+  <meta property="og:description" content="Free aircraft CG calculator for DGCA mass and balance: total mass, moments, centre of gravity, %MAC and fuel mass from litres or gallons and specific gravity, with working.">
+  <meta property="og:image" content="https://quiz.pilotjourney.in/pj-logo-512.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Mass and Balance Calculator: CG Position, Moments and Fuel Mass | Pilot Journey">
+  <meta name="twitter:description" content="Free aircraft CG calculator for DGCA mass and balance: total mass, moments, centre of gravity, %MAC and fuel mass from litres or gallons and specific gravity, with working.">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Mass and balance calculator: CG position and fuel mass", "url": "https://quiz.pilotjourney.in/tools/mass-balance/", "applicationCategory": "EducationalApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"}, "publisher": {"@type": "Organization", "name": "Pilot Journey", "url": "https://quiz.pilotjourney.in/"}, "description": "Free aircraft CG calculator for DGCA mass and balance: total mass, moments, centre of gravity, %MAC and fuel mass from litres or gallons and specific gravity, with working."}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Pilot Journey Quiz", "item": "https://quiz.pilotjourney.in/"}, {"@type": "ListItem", "position": 2, "name": "Aviation tools", "item": "https://quiz.pilotjourney.in/tools/"}, {"@type": "ListItem", "position": 3, "name": "Mass and balance (CG) calculator", "item": "https://quiz.pilotjourney.in/tools/mass-balance/"}]}]}</script>
+</head>
+<body class="hx">
+  <div class="page">
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="accent-bar" aria-hidden="true"></div>
+    <div class="top-strip">
+      <div class="wrap top-strip-inner">
+        <span><span class="dot" aria-hidden="true"></span>Free study tools · no account needed</span>
+        <span class="hide-sm">For study only · always check official documents</span>
+      </div>
+    </div>
+    <header class="site-header">
+      <div class="wrap site-header-inner">
+        <a class="brand" href="/" aria-label="Pilot Journey home">
+          <img src="../assets/pj-logo.png" alt="" width="40" height="40">
+          <span>
+            <span class="brand-name">Pilot Journey</span>
+            <span class="brand-tag">DGCA · ATPL · A320</span>
+          </span>
+        </a>
+        <nav class="nav" aria-label="Main navigation">
+          <a href="/subjects/">Question bank</a>
+          <a href="/type-rating/">Type rating</a>
+          <a href="/daily/">Daily check</a>
+          <a href="/tools/" aria-current="page">Tools</a>
+          <a href="/faq/">FAQ</a>
+        </nav>
+        <a class="btn btn-primary header-cta" href="/subjects/">Start practising</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <header class="hero">
+        <div class="wrap">
+          <nav aria-label="Breadcrumb">
+            <ol class="crumbs">
+              <li><a href="/">Quiz home</a></li>
+              <li><a href="/tools/">Aviation tools</a></li>
+              <li aria-current="page">Mass and balance (CG) calculator</li>
+            </ol>
+          </nav>
+          <p class="kicker">Free aviation calculator</p>
+          <h1 class="display-lg">Mass and balance calculator: CG position and fuel mass</h1>
+          <p class="lede">Enter each mass and its arm. You get the moments, total mass and CG position, a check against your CG limits and MTOM, %MAC if you give LEMAC and MAC, and fuel mass from volume and specific gravity.</p>
+          <p class="study-note">For training/study only, not for real flight planning.</p>
+          <noscript>
+            <p class="noscript">This calculator needs JavaScript in your browser to run the calculations. The formulae and a worked example are still on this page below.</p>
+          </noscript>
+        </div>
+      </header>
+
+      <div class="wrap tool-layout">
+        <div>
+          <section class="card calc-card" id="calc">
+            <h2>Loading inputs</h2>
+            <p class="panel-help">Arms are distances from the aircraft's datum (aft positive). Use one arm unit throughout; the CG comes out in the same unit.</p>
+            <div class="fields">
+              <div class="field"><label for="mu">Mass unit</label><select id="mu"><option value="kg">kg</option><option value="lb">lb</option></select></div>
+              <div class="field"><label for="au">Arm unit</label><select id="au"><option value="m">m</option><option value="in">in</option><option value="mm">mm</option><option value="cm">cm</option></select></div>
+            </div>
+            <div class="tbl-wrap" style="margin-top:.9rem">
+            <table class="tbl" id="loadtbl">
+              <thead><tr><th>Item</th><th>Mass</th><th>Arm</th><th>Moment</th></tr></thead>
+              <tbody>
+                <tr><td>Basic empty</td><td><input id="m0" inputmode="decimal" value="760" aria-label="Basic empty mass"></td><td><input id="a0" inputmode="decimal" value="1.00" aria-label="Basic empty arm"></td><td class="num" id="mo0">–</td></tr>
+                <tr><td>Front seats</td><td><input id="m1" inputmode="decimal" value="150" aria-label="Front seats mass"></td><td><input id="a1" inputmode="decimal" value="0.94" aria-label="Front seats arm"></td><td class="num" id="mo1">–</td></tr>
+                <tr><td>Rear seats</td><td><input id="m2" inputmode="decimal" value="0" aria-label="Rear seats mass"></td><td><input id="a2" inputmode="decimal" value="1.85" aria-label="Rear seats arm"></td><td class="num" id="mo2">–</td></tr>
+                <tr><td>Baggage</td><td><input id="m3" inputmode="decimal" value="10" aria-label="Baggage mass"></td><td><input id="a3" inputmode="decimal" value="2.41" aria-label="Baggage arm"></td><td class="num" id="mo3">–</td></tr>
+                <tr><td>Other</td><td><input id="m4" inputmode="decimal" placeholder="0" aria-label="Other mass"></td><td><input id="a4" inputmode="decimal" placeholder="arm" aria-label="Other arm"></td><td class="num" id="mo4">–</td></tr>
+                <tr><td>Fuel</td><td class="num" id="m5show">–</td><td><input id="a5" inputmode="decimal" value="1.22" aria-label="Fuel arm"></td><td class="num" id="mo5">–</td></tr>
+              </tbody>
+            </table>
+            </div>
+            <p class="subhead">Fuel</p>
+            <div class="fields">
+              <div class="field"><label for="fv">Fuel volume</label><div class="inp"><input id="fv" inputmode="decimal" value="150"><select id="fvu" aria-label="Volume unit"><option value="L">litres</option><option value="USG">US gal</option><option value="IG">Imp gal</option></select></div></div>
+              <div class="field"><label for="sg">Specific gravity</label><div class="inp"><input id="sg" inputmode="decimal" value="0.72"><select id="sgp" aria-label="Fuel type preset"><option value="">preset…</option><option value="0.72">AVGAS 100LL (0.72)</option><option value="0.80">Jet A-1 (0.80)</option><option value="0.785">Jet A-1 light (0.785)</option></select></div></div>
+              <div class="field"><label for="fb">Fuel burnt before landing (same volume unit, optional)</label><input id="fb" inputmode="decimal" placeholder="e.g. 40"></div>
+            </div>
+            <p class="subhead">Limits (optional)</p>
+            <div class="fields">
+              <div class="field"><label for="mtom">Max take-off mass</label><input id="mtom" inputmode="decimal" value="1157"></div>
+              <div class="field"><label for="fwd">Forward CG limit (arm)</label><input id="fwd" inputmode="decimal" value="0.89"></div>
+              <div class="field"><label for="aft">Aft CG limit (arm)</label><input id="aft" inputmode="decimal" value="1.20"></div>
+              <div class="field"><label for="lemac">LEMAC (arm, for %MAC)</label><input id="lemac" inputmode="decimal" placeholder="optional"></div>
+              <div class="field"><label for="mac">MAC length</label><input id="mac" inputmode="decimal" placeholder="optional"></div>
+            </div>
+
+            <div class="actions"><button type="button" class="btn btn-primary" id="exbtn">Try an example</button><button type="button" class="btn btn-ghost" id="clearbtn">Clear</button><p class="exnote" id="exnote"></p></div>
+          </section>
+
+          <section class="card result-card" id="result" aria-live="polite">
+            <span class="kicker" id="rlabel">Centre of gravity (CG)</span>
+            <div class="result-big" id="rbig">–</div>
+            <div class="result-sub" id="rsub"></div>
+            <div class="result-grid" id="rgrid"></div>
+            <div class="result-warn" id="rwarn"></div>
+          </section>
+
+          <details class="card working" open><summary>Show working</summary><div class="steps" id="steps"></div></details>
+
+          <section class="card prose">
+<h2>How a CG calculation works</h2>
+<p>Every item on board, from the empty aircraft to the fuel, has a mass and an <strong>arm</strong>: its distance from a reference line called the datum. Multiply the two and you get its <strong>moment</strong>, the turning effect it has about the datum. Add up all the masses and all the moments, then divide total moment by total mass. The result is the <strong>centre of gravity (CG)</strong>, the single point where the whole aircraft balances.</p>
+<p>The CG must stay between the forward and aft limits in the flight manual. Too far forward and you may not be able to raise the nose; too far aft and the aircraft becomes unstable and hard to recover from a stall. Fuel burns off in flight, so check the landing CG as well as the take-off CG.</p>
+<p>Fuel is usually measured by volume, so convert it to mass with specific gravity (SG): litres × SG gives kilograms. AVGAS 100LL is about 0.72 and Jet A-1 about 0.80. Larger aircraft express CG as a percentage of the mean aerodynamic chord (%MAC).</p>
+<div class="formula">Moment = mass × arm
+CG = Σ moments ÷ Σ masses
+Fuel mass (kg) = volume (L) × SG   (1 US gal = 3.785 L, 1 Imp gal = 4.546 L)
+%MAC = (CG − LEMAC) ÷ MAC × 100</div>
+<h3>Worked example</h3>
+<p>Basic empty mass 760 kg at 1.00 m, two people 150 kg at 0.94 m, 10 kg of baggage at 2.41 m and 150 L of AVGAS (150 × 0.72 = 108 kg) at 1.22 m. Moments: 760.0 + 141.0 + 24.1 + 131.76 = 1,056.86 kg·m. Total mass 1,028 kg. CG = 1,056.86 ÷ 1,028 = <strong>1.028 m</strong> aft of the datum.</p>
+<p><small>Sources: FAA Aircraft Weight and Balance Handbook (FAA-H-8083-1B); FAA Pilot's Handbook of Aeronautical Knowledge (FAA-H-8083-25), Chapter 10 Weight and Balance; standard ATPL/DGCA Mass &amp; Balance texts for %MAC.</small></p>
+
+          </section>
+        </div>
+
+        <aside class="side">
+          <div class="card">
+            <p class="kicker">Practice</p>
+            <h2>Test yourself</h2>
+            <p>CG, moments and %MAC questions are part of the DGCA Mass &amp; Balance paper.</p>
+            <p><a class="btn btn-primary" href="https://quiz.pilotjourney.in/subjects/mass-and-balance/">Practice DGCA Mass &amp; Balance questions</a></p>
+            <p class="disclaimer">For training/study only, not for real flight planning. This is not a certified source for flight operations. Cross-check figures with official documents, the current AIP and the aircraft AFM.</p>
+          </div>
+          <div class="card">
+            <p class="kicker">More tools</p>
+            <h2>Also on Pilot Journey</h2>
+            <ul>
+              <li><a href="/tools/crosswind/">Crosswind component calculator</a></li>
+              <li><a href="/tools/wind-triangle/">Wind triangle (E6B) calculator</a></li>
+              <li><a href="/tools/density-altitude/">Pressure and density altitude calculator</a></li>
+              <li><a href="/tools/unit-converter/">Aviation unit converter</a></li>
+              <li><a href="/tools/tas-mach/">TAS, CAS and Mach calculator</a></li>
+              <li><a href="/tools/one-in-sixty/">1 in 60 rule calculator</a></li>
+              <li><a href="/tools/pet-pnr/">PET and PNR calculator</a></li>
+              <li><a href="/tools/descent-planner/">Descent planning calculator</a></li>
+              <li><a href="/tools/altimetry/">QNH, QFE and cold temperature calculator</a></li>
+              <li><a href="/tools/utc-ist-sunrise/">UTC/IST and sunrise/sunset calculator</a></li>
+              <li><a href="/tools/">All aviation tools</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+
+      <div class="wrap">
+        <div class="card cta-band">
+          <div>
+            <p class="kicker">Career guidance</p>
+            <h2>Planning a CPL in India?</h2>
+            <p>Get a free, plain-English path from where you are now to a computer number, medicals and flying training.</p>
+          </div>
+          <a class="btn btn-primary" href="https://www.pilotjourney.in/guidance">Get free pilot career guidance</a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-grid">
+        <div>
+          <p class="kicker">Pilot Journey</p>
+          <p>Free DGCA study tools and practice questions for aspiring pilots. Independent study project. Not affiliated with DGCA, Airbus, Boeing or any airline.</p>
+          <p class="legal-note">Study material only.<br>Always check current official documents.</p>
+        </div>
+        <div>
+          <p class="kicker">Study</p>
+          <ul>
+            <li><a href="/subjects/">Question bank</a></li>
+            <li><a href="/type-rating/">Type rating: A320 / B737</a></li>
+            <li><a href="/tools/">Aviation tools</a></li>
+            <li><a href="/daily/">Daily check</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="kicker">About</p>
+          <ul>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a href="https://www.pilotjourney.in/">Read the Pilot Journey blog</a></li>
+            <li><a href="https://altitude.pilotjourney.in/">Pilot Journey Altitude store</a></li>
+            <li><a href="https://www.pilotjourney.in/guidance">Free guidance page</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bar">
+        <div class="wrap footer-bar-inner">
+          <span>© 2026 Pilot Journey · Study material only</span>
+          <span>Free study material for pilots. Always check current DGCA and manufacturer documents.</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script id="calc-js">
+// Mass and balance: moment = mass x arm; CG = total moment / total mass; %MAC = (CG - LEMAC) / MAC x 100.
+// Fuel mass = volume (L) x specific gravity (kg/L, since water = 1 kg/L).
+var L_PER = { L: 1, USG: 3.785411784, IG: 4.54609 };
+var LB_PER_KG = 2.2046226218;
+function fuelMass(vol, unit, sg, massUnit){
+  var kg = vol * L_PER[unit] * sg;
+  return massUnit === 'lb' ? kg * LB_PER_KG : kg;
+}
+// items: [{m, a}], lim: {mtom, fwd, aft, lemac, mac}
+function massBalance(items, lim){
+  var tm = 0, tmo = 0, rows = items.map(function(it){ var mo = it.m * it.a; tm += it.m; tmo += mo; return mo; });
+  var cg = tm > 0 ? tmo / tm : NaN;
+  var r = { moments: rows, totalMass: tm, totalMoment: tmo, cg: cg };
+  lim = lim || {};
+  if (isFinite(lim.lemac) && lim.mac > 0) r.pctMac = (cg - lim.lemac) / lim.mac * 100;
+  if (isFinite(lim.mtom)) r.massOk = tm <= lim.mtom + 1e-9;
+  if (isFinite(lim.fwd) && isFinite(lim.aft)) r.cgOk = cg >= lim.fwd - 1e-9 && cg <= lim.aft + 1e-9;
+  return r;
+}
+
+  </script>
+  <script>
+
+const $=id=>document.getElementById(id);
+function v(id){const e=$(id);if(!e)return NaN;const x=parseFloat(String(e.value).trim().replace(',','.'));return isFinite(x)?x:NaN}
+function fx(x,d){d=d||0;return isFinite(x)?Number(x).toLocaleString('en-IN',{minimumFractionDigits:d,maximumFractionDigits:d}):'–'}
+function kv(k,val,cls){return '<div class="kv '+(cls||'')+'"><div class="k">'+k+'</div><div class="v">'+val+'</div></div>'}
+function setVals(o){for(const k in o){const e=$(k);if(e){e.value=o[k]}}}
+function bindAll(fn){document.querySelectorAll('#calc input,#calc select').forEach(e=>{e.addEventListener('input',fn);e.addEventListener('change',fn)});}
+function segInit(id,fn){const g=$(id);g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-selected','false'));b.setAttribute('aria-selected','true');fn()}));}
+function segVal(id){const b=$(id).querySelector('button[aria-selected=true]');return b?b.dataset.v:null}
+function segSet(id,val){$(id).querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.v===val?'true':'false'))}
+function show(big,unit,sub,grid,warn,steps){$('rbig').innerHTML=big+(unit?' <small>'+unit+'</small>':'');$('rsub').innerHTML=sub||'';$('rgrid').innerHTML=grid||'';$('rwarn').innerHTML=warn||'';$('steps').textContent=steps||''}
+
+const N=x=>isFinite(x)?x:0;
+function render(){
+  const mu=$('mu').value,au=$('au').value;let sg=v('sg');const fv=v('fv'),fvu=$('fvu').value,fb=v('fb');
+  const fm=isFinite(fv)&&isFinite(sg)?fuelMass(fv,fvu,sg,mu):0;$('m5show').textContent=fx(fm,1);
+  const items=[0,1,2,3,4].map(i=>({m:N(v('m'+i)),a:N(v('a'+i))}));items.push({m:fm,a:N(v('a5'))});
+  const lim={mtom:v('mtom'),fwd:v('fwd'),aft:v('aft'),lemac:v('lemac'),mac:v('mac')};
+  const r=massBalance(items,lim);
+  items.forEach((it,i)=>$('mo'+i).textContent=it.m?fx(r.moments[i],au==='mm'?0:2):'–');
+  if(!(r.totalMass>0)){show('–','','Enter at least one mass and arm','','');return}
+  const mom=mu+'·'+au,dec=au==='m'?3:au==='mm'?0:2;
+  let g=kv('Total mass',fx(r.totalMass,1)+' '+mu)+kv('Total moment',fx(r.totalMoment,2)+' '+mom)+kv('Fuel mass',fx(fm,1)+' '+mu);
+  if(r.pctMac!==undefined)g+=kv('CG in %MAC',fx(r.pctMac,1)+' %');
+  if(r.massOk!==undefined)g+=kv('Mass vs MTOM ('+fx(lim.mtom,0)+')',r.massOk?'Within':'OVER by '+fx(r.totalMass-lim.mtom,1),r.massOk?'good':'bad');
+  if(r.cgOk!==undefined)g+=kv('CG vs limits '+fx(lim.fwd,dec)+'–'+fx(lim.aft,dec),r.cgOk?'Within':(r.cg<lim.fwd?'FORWARD of limit':'AFT of limit'),r.cgOk?'good':'bad');
+  const names=['Basic empty','Front seats','Rear seats','Baggage','Other','Fuel'];
+  let st='1) Moment = mass × arm for each item\n'+items.map((it,i)=>it.m?`   ${names[i].padEnd(12)} ${fx(it.m,1).padStart(8)} × ${fx(it.a,3).padStart(6)} = ${fx(r.moments[i],2)}`:'').filter(Boolean).join('\n');
+  st+=`\n\n2) Fuel mass = volume × ${fvu==='L'?'':(fvu==='USG'?'3.7854 L/US gal × ':'4.5461 L/Imp gal × ')}SG${mu==='lb'?' × 2.2046 lb/kg':''}\n   = ${fx(fv,1)} ${fvu==='L'?'L':fvu==='USG'?'US gal':'Imp gal'} → ${fx(N(fv)*L_PER[fvu],1)} L × ${fx(sg,3)} = ${fx(fm,1)} ${mu}`;
+  st+=`\n\n3) Totals\n   Total mass = ${fx(r.totalMass,1)} ${mu}\n   Total moment = ${fx(r.totalMoment,2)} ${mom}\n\n4) CG = total moment ÷ total mass = ${fx(r.totalMoment,2)} ÷ ${fx(r.totalMass,1)} = ${fx(r.cg,dec+1)} ${au} aft of datum`;
+  if(r.pctMac!==undefined)st+=`\n\n5) %MAC = (CG − LEMAC) ÷ MAC × 100 = (${fx(r.cg,dec+1)} − ${fx(lim.lemac,dec)}) ÷ ${fx(lim.mac,dec)} × 100 = ${fx(r.pctMac,2)} %`;
+  let warn='';if(r.massOk===false)warn+='Over the maximum take-off mass. ';if(r.cgOk===false)warn+='CG outside the limits you entered.';
+  if(isFinite(fb)&&fb>0){const bm=fuelMass(fb,fvu,sg,mu);const it2=items.map((it,i)=>i===5?{m:Math.max(0,fm-bm),a:it.a}:it);const r2=massBalance(it2,lim);
+    g+=kv('Landing mass',fx(r2.totalMass,1)+' '+mu)+kv('Landing CG',fx(r2.cg,dec+1)+' '+au+(r2.cgOk===false?' (outside)':''),r2.cgOk===false?'bad':'');
+    st+=`\n\n6) After burning ${fx(fb,1)} (${fx(bm,1)} ${mu}) of fuel at arm ${fx(items[5].a,3)}:\n   mass = ${fx(r.totalMass,1)} − ${fx(bm,1)} = ${fx(r2.totalMass,1)} ${mu}\n   moment = ${fx(r.totalMoment,2)} − ${fx(bm*items[5].a,2)} = ${fx(r2.totalMoment,2)}\n   CG = ${fx(r2.cg,dec+1)} ${au}`;}
+  show(fx(r.cg,dec),au,'aft of datum · total mass '+fx(r.totalMass,1)+' '+mu,g,warn,st);
+}
+bindAll(render);
+$('sgp').addEventListener('change',()=>{if($('sgp').value){$('sg').value=$('sgp').value;render()}});
+$('exbtn').addEventListener('click',()=>{setVals({mu:'kg',au:'m',m0:762,a0:1.016,m1:155,a1:0.94,m2:0,a2:1.854,m3:10,a3:2.413,m4:'',a4:'',a5:1.219,fv:150,fvu:'L',sg:0.72,sgp:'0.72',fb:40,mtom:1157,fwd:0.97,aft:1.201,lemac:'',mac:''});$('exnote').textContent='C172-type trainer on a local training sortie: instructor and student 155 kg, 10 kg baggage, 150 L AVGAS. Masses and the forward limit are illustrative; arms follow typical C172 POH stations converted to metres. Always use the aircraft\u2019s own weight and balance report.';render()});
+$('clearbtn').addEventListener('click',()=>{setVals({m0:'',a0:'',m1:'',a1:'',m2:'',a2:'',m3:'',a3:'',m4:'',a4:'',a5:'',fv:'',fb:'',mtom:'',fwd:'',aft:'',lemac:'',mac:''});$('exnote').textContent='';render()});
+render();
+
+  </script>
+</body>
+</html>

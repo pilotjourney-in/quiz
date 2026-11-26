@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>QNH to QFE Calculator with Cold Temperature Correction (ICAO) | Pilot Journey</title>
+  <meta name="description" content="Free QNH to QFE calculator: convert QNH, QFE and QNE (flight level) for any aerodrome elevation and apply the ICAO PANS-OPS cold temperature altitude correction, with step-by-step working.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://quiz.pilotjourney.in/tools/altimetry/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pilot Journey">
+  <meta property="og:url" content="https://quiz.pilotjourney.in/tools/altimetry/">
+  <meta property="og:title" content="QNH to QFE Calculator with Cold Temperature Correction (ICAO) | Pilot Journey">
+  <meta property="og:description" content="Free QNH to QFE calculator: convert QNH, QFE and QNE (flight level) for any aerodrome elevation and apply the ICAO PANS-OPS cold temperature altitude correction, with step-by-step working.">
+  <meta property="og:image" content="https://quiz.pilotjourney.in/pj-logo-512.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="QNH to QFE Calculator with Cold Temperature Correction (ICAO) | Pilot Journey">
+  <meta name="twitter:description" content="Free QNH to QFE calculator: convert QNH, QFE and QNE (flight level) for any aerodrome elevation and apply the ICAO PANS-OPS cold temperature altitude correction, with step-by-step working.">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebApplication", "name": "Altimetry calculator: QNH, QFE, QNE and cold temperature correction", "url": "https://quiz.pilotjourney.in/tools/altimetry/", "applicationCategory": "EducationalApplication", "operatingSystem": "Any", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "INR"}, "publisher": {"@type": "Organization", "name": "Pilot Journey", "url": "https://quiz.pilotjourney.in/"}, "description": "Free QNH to QFE calculator: convert QNH, QFE and QNE (flight level) for any aerodrome elevation and apply the ICAO PANS-OPS cold temperature altitude correction, with step-by-step working."}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Pilot Journey Quiz", "item": "https://quiz.pilotjourney.in/"}, {"@type": "ListItem", "position": 2, "name": "Aviation tools", "item": "https://quiz.pilotjourney.in/tools/"}, {"@type": "ListItem", "position": 3, "name": "QNH, QFE and cold temperature calculator", "item": "https://quiz.pilotjourney.in/tools/altimetry/"}]}]}</script>
+</head>
+<body class="hx">
+  <div class="page">
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="accent-bar" aria-hidden="true"></div>
+    <div class="top-strip">
+      <div class="wrap top-strip-inner">
+        <span><span class="dot" aria-hidden="true"></span>Free study tools · no account needed</span>
+        <span class="hide-sm">For study only · always check official documents</span>
+      </div>
+    </div>
+    <header class="site-header">
+      <div class="wrap site-header-inner">
+        <a class="brand" href="/" aria-label="Pilot Journey home">
+          <img src="../assets/pj-logo.png" alt="" width="40" height="40">
+          <span>
+            <span class="brand-name">Pilot Journey</span>
+            <span class="brand-tag">DGCA · ATPL · A320</span>
+          </span>
+        </a>
+        <nav class="nav" aria-label="Main navigation">
+          <a href="/subjects/">Question bank</a>
+          <a href="/type-rating/">Type rating</a>
+          <a href="/daily/">Daily check</a>
+          <a href="/tools/" aria-current="page">Tools</a>
+          <a href="/faq/">FAQ</a>
+        </nav>
+        <a class="btn btn-primary header-cta" href="/subjects/">Start practising</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <header class="hero">
+        <div class="wrap">
+          <nav aria-label="Breadcrumb">
+            <ol class="crumbs">
+              <li><a href="/">Quiz home</a></li>
+              <li><a href="/tools/">Aviation tools</a></li>
+              <li aria-current="page">QNH, QFE and cold temperature calculator</li>
+            </ol>
+          </nav>
+          <p class="kicker">Free aviation calculator</p>
+          <h1 class="display-lg">Altimetry calculator: QNH, QFE, QNE and cold temperature correction</h1>
+          <p class="lede">Enter the aerodrome elevation, QNH and temperature. You get QFE, the aerodrome pressure altitude, your height and flight level for any altimeter reading, and the ICAO cold temperature correction for the altitudes you plan to fly.</p>
+          <p class="study-note">For training/study only, not for real flight planning.</p>
+          <noscript>
+            <p class="noscript">This calculator needs JavaScript in your browser to run the calculations. The formulae and a worked example are still on this page below.</p>
+          </noscript>
+        </div>
+      </header>
+
+      <div class="wrap tool-layout">
+        <div>
+          <section class="card calc-card" id="calc">
+            <h2>Aerodrome and altimeter inputs</h2>
+            <p class="panel-help">QNH is the setting that makes the altimeter read aerodrome elevation on the ground. Cold temperature corrections are only added when it is colder than ISA.</p>
+            <div class="fields">
+              <div class="field"><label for="elev">Aerodrome elevation</label><div class="inp"><input id="elev" inputmode="decimal" value="777" autocomplete="off"><select id="elevu" aria-label="Elevation unit"><option value="ft">ft</option><option value="m">m</option></select></div></div>
+              <div class="field"><label for="qnh">QNH</label><div class="inp"><input id="qnh" inputmode="decimal" value="1008" autocomplete="off"><select id="qnhu" aria-label="Pressure unit"><option value="hpa">hPa</option><option value="inhg">inHg</option></select></div></div>
+              <div class="field"><label for="alt">Altimeter reading with QNH set (ft)</label><input id="alt" inputmode="decimal" value="4000" autocomplete="off"></div>
+              <div class="field"><label for="temp">Aerodrome temperature</label><div class="inp"><input id="temp" inputmode="decimal" value="15" autocomplete="off"><select id="tempu" aria-label="Temperature unit"><option value="c">°C</option><option value="f">°F</option></select></div></div>
+            </div>
+            <p class="subhead">Altitudes to correct for cold temperature (ft, on QNH)</p>
+            <div class="fields">
+              <div class="field"><label for="c1">Altitude 1</label><input id="c1" inputmode="decimal" value="3000" autocomplete="off"></div>
+              <div class="field"><label for="c2">Altitude 2</label><input id="c2" inputmode="decimal" value="2000" autocomplete="off"></div>
+              <div class="field"><label for="c3">Altitude 3</label><input id="c3" inputmode="decimal" placeholder="optional" autocomplete="off"></div>
+              <div class="field"><label for="c4">Altitude 4</label><input id="c4" inputmode="decimal" placeholder="optional" autocomplete="off"></div>
+            </div>
+
+            <div class="actions"><button type="button" class="btn btn-primary" id="exbtn">Try an example</button><button type="button" class="btn btn-ghost" id="clearbtn">Clear</button><p class="exnote" id="exnote"></p></div>
+          </section>
+
+          <section class="card result-card" id="result" aria-live="polite">
+            <span class="kicker" id="rlabel">QFE (aerodrome level pressure)</span>
+            <div class="result-big" id="rbig">–</div>
+            <div class="result-sub" id="rsub"></div>
+            <div class="result-grid" id="rgrid"></div>
+            <div class="result-warn" id="rwarn"></div>
+          </section>
+
+          <details class="card working" open><summary>Show working</summary><div class="steps" id="steps"></div></details>
+
+          <section class="card prose">
+<h2>QNH, QFE, QNE and why cold air matters</h2>
+<p>An altimeter is a barometer that turns pressure into height using the ISA. The number set in the subscale picks the zero point. With <strong>QNH</strong> set it shows altitude above mean sea level, so it reads the aerodrome elevation on the runway. With <strong>QFE</strong> set it shows height above the aerodrome and reads zero on the runway. With <strong>QNE</strong> (1013.25 hPa) it shows pressure altitude, which is what flight levels use above the transition altitude.</p>
+<p>Near sea level, 1 hPa is about 27 ft, which gives the quick exam rule: QFE ≈ QNH − elevation ÷ 27. The calculator also uses the full ISA formula, which matters at high aerodromes.</p>
+<p>The altimeter assumes ISA temperatures. In air colder than ISA, the pressure levels sit closer together, so you are <strong>lower than the altimeter shows</strong>. ICAO PANS-OPS has pilots add a correction to minimum altitudes when it is cold. The correction grows with height above the aerodrome and with how far below ISA it is.</p>
+<div class="formula">QFE = QNH × (1 − 6.8756×10⁻⁶ × elevation_ft)^5.2559   (≈ QNH − elevation/27)
+Cold correction = H × (15 − t0) ÷ (273 + t0 − 0.5 × 0.0019812 × (H + Hss))
+  H = height above aerodrome, Hss = aerodrome elevation,
+  t0 = aerodrome temp + 0.0019812 × elevation</div>
+<h3>Worked example</h3>
+<p>At a sea-level aerodrome at −10 °C (ISA −25 °C), a procedure altitude 1,000 ft above the aerodrome needs a correction of 1,000 × 25 ÷ (263 − 1) ≈ 95 ft. Rounded up to the next 10 ft, that is <strong>+100 ft</strong>, which matches the ICAO table. At Delhi (elevation 777 ft) with QNH 1008, QFE ≈ 1008 − 777 ÷ 27 ≈ 979 hPa.</p>
+<p><small>Sources: ICAO Doc 8168 PANS-OPS (altimeter corrections, cold temperature correction formula and table); ICAO Doc 7488 Manual of the ICAO Standard Atmosphere; EUROCONTROL Guidelines for Cold Temperature Corrections by ATS (2014) for the accurate method; FAA Aviation Weather Handbook (FAA-H-8083-28) on altimetry.</small></p>
+
+          </section>
+        </div>
+
+        <aside class="side">
+          <div class="card">
+            <p class="kicker">Practice</p>
+            <h2>Test yourself</h2>
+            <p>Altimeter settings and altimeter errors are tested in the DGCA Instruments paper.</p>
+            <p><a class="btn btn-primary" href="https://quiz.pilotjourney.in/subjects/instrumentation/">Practice DGCA Instruments questions</a></p>
+            <p class="disclaimer">For training/study only, not for real flight planning. This is not a certified source for flight operations. Cross-check figures with official documents, the current AIP and the aircraft AFM.</p>
+          </div>
+          <div class="card">
+            <p class="kicker">More tools</p>
+            <h2>Also on Pilot Journey</h2>
+            <ul>
+              <li><a href="/tools/crosswind/">Crosswind component calculator</a></li>
+              <li><a href="/tools/wind-triangle/">Wind triangle (E6B) calculator</a></li>
+              <li><a href="/tools/density-altitude/">Pressure and density altitude calculator</a></li>
+              <li><a href="/tools/unit-converter/">Aviation unit converter</a></li>
+              <li><a href="/tools/tas-mach/">TAS, CAS and Mach calculator</a></li>
+              <li><a href="/tools/one-in-sixty/">1 in 60 rule calculator</a></li>
+              <li><a href="/tools/pet-pnr/">PET and PNR calculator</a></li>
+              <li><a href="/tools/descent-planner/">Descent planning calculator</a></li>
+              <li><a href="/tools/mass-balance/">Mass and balance (CG) calculator</a></li>
+              <li><a href="/tools/utc-ist-sunrise/">UTC/IST and sunrise/sunset calculator</a></li>
+              <li><a href="/tools/">All aviation tools</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+
+      <div class="wrap">
+        <div class="card cta-band">
+          <div>
+            <p class="kicker">Career guidance</p>
+            <h2>Planning a CPL in India?</h2>
+            <p>Get a free, plain-English path from where you are now to a computer number, medicals and flying training.</p>
+          </div>
+          <a class="btn btn-primary" href="https://www.pilotjourney.in/guidance">Get free pilot career guidance</a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-grid">
+        <div>
+          <p class="kicker">Pilot Journey</p>
+          <p>Free DGCA study tools and practice questions for aspiring pilots. Independent study project. Not affiliated with DGCA, Airbus, Boeing or any airline.</p>
+          <p class="legal-note">Study material only.<br>Always check current official documents.</p>
+        </div>
+        <div>
+          <p class="kicker">Study</p>
+          <ul>
+            <li><a href="/subjects/">Question bank</a></li>
+            <li><a href="/type-rating/">Type rating: A320 / B737</a></li>
+            <li><a href="/tools/">Aviation tools</a></li>
+            <li><a href="/daily/">Daily check</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="kicker">About</p>
+          <ul>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a href="https://www.pilotjourney.in/">Read the Pilot Journey blog</a></li>
+            <li><a href="https://altitude.pilotjourney.in/">Pilot Journey Altitude store</a></li>
+            <li><a href="https://www.pilotjourney.in/guidance">Free guidance page</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bar">
+        <div class="wrap footer-bar-inner">
+          <span>© 2026 Pilot Journey · Study material only</span>
+          <span>Free study material for pilots. Always check current DGCA and manufacturer documents.</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script id="calc-js">
+// Altimetry - ICAO Standard Atmosphere (Doc 7488) troposphere, and ICAO PANS-OPS (Doc 8168) cold temperature correction.
+// Units: ft, hPa, degC.
+var K_FT = 6.8755856e-6, N_EXP = 5.2558797, L0_FT = 0.0019812; // ISA lapse 6.5 K/km = 0.0019812 K/ft
+// Pressure at an altimeter reading 'altFt' when the subscale is set to 'setting' hPa
+function pressureAt(altFt, setting){ return setting * Math.pow(1 - K_FT * altFt, N_EXP); }
+// Pressure altitude for a static pressure p (hPa)
+function pressureAlt(p){ return (1 - Math.pow(p / 1013.25, 1 / N_EXP)) / K_FT; }
+function altimetry(elevFt, qnh, altFt){
+  var qfe = pressureAt(elevFt, qnh);
+  var paAd = pressureAlt(qfe);
+  var r = { qfe: qfe, paAerodrome: paAd, qfeRule: qnh - elevFt / 27, paAdRule: elevFt + (1013.25 - qnh) * 27 };
+  if (isFinite(altFt)) {
+    var p = pressureAt(altFt, qnh), pa = pressureAlt(p);
+    r.height = altFt - elevFt; r.pa = pa; r.fl = pa / 100; r.paRule = altFt + (1013.25 - qnh) * 27; r.pAlt = p;
+  }
+  return r;
+}
+// ICAO Doc 8168 simplified formula. H = height above altimeter setting source (ft), tAd = aerodrome temp (C), elev = aerodrome elevation (ft)
+function coldSimplified(H, tAd, elev){
+  var t0 = tAd + L0_FT * elev; // aerodrome temperature adjusted to sea level
+  var c = H * (15 - t0) / (273 + t0 - 0.5 * L0_FT * (H + elev));
+  return c > 0 ? c : 0;
+}
+// Accurate method (ESDU 77022 / Doc 8168): error at pressure height dhP is (-dT/L0) ln(1 + L0 dhP/(T0 + L0 hPad)) with L0 = -0.0019812 K/ft.
+// The correction is the dhP whose true (geopotential) height equals H, found by iteration.
+function coldAccurate(H, tAd, elev){
+  var L = -L0_FT, hPad = elev, isaAd = 15 - L0_FT * hPad, dT = tAd - isaAd;
+  if (dT >= 0) return 0;
+  function trueHeight(dhP){ return dhP - (-dT / L) * Math.log(1 + L * dhP / (288.15 + L * hPad)); }
+  var x = H;
+  for (var i = 0; i < 50; i++) { var f = trueHeight(x) - H, d = (trueHeight(x + 0.01) - trueHeight(x - 0.01)) / 0.02; x = x - f / d; }
+  return x - H;
+}
+function roundUp10(x){ return Math.ceil(x / 10 - 1e-9) * 10; }
+// Rule of thumb in Doc 8168: add 4% of height per 10 C below ISA at the altimeter setting source
+function cold4pct(H, tAd, elev){ var dT = tAd - (15 - L0_FT * elev); return dT < 0 ? H * 0.04 * (-dT / 10) : 0; }
+function coldCorrections(alts, tAd, elev){
+  return alts.map(function(a){ var H = a - elev; if (!(H > 0)) return { alt: a, H: H, invalid: true };
+    var s = coldSimplified(H, tAd, elev); return { alt: a, H: H, simplified: s, table: roundUp10(s), accurate: coldAccurate(H, tAd, elev), rule4: cold4pct(H, tAd, elev), corrected: a + roundUp10(s) }; });
+}
+
+  </script>
+  <script>
+
+const $=id=>document.getElementById(id);
+function v(id){const e=$(id);if(!e)return NaN;const x=parseFloat(String(e.value).trim().replace(',','.'));return isFinite(x)?x:NaN}
+function fx(x,d){d=d||0;return isFinite(x)?Number(x).toLocaleString('en-IN',{minimumFractionDigits:d,maximumFractionDigits:d}):'–'}
+function kv(k,val,cls){return '<div class="kv '+(cls||'')+'"><div class="k">'+k+'</div><div class="v">'+val+'</div></div>'}
+function setVals(o){for(const k in o){const e=$(k);if(e){e.value=o[k]}}}
+function bindAll(fn){document.querySelectorAll('#calc input,#calc select').forEach(e=>{e.addEventListener('input',fn);e.addEventListener('change',fn)});}
+function segInit(id,fn){const g=$(id);g.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-selected','false'));b.setAttribute('aria-selected','true');fn()}));}
+function segVal(id){const b=$(id).querySelector('button[aria-selected=true]');return b?b.dataset.v:null}
+function segSet(id,val){$(id).querySelectorAll('button').forEach(b=>b.setAttribute('aria-selected',b.dataset.v===val?'true':'false'))}
+function show(big,unit,sub,grid,warn,steps){$('rbig').innerHTML=big+(unit?' <small>'+unit+'</small>':'');$('rsub').innerHTML=sub||'';$('rgrid').innerHTML=grid||'';$('rwarn').innerHTML=warn||'';$('steps').textContent=steps||''}
+
+function render(){
+  let e=v('elev');if($('elevu').value==='m')e/=0.3048;let q=v('qnh');if($('qnhu').value==='inhg')q*=33.86389;
+  let t=v('temp');if($('tempu').value==='f')t=(t-32)*5/9;const a=v('alt');
+  if(![e,q].every(isFinite)){show('–','','Enter aerodrome elevation and QNH','','');return}
+  if(q<870||q>1085){show('–','','QNH should be between 870 and 1085 hPa','','');return}
+  if(e<-1500||e>15000){show('–','','Elevation should be between −1,500 and 15,000 ft','','');return}
+  const r=altimetry(e,q,isFinite(a)?a:NaN);
+  let g=kv('QFE (exact ISA)',fx(r.qfe,1)+' hPa')+kv('QFE rule (27 ft/hPa)',fx(r.qfeRule,1)+' hPa','exact')+kv('Aerodrome pressure altitude',fx(r.paAerodrome,0)+' ft')+kv('Rule (27 ft/hPa)',fx(r.paAdRule,0)+' ft','exact');
+  let st=`1) QFE from QNH (ISA pressure–height relation)
+   QFE = QNH × (1 − 6.8756×10⁻⁶ × elevation)^5.2559
+       = ${fx(q,2)} × (1 − 6.8756×10⁻⁶ × ${fx(e,0)})^5.2559 = ${fx(r.qfe,2)} hPa
+   Rule of thumb: 1 hPa ≈ 27 ft near sea level → ${fx(q,1)} − ${fx(e,0)} ÷ 27 = ${fx(r.qfeRule,1)} hPa
+
+2) Aerodrome pressure altitude (altimeter reading with 1013 set on the ground)
+   = (1 − (QFE/1013.25)^0.19026) ÷ 6.8756×10⁻⁶ = ${fx(r.paAerodrome,0)} ft
+   Rule: elevation + (1013 − QNH) × 27 = ${fx(e,0)} + (${fx(1013.25-q,2)}) × 27 = ${fx(r.paAdRule,0)} ft`;
+  if(isFinite(a)){g+=kv('Height above aerodrome (QFE)',fx(r.height,0)+' ft')+kv('Flight level (QNE)','FL'+String(Math.round(r.fl)).padStart(3,'0')+' ('+fx(r.pa,0)+' ft)');
+    st+=`\n\n3) Altimeter reads ${fx(a,0)} ft on QNH
+   Height on QFE = ${fx(a,0)} − ${fx(e,0)} = ${fx(r.height,0)} ft
+   Static pressure there = ${fx(r.pAlt,1)} hPa → pressure altitude ${fx(r.pa,0)} ft = FL${String(Math.round(r.fl)).padStart(3,'0')} on 1013.25
+   Rule: ${fx(a,0)} + (1013 − ${fx(q,1)}) × 27 = ${fx(r.paRule,0)} ft`;}
+  let warn=e>2500?'At high aerodromes 1 hPa is more than 27 ft (about 32 ft at 5,000 ft), so the 27 ft/hPa rule drifts. Use the exact ISA value.':'';
+  if(isFinite(t)){
+    const alts=['c1','c2','c3','c4'].map(v).filter(isFinite);const isa=15-0.0019812*e,dT=t-isa;
+    st+=`\n\n4) Cold temperature correction (ICAO PANS-OPS, Doc 8168)
+   ISA at aerodrome = 15 − 1.98 × ${fx(e/1000,2)} = ${fx(isa,1)} °C, actual ${fx(t,1)} °C → ISA ${dT>=0?'+':''}${fx(dT,1)} °C`;
+    if(dT>=0) st+='\n   Not colder than ISA, so no correction is added (ICAO does not apply warm-temperature corrections to minimum altitudes).';
+    else{const cs=coldCorrections(alts,t,e);const t0=t+0.0019812*e;
+      st+=`\n   t0 (aerodrome temp adjusted to sea level) = ${fx(t,1)} + 0.0019812 × ${fx(e,0)} = ${fx(t0,2)} °C
+   Correction = H × (15 − t0) ÷ (273 + t0 − 0.5 × 0.0019812 × (H + elevation)), H = height above aerodrome`;
+      let rows='';cs.forEach((c,i)=>{if(c.invalid){rows+=`<tr><td class="num">${fx(c.alt,0)}</td><td colspan="4">below aerodrome</td></tr>`;return}
+        rows+=`<tr><td class="num">${fx(c.alt,0)}</td><td class="num">+${fx(c.simplified,0)}</td><td class="num">+${fx(c.accurate,0)}</td><td class="num">+${fx(c.rule4,0)}</td><td class="num" style="color:var(--accent)">${fx(c.corrected,0)}</td></tr>`;
+        st+=`\n   ${fx(c.alt,0)} ft: H = ${fx(c.H,0)} → ${fx(c.H,0)} × ${fx(15-t0,2)} ÷ ${fx(273+t0-0.5*0.0019812*(c.H+e),2)} = +${fx(c.simplified,1)} ft (round up → +${c.table}) · accurate +${fx(c.accurate,1)} · 4%/10°C +${fx(c.rule4,1)}`;});
+      if(rows)g+=`<div style="grid-column:1/-1" class="tbl-wrap"><table class="tbl"><thead><tr><th>Altitude</th><th>ICAO formula</th><th>Accurate</th><th>4% rule</th><th>Fly at</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+      st+='\n   Corrected altitude = published altitude + correction, rounded up to the next 10 ft as in the ICAO table.';
+      if(e>10000)warn+=' '+'The ICAO simplified formula is meant for aerodromes up to 10,000 ft; use the accurate column here.';}
+  }
+  show(fx(Math.floor(r.qfe),0),'hPa','exact '+fx(r.qfe,1)+' hPa · QNH '+fx(q,1)+' hPa · elevation '+fx(e,0)+' ft',g,warn,st);
+}
+bindAll(render);
+$('exbtn').addEventListener('click',()=>{setVals({elev:5429,elevu:'ft',qnh:1022,qnhu:'hpa',alt:9000,temp:-6,tempu:'c',c1:9000,c2:7500,c3:6500,c4:''});$('exnote').textContent='Winter morning at VISR (Srinagar, elevation 5,429 ft, runway 13/31): QNH 1022, −6 °C. Altitudes 9,000 / 7,500 / 6,500 ft are illustrative, not taken from a published procedure.';render()});
+$('clearbtn').addEventListener('click',()=>{setVals({elev:'',qnh:'',alt:'',temp:'',c1:'',c2:'',c3:'',c4:''});$('exnote').textContent='';render()});
+render();
+
+  </script>
+</body>
+</html>

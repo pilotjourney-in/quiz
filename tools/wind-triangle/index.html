@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wind Triangle Calculator: WCA, Heading &amp; Groundspeed | Pilot Journey</title>
+  <meta name="description" content="Free E6B wind triangle calculator for DGCA study. Enter true airspeed, true course, wind and variation to get wind correction angle, true heading, magnetic heading and groundspeed, plus optional time and fuel.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://quiz.pilotjourney.in/tools/wind-triangle/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Pilot Journey">
+  <meta property="og:url" content="https://quiz.pilotjourney.in/tools/wind-triangle/">
+  <meta property="og:title" content="Wind Triangle Calculator | Pilot Journey">
+  <meta property="og:description" content="Solve the E6B wind triangle for wind correction angle, true and magnetic heading, and groundspeed, with optional distance and fuel flow.">
+  <meta property="og:image" content="https://quiz.pilotjourney.in/pj-logo-512.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Wind Triangle Calculator | Pilot Journey">
+  <meta name="twitter:description" content="Solve the E6B wind triangle for wind correction angle, true and magnetic heading, and groundspeed, with optional distance and fuel flow.">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="../assets/tools.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "Wind triangle calculator",
+        "url": "https://quiz.pilotjourney.in/tools/wind-triangle/",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Any",
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
+        "description": "Solve the E6B wind triangle for wind correction angle, true and magnetic heading, and groundspeed, with optional distance and fuel flow.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Pilot Journey",
+          "url": "https://quiz.pilotjourney.in/"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Pilot Journey Quiz", "item": "https://quiz.pilotjourney.in/" },
+          { "@type": "ListItem", "position": 2, "name": "Aviation tools", "item": "https://quiz.pilotjourney.in/tools/" },
+          { "@type": "ListItem", "position": 3, "name": "Wind triangle calculator", "item": "https://quiz.pilotjourney.in/tools/wind-triangle/" }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <div class="page">
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="accent-bar" aria-hidden="true"></div>
+    <div class="top-strip">
+      <div class="wrap top-strip-inner">
+        <span><span class="dot" aria-hidden="true"></span>Free study tools · no account needed</span>
+        <span class="hide-sm">For study only · always check official documents</span>
+      </div>
+    </div>
+    <header class="site-header">
+      <div class="wrap site-header-inner">
+        <a class="brand" href="/" aria-label="Pilot Journey home">
+          <img src="/pj-logo.png" alt="" width="40" height="40">
+          <span>
+            <span class="brand-name">Pilot Journey</span>
+            <span class="brand-tag">DGCA · ATPL · A320</span>
+          </span>
+        </a>
+        <nav class="nav" aria-label="Main navigation">
+          <a href="/subjects/">Question bank</a>
+          <a href="/type-rating/">Type rating</a>
+          <a href="/daily/">Daily check</a>
+          <a href="/tools/" aria-current="page">Tools</a>
+          <a href="/faq/">FAQ</a>
+        </nav>
+        <a class="btn btn-primary header-cta" href="/subjects/">Start practising</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <header class="hero">
+        <div class="wrap">
+          <nav aria-label="Breadcrumb">
+            <ol class="crumbs">
+              <li><a href="/">Quiz home</a></li>
+              <li><a href="/tools/">Aviation tools</a></li>
+              <li aria-current="page">Wind triangle calculator</li>
+            </ol>
+          </nav>
+          <p class="kicker">Free aviation calculator</p>
+          <h1 class="display-lg">Wind triangle calculator</h1>
+          <p class="lede">Solve the E6B wind triangle for wind correction angle, true heading, magnetic heading and groundspeed. Add an optional distance and fuel flow to get time and fuel. The example is a westbound leg near VIDP at 120 kt, with wind 310°/20 and 1° E variation.</p>
+          <p class="study-line">For training/study only, not for real flight planning.</p>
+          <noscript>
+            <p class="noscript">This calculator needs JavaScript in your browser to run. The formulae are still written on this page below.</p>
+          </noscript>
+        </div>
+      </header>
+
+      <div class="wrap tool-layout">
+        <div>
+          <div class="actions">
+            <button type="button" class="btn btn-outline" id="try-example">Try an example</button>
+          </div>
+          <section class="card result-card result-empty" id="result-card" aria-live="polite">
+            <p class="kicker">Magnetic heading</p>
+            <div class="result-hero">
+              <span class="result-number" id="result-number">—</span>
+              <span class="result-unit" id="result-unit">° MH</span>
+            </div>
+            <p class="result-sub" id="result-sub">Enter TAS, true course and wind to solve the triangle.</p>
+            <dl class="result-grid" id="result-grid">
+              <div><dt class="lbl">Wind correction</dt><dd class="val" id="out-wca">—</dd></div>
+              <div><dt class="lbl">True heading</dt><dd class="val" id="out-th">—</dd></div>
+              <div><dt class="lbl">Groundspeed</dt><dd class="val" id="out-gs">—</dd></div>
+              <div><dt class="lbl">Time and fuel</dt><dd class="val" id="out-time">—</dd></div>
+            </dl>
+          </section>
+          <section class="card panel is-active" style="display:block">
+            <h2>Wind triangle inputs</h2>
+            <p class="panel-help">Enter true airspeed and true course, then the wind it is coming from. Variation is optional. Distance and fuel flow are optional and give time and fuel used.</p>
+            <div class="fields">
+              <div class="field">
+                <label for="tas">True airspeed <span class="unit-hint">kt</span></label>
+                <input id="tas" inputmode="decimal" enterkeyhint="done" autocomplete="off" placeholder="120">
+              </div>
+              <div class="field">
+                <label for="tc">True course <span class="unit-hint">degrees</span></label>
+                <input id="tc" inputmode="decimal" enterkeyhint="done" autocomplete="off" placeholder="240">
+              </div>
+              <div class="field">
+                <label for="wind-dir">Wind direction <span class="unit-hint">degrees</span></label>
+                <input id="wind-dir" inputmode="decimal" enterkeyhint="done" autocomplete="off" placeholder="310">
+              </div>
+              <div class="field">
+                <label for="wind-speed">Wind speed <span class="unit-hint">kt</span></label>
+                <input id="wind-speed" inputmode="decimal" enterkeyhint="done" autocomplete="off" placeholder="20">
+              </div>
+              <div class="field">
+                <label for="variation">Variation <span class="unit-hint">degrees</span></label>
+                <input id="variation" inputmode="decimal" enterkeyhint="done" autocomplete="off" placeholder="1">
+              </div>
+              <div class="field">
+                <label for="var-ew">Variation east or west</label>
+                <select id="var-ew">
+                  <option value="E" selected>East (subtract)</option>
+                  <option value="W">West (add)</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="distance">Distance <span class="unit-hint">optional, NM</span></label>
+                <input id="distance" inputmode="decimal" enterkeyhint="done" autocomplete="off" placeholder="123">
+              </div>
+              <div class="field">
+                <label for="fuel-flow">Fuel flow <span class="unit-hint">optional, units/h</span></label>
+                <input id="fuel-flow" inputmode="decimal" enterkeyhint="done" autocomplete="off" placeholder="28">
+              </div>
+            </div>
+          </section>
+          <details class="working" id="working">
+            <summary>Show working</summary>
+            <div class="working-body" id="working-body">
+              <p>Enter the values above to see the formula with your numbers.</p>
+            </div>
+          </details>
+        </div>
+        <aside class="side">
+          <div class="card">
+            <p class="kicker">How it is calculated</p>
+            <h2>Formulae used</h2>
+            <ul>
+              <li>sin(WCA) = (wind speed ÷ TAS) × sin(wind direction − true course).</li>
+              <li>True heading = true course + WCA. A positive WCA is a right correction.</li>
+              <li>Groundspeed = TAS × cos(WCA) − wind speed × cos(wind direction − true course).</li>
+              <li>Magnetic heading = true heading − easterly variation + westerly variation.</li>
+              <li>Time = distance ÷ groundspeed. Fuel = time × fuel flow.</li>
+            </ul>
+            <p class="disclaimer">For training/study only, not for real flight planning. Variation in northern India is typically about 1° E.</p>
+          </div>
+          <div class="card">
+            <p class="kicker">More tools</p>
+            <h2>Also on Pilot Journey</h2>
+            <ul>
+              <li><a href="/tools/unit-converter/">Aviation unit converter</a></li>
+              <li><a href="/tools/crosswind/">Crosswind component calculator</a></li>
+              <li><a href="/tools/density-altitude/">Pressure and density altitude calculator</a></li>
+              <li><a href="/tools/tas-mach/">TAS, CAS and Mach calculator</a></li>
+              <li><a href="/tools/one-in-sixty/">1 in 60 rule calculator</a></li>
+              <li><a href="/tools/pet-pnr/">PET and PNR calculator</a></li>
+              <li><a href="/tools/descent-planner/">Descent planning calculator</a></li>
+              <li><a href="/tools/altimetry/">QNH, QFE and cold temperature calculator</a></li>
+              <li><a href="/tools/mass-balance/">Mass and balance (CG) calculator</a></li>
+              <li><a href="/tools/utc-ist-sunrise/">UTC/IST and sunrise/sunset calculator</a></li>
+              <li><a href="/tools/">All aviation tools</a></li>
+              <li><a href="https://quiz.pilotjourney.in/subjects/">Free DGCA question bank</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+
+      <div class="wrap">
+        <section class="card explainer" id="explainer">
+          <h2>How the wind triangle is solved</h2>
+          <p>The wind triangle is the same problem you solve on the wind face of an E6B flight computer. You know the true airspeed and the true course you want to make good over the ground. The wind is given as the direction it is coming from and its speed. The missing sides are the heading you must fly and the groundspeed that results. This page uses the standard sine formula rather than a mechanical computer, but the geometry is identical.</p>
+          <p>The sine of the wind correction angle is the wind speed divided by true airspeed, multiplied by the sine of the angle between the wind and the true course. A positive correction means the wind is from the right and you steer to the right of the course; a negative correction means you steer left. True heading is the true course plus that correction. Groundspeed is true airspeed times the cosine of the correction, minus the tail or head component of the wind along the course. If the wind is stronger than the airspeed at a right angle, no heading can hold the course, and the calculator flags that case.</p>
+          <p>Magnetic heading follows the exam phrase east is least, west is best: subtract an easterly variation and add a westerly one. If you add a distance, time is distance divided by groundspeed. Fuel used is that time multiplied by fuel flow. The worked example is a westbound leg from the Delhi area at 120 knots, with a north-westerly wind and a one degree easterly variation typical of northern India. Treat every result as study practice, not as a flight-planning output.</p>
+        </section>
+        <nav class="page-links" aria-label="Study links">
+          <a href="https://quiz.pilotjourney.in/subjects/">Practise in the free DGCA question bank</a>
+          <a href="https://www.pilotjourney.in/guidance">Get free CPL career guidance</a>
+        </nav>
+      </div>
+      <div class="wrap">
+        <div class="card cta-band">
+          <div>
+            <p class="kicker">Career guidance</p>
+            <h2>Planning a CPL in India?</h2>
+            <p>Get a free, plain-English path from where you are now to a computer number, medicals and flying training.</p>
+          </div>
+          <a class="btn btn-primary" href="https://www.pilotjourney.in/guidance">Get free pilot career guidance</a>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-grid">
+        <div>
+          <p class="kicker">Pilot Journey</p>
+          <p>Free DGCA study tools and practice questions for aspiring pilots. Independent study project. Not affiliated with DGCA, Airbus, Boeing or any airline.</p>
+          <p class="legal-note">Study material only.<br>Always check current official documents.</p>
+        </div>
+        <div>
+          <p class="kicker">Study</p>
+          <ul>
+            <li><a href="/subjects/">Question bank</a></li>
+            <li><a href="/type-rating/">Type rating: A320 / B737</a></li>
+            <li><a href="/tools/">Aviation tools</a></li>
+            <li><a href="/daily/">Daily check</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="kicker">About</p>
+          <ul>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a href="https://www.pilotjourney.in/">Read the Pilot Journey blog</a></li>
+            <li><a href="https://altitude.pilotjourney.in/">Pilot Journey Altitude store</a></li>
+            <li><a href="https://www.pilotjourney.in/guidance">Free guidance page</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bar">
+        <div class="wrap footer-bar-inner">
+          <span>© 2026 Pilot Journey · Study material only</span>
+          <span>Free study material for pilots. Always check current DGCA and manufacturer documents.</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="wind-triangle.js"></script>
+  <script>
+    (function () {
+      var W = window.WindTriangle;
+      if (!W) return;
+
+      var ids = ['tas', 'tc', 'wind-dir', 'wind-speed', 'variation', 'var-ew', 'distance', 'fuel-flow'];
+      var el = {};
+      ids.forEach(function (id) { el[id] = document.getElementById(id); });
+
+      var card = document.getElementById('result-card');
+      var number = document.getElementById('result-number');
+      var unit = document.getElementById('result-unit');
+      var sub = document.getElementById('result-sub');
+      var outWca = document.getElementById('out-wca');
+      var outTh = document.getElementById('out-th');
+      var outGs = document.getElementById('out-gs');
+      var outTime = document.getElementById('out-time');
+      var working = document.getElementById('working-body');
+
+      function empty(message) {
+        card.classList.add('result-empty');
+        number.textContent = '—';
+        unit.textContent = '° MH';
+        sub.textContent = message || 'Enter TAS, true course and wind to solve the triangle.';
+        outWca.textContent = '—';
+        outTh.textContent = '—';
+        outGs.textContent = '—';
+        outTime.textContent = '—';
+        working.innerHTML = '<p>Enter the values above to see the formula with your numbers.</p>';
+      }
+
+      function describe(r) {
+        var wa = Number((r.windDir - r.tc).toFixed(1));
+        var steps = [];
+        steps.push('Wind angle = wind direction − true course = <code>' +
+          W.formatAngle(r.windDir) + ' − ' + W.formatAngle(r.tc) + ' = ' +
+          W.formatAngle(r.windAngle) + '°</code>.');
+        steps.push('sin(WCA) = (wind speed ÷ TAS) × sin(wind angle) = <code>(' +
+          W.formatKt(r.windSpeed) + ' ÷ ' + W.formatKt(r.tas) + ') × sin(' +
+          W.formatAngle(r.windAngle) + '°) = ' + Number(r.sineWindCorrection.toFixed(4)) + '</code>.');
+        var side = r.wca >= 0 ? 'right of the course' : 'left of the course';
+        steps.push('WCA = arcsin of that value = <code>' + W.formatAngle(r.wca) +
+          '°</code>, a correction to the ' + side + '.');
+        steps.push('True heading = true course + WCA = <code>' +
+          W.formatAngle(r.tc) + ' + (' + W.formatAngle(r.wca) + ') = ' +
+          W.formatAngle(r.th) + '°</code>.');
+        steps.push('Groundspeed = TAS × cos(WCA) − wind speed × cos(wind angle) = <code>' +
+          W.formatKt(r.tas) + ' × cos(' + W.formatAngle(r.wca) + '°) − ' +
+          W.formatKt(r.windSpeed) + ' × cos(' + W.formatAngle(r.windAngle) + '°) = ' +
+          W.formatKt(r.gs) + ' kt</code>.');
+        if (r.varEW === 'E') {
+          steps.push('Magnetic heading = true heading − easterly variation = <code>' +
+            W.formatAngle(r.th) + ' − ' + W.formatAngle(r.variation) + ' = ' +
+            W.formatAngle(r.mh) + '°</code> (east is least).');
+        } else {
+          steps.push('Magnetic heading = true heading + westerly variation = <code>' +
+            W.formatAngle(r.th) + ' + ' + W.formatAngle(r.variation) + ' = ' +
+            W.formatAngle(r.mh) + '°</code> (west is best).');
+        }
+        if (r.timeHours != null) {
+          steps.push('Time = distance ÷ groundspeed = <code>' +
+            r.distanceNm + ' NM ÷ ' + W.formatKt(r.gs) + ' kt = ' +
+            W.formatTime(r.timeHours) + '</code>.');
+        }
+        if (r.fuel != null) {
+          steps.push('Fuel = time × fuel flow = <code>' +
+            W.formatTime(r.timeHours) + ' × ' + W.formatKt(r.fuelFlow) +
+            ' /h = ' + Number(r.fuel.toFixed(1)) + '</code>.');
+        }
+        return '<ol>' + steps.map(function (s) { return '<li>' + s + '</li>'; }).join('') + '</ol>';
+      }
+
+      function render() {
+        var tas = W.parseInput(el.tas.value);
+        var tc = W.parseInput(el.tc.value);
+        var wd = W.parseInput(el['wind-dir'].value);
+        var ws = W.parseInput(el['wind-speed'].value);
+        var variation = W.parseInput(el.variation.value);
+        var varEW = el['var-ew'].value;
+        var distance = W.parseInput(el.distance.value);
+        var fuelFlow = W.parseInput(el['fuel-flow'].value);
+        if (tas === null || tc === null || wd === null || ws === null) {
+          empty();
+          return;
+        }
+        var solved = W.solve(tas, tc, wd, ws, variation === null ? 0 : variation, varEW);
+        if (!solved) { empty(); return; }
+        if (solved.impossible) {
+          empty('The wind is too strong to hold this course at the entered TAS. No heading exists.');
+          working.innerHTML = '<p>sin(WCA) would be <code>' +
+            Number(solved.sineWindCorrection.toFixed(3)) +
+            '</code>, which is outside the range −1 to +1, so no wind correction angle exists.</p>';
+          return;
+        }
+        var r = W.withFuel(solved, distance, fuelFlow);
+        card.classList.remove('result-empty');
+        number.textContent = W.formatAngle(r.mh);
+        unit.textContent = '° MH';
+        var wcaSide = r.wca >= 0 ? 'right' : 'left';
+        sub.textContent = 'WCA ' + W.formatAngle(Math.abs(r.wca)) + '° ' + wcaSide +
+          ', true heading ' + W.formatAngle(r.th) + '°, groundspeed ' + W.formatKt(r.gs) + ' kt.';
+        outWca.textContent = W.formatAngle(Math.abs(r.wca)) + '° ' + wcaSide;
+        outTh.textContent = W.formatAngle(r.th) + '°';
+        outGs.textContent = W.formatKt(r.gs) + ' kt';
+        if (r.timeHours != null) {
+          outTime.textContent = W.formatTime(r.timeHours) +
+            (r.fuel != null ? ', fuel ' + Number(r.fuel.toFixed(1)) : '');
+        } else {
+          outTime.textContent = 'Add a distance to get time';
+        }
+        working.innerHTML = describe(r);
+      }
+
+      ids.forEach(function (id) {
+        el[id].addEventListener('input', render);
+        el[id].addEventListener('change', render);
+      });
+
+      document.getElementById('try-example').addEventListener('click', function () {
+        var ex = W.EXAMPLE;
+        el.tas.value = ex.tas;
+        el.tc.value = ex.tc;
+        el['wind-dir'].value = ex.windDir;
+        el['wind-speed'].value = ex.windSpeed;
+        el.variation.value = ex.variation;
+        el['var-ew'].value = ex.varEW;
+        el.distance.value = ex.distance;
+        el['fuel-flow'].value = ex.fuelFlow;
+        render();
+        card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+
+      empty();
+    })();
+  </script>
+</body>
+</html>
